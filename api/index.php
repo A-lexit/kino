@@ -1,16 +1,24 @@
 <?php
 
-ini_set('display_errors',1);
+ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 require __DIR__.'/../vendor/autoload.php';
 
-echo "autoload ok<br>";
-
 $app = require __DIR__.'/../bootstrap/app.php';
 
-echo "bootstrap ok<br>";
+echo "Application OK<br>";
 
-var_dump(get_class($app));
+try {
+    $config = $app->make('config');
+
+    echo "Config OK<br>";
+
+    var_dump(get_class($config));
+} catch (Throwable $e) {
+    echo "<pre>";
+    echo $e;
+    echo "</pre>";
+}
 
 exit;
