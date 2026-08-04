@@ -13,27 +13,19 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
         then: function () {
-
             Route::middleware('web')
-
                 ->group(base_path('routes/admin.php'));
-
         }
     )
-
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-
             'is.admin' => \App\Http\Middleware\AdminMiddleware::class,
             'is.staff' => \App\Http\Middleware\EnsureStaffRole::class,
-
         ]);
-
-
-
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*'),
         );
-    })->create();
+    })
+    ->create();
