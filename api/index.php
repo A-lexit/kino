@@ -1,36 +1,27 @@
 <?php
 header('Content-Type: text/plain');
 
-echo "Step 1: PHP works\n";
-
 require __DIR__ . '/../vendor/autoload.php';
-echo "Step 2: Autoload loaded\n";
-
 $app = require_once __DIR__ . '/../bootstrap/app.php';
-echo "Step 3: App bootstrapped\n";
+
+$app->singleton(\Illuminate\Contracts\Debug\ExceptionHandler::class, function ($app) {
+    return new class($app) extends \Illuminate\Foundation\Exceptions\Handler {
+        public function render($request, \Throwable $e)
+        {
+            return response(
+                "CAUGHT: " . get_class($e) . "\n" .
+                "MESSAGE: " . $e->getMessage() . "\n" .
+                "FILE: " . $e->getFile() . ":" . $e->getLine() . "\n\n" .
+                "TRACE:\n" . $e->getTraceAsString(),
+                500,
+                ['Content-Type' => 'text/plain']
+            );
+        }
+    };
+});
 
 $kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
-echo "Step 4: Kernel created\n";
-
-flush();
-
 $request = \Illuminate\Http\Request::capture();
-echo "Step 5: Request captured\n";
-flush();
-
-
-echo "PATH INFO: " . $request->getPathInfo() . "\n";
-echo "REQUEST URI: " . $request->getRequestUri() . "\n";
-echo "SCRIPT NAME: " . ($_SERVER['SCRIPT_NAME'] ?? 'n/a') . "\n";
-echo "REQUEST_URI (server): " . ($_SERVER['REQUEST_URI'] ?? 'n/a') . "\n";
-flush();
 $response = $kernel->handle($request);
-echo "Step 6: Response handled\n";
-flush();
-
-
-echo "Response status: " . $response->getStatusCode() . "\n";
-echo "----- RESPONSE CONTENT -----\n";
-echo $response->getContent();
-
-exit;
+$response->send();
+$kernel->terminate($request, $response);
