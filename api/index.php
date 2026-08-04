@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 
-
 require __DIR__ . '/../vendor/autoload.php';
 
 // Створюємо структуру тимчасових папок у /tmp
