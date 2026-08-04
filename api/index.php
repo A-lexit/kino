@@ -22,6 +22,12 @@ $response = $kernel->handle($request);
 echo "Step 6: Response handled\n";
 flush();
 
+$response = $kernel->handle($request);
+echo "Step 6: Response handled\n";
+flush();
+
 echo "Response status: " . $response->getStatusCode() . "\n";
+echo "----- RESPONSE CONTENT -----\n";
+echo $response->getContent();
 
 exit;
