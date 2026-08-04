@@ -96,7 +96,7 @@ export default createStore({
             commit('SET_ERRORS', []);
 
             try {
-                await axios.put('/api/film-add-comment', {
+                await axios.post('/api/film-add-comment', {
                     subject: payload.subject,
                     body: payload.body,
                     film_id: payload.film_id,
