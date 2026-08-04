@@ -44,7 +44,7 @@ Thumbs.db
 /storage/app/private/*
 !/storage/app/private/.gitignore
 
-#/bootstrap/cache/*.php
+/bootstrap/cache/*.php
 
 npm-debug.log*
 yarn-error.log*
