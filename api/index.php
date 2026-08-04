@@ -1,16 +1,15 @@
 <?php
 
-echo 'APP_DEBUG = ';
-var_dump(getenv('APP_DEBUG'));
+echo '<pre>';
 
-echo '<br>';
+print_r($_ENV);
 
-echo 'APP_KEY = ';
-var_dump(getenv('APP_KEY'));
+echo "\n====================\n";
 
-echo '<br>';
+print_r($_SERVER);
 
-echo 'APP_ENV = ';
-var_dump(getenv('APP_ENV'));
+echo "\n====================\n";
+
+var_dump(getenv());
 
 exit;
