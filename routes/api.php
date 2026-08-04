@@ -23,7 +23,7 @@ Route::get('film-json', [App\Http\Controllers\Api\FilmController::class, 'show']
 
 
 Route::put('film-views-increment', [App\Http\Controllers\Api\FilmController::class, 'viewsIncrement']);
-Route::put('film-likes-increment', [App\Http\Controllers\Api\FilmController::class, 'likesIncrement']);
+Route::post('film-likes-increment', [App\Http\Controllers\Api\FilmController::class, 'likesIncrement']);
 
 Route::middleware(['web', 'auth'])->post('film-add-comment', [App\Http\Controllers\Api\CommentController::class, 'store']);
 
