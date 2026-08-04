@@ -1,16 +1,15 @@
 <?php
 
-echo 'APP_DEBUG = ';
-var_dump(getenv('APP_DEBUG'));
+use Illuminate\Http\Request;
 
-echo '<br>';
+define('LARAVEL_START', microtime(true));
 
-echo 'APP_KEY = ';
-var_dump(getenv('APP_KEY'));
+if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
+    require $maintenance;
+}
 
-echo '<br>';
+require __DIR__.'/../vendor/autoload.php';
 
-echo 'APP_ENV = ';
-var_dump(getenv('APP_ENV'));
+$app = require_once __DIR__.'/../bootstrap/app.php';
 
-exit;
+$app->handleRequest(Request::capture());
