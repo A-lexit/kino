@@ -1,5 +1,5 @@
 <?php
-die('PUBLIC INDEX WORKS');
+
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
