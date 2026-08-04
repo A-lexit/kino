@@ -1,17 +1,15 @@
 <?php
+// api/index.php
 
-use Illuminate\Http\Request;
+require __DIR__ . '/../vendor/autoload.php';
 
-define('LARAVEL_START', microtime(true));
+$app = require_once __DIR__ . '/../bootstrap/app.php';
 
-// Перевірка на режим обслуговування (Maintenance mode)
-if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
-    require $maintenance;
-}
+$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
-// Завантаження автолоадера Composer
-require __DIR__.'/../vendor/autoload.php';
+$response = $kernel->handle(
+    $request = Illuminate\Http\Request::capture()
+);
 
-// Запуск додатку Laravel (новий синтаксис для Laravel 11+)
-$app = require_once __DIR__.'/../bootstrap/app.php';
-$app->handleRequest(Request::capture());
+$response->send();
+$kernel->terminate($request, $response);
