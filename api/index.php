@@ -18,13 +18,16 @@ $request = \Illuminate\Http\Request::capture();
 echo "Step 5: Request captured\n";
 flush();
 
+
+echo "PATH INFO: " . $request->getPathInfo() . "\n";
+echo "REQUEST URI: " . $request->getRequestUri() . "\n";
+echo "SCRIPT NAME: " . ($_SERVER['SCRIPT_NAME'] ?? 'n/a') . "\n";
+echo "REQUEST_URI (server): " . ($_SERVER['REQUEST_URI'] ?? 'n/a') . "\n";
+flush();
 $response = $kernel->handle($request);
 echo "Step 6: Response handled\n";
 flush();
 
-$response = $kernel->handle($request);
-echo "Step 6: Response handled\n";
-flush();
 
 echo "Response status: " . $response->getStatusCode() . "\n";
 echo "----- RESPONSE CONTENT -----\n";
