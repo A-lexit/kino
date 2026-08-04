@@ -78,7 +78,7 @@ export default createStore({
 
         async addLike({ commit, state }, payload) {
             try {
-                const response = await axios.put('/api/film-likes-increment', {
+                const response = await axios.post('/api/film-likes-increment', {
                     slug: payload.slug,
                     increment: payload.increment,
                 });
@@ -96,7 +96,7 @@ export default createStore({
             commit('SET_ERRORS', []);
 
             try {
-                await axios.post('/api/film-add-comment', {
+                await axios.put('/api/film-add-comment', {
                     subject: payload.subject,
                     body: payload.body,
                     film_id: payload.film_id,
