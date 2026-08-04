@@ -1,38 +1,22 @@
 <?php
+
 declare(strict_types=1);
 
-require __DIR__ . '/../vendor/autoload.php';
+ini_set('display_errors', '1');
+error_reporting(E_ALL);
 
-// 1. Vercel дозволяє писати ТІЛЬКИ в /tmp. Створюємо там структуру для Laravel.
-$tmpStorage = '/tmp/storage';
-$dirs = [
-    $tmpStorage . '/logs',
-    $tmpStorage . '/framework/cache/data',
-    $tmpStorage . '/framework/sessions',
-    $tmpStorage . '/framework/views',
-    $tmpStorage . '/app'
-];
+try {
+    require __DIR__.'/../public/index.php';
+} catch (Throwable $e) {
+    http_response_code(500);
+    header('Content-Type: text/plain');
 
-foreach ($dirs as $dir) {
-    if (!is_dir($dir)) {
-        mkdir($dir, 0777, true);
-    }
+    echo "MESSAGE:\n";
+    echo $e->getMessage()."\n\n";
+
+    echo "FILE:\n";
+    echo $e->getFile().':'.$e->getLine()."\n\n";
+
+    echo "TRACE:\n";
+    echo $e->getTraceAsString();
 }
-
-// 2. Форсуємо використання безпечних драйверів для Serverless
-$_ENV['LOG_CHANNEL'] = 'stderr'; // Логи йтимуть в консоль Vercel, а не в файл
-$_ENV['SESSION_DRIVER'] = 'cookie'; // Файлові сесії не працюють в Serverless
-$_ENV['CACHE_STORE'] = 'array'; // Файловий кеш не зберігається між запитами
-
-$app = require_once __DIR__ . '/../bootstrap/app.php';
-
-// 3. Вказуємо Laravel використовувати /tmp замість стандартної папки storage
-$app->useStoragePath($tmpStorage);
-
-// 4. Запускаємо ядро
-$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
-$response = $kernel->handle(
-    $request = Illuminate\Http\Request::capture()
-);
-$response->send();
-$kernel->terminate($request, $response);
