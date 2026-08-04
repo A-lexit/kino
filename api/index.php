@@ -1,27 +1,41 @@
 <?php
-header('Content-Type: text/plain');
+
+use Illuminate\Http\Request;
 
 require __DIR__ . '/../vendor/autoload.php';
+
+// Створюємо структуру тимчасових папок у /tmp
+$tmpStorage = '/tmp/storage';
+$tmpCache = '/tmp/bootstrap/cache';
+
+$dirs = [
+    $tmpStorage . '/logs',
+    $tmpStorage . '/framework/cache/data',
+    $tmpStorage . '/framework/sessions',
+    $tmpStorage . '/framework/views',
+    $tmpStorage . '/app',
+    $tmpCache,
+];
+
+foreach ($dirs as $dir) {
+    if (!is_dir($dir)) {
+        mkdir($dir, 0777, true);
+    }
+}
+
+// Задаємо системні змінні для кешу та клейких файлів
+$_ENV['VIEW_COMPILED_PATH'] = $tmpStorage . '/framework/views';
+$_ENV['APP_SERVICES_CACHE'] = $tmpCache . '/services.php';
+$_ENV['APP_PACKAGES_CACHE'] = $tmpCache . '/packages.php';
+$_ENV['APP_CONFIG_CACHE']   = $tmpCache . '/config.php';
+$_ENV['APP_ROUTES_CACHE']   = $tmpCache . '/routes.php';
+$_ENV['APP_EVENTS_CACHE']   = $tmpCache . '/events.php';
+
+// Завантажуємо додаток
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
-$app->singleton(\Illuminate\Contracts\Debug\ExceptionHandler::class, function ($app) {
-    return new class($app) extends \Illuminate\Foundation\Exceptions\Handler {
-        public function render($request, \Throwable $e)
-        {
-            return response(
-                "CAUGHT: " . get_class($e) . "\n" .
-                "MESSAGE: " . $e->getMessage() . "\n" .
-                "FILE: " . $e->getFile() . ":" . $e->getLine() . "\n\n" .
-                "TRACE:\n" . $e->getTraceAsString(),
-                500,
-                ['Content-Type' => 'text/plain']
-            );
-        }
-    };
-});
+// Перенаправляємо основний storage в /tmp
+$app->useStoragePath($tmpStorage);
 
-$kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
-$request = \Illuminate\Http\Request::capture();
-$response = $kernel->handle($request);
-$response->send();
-$kernel->terminate($request, $response);
+// Обробляємо запит
+$app->handleRequest(Request::capture());
