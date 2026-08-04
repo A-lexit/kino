@@ -1,17 +1,16 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+ini_set('display_errors',1);
 error_reporting(E_ALL);
 
-set_exception_handler(function ($e) {
-    echo "<pre>";
-    echo $e;
-    echo "</pre>";
-});
+require __DIR__.'/../vendor/autoload.php';
 
-set_error_handler(function ($severity, $message, $file, $line) {
-    throw new ErrorException($message, 0, $severity, $file, $line);
-});
+echo "autoload ok<br>";
 
-require __DIR__.'/../public/index.php';
+$app = require __DIR__.'/../bootstrap/app.php';
+
+echo "bootstrap ok<br>";
+
+var_dump(get_class($app));
+
+exit;
