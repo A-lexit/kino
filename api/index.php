@@ -5,20 +5,32 @@ error_reporting(E_ALL);
 
 require __DIR__.'/../vendor/autoload.php';
 
+echo "autoload OK<br>";
+
 $app = require __DIR__.'/../bootstrap/app.php';
 
-echo "Application OK<br>";
+echo "bootstrap OK<br>";
 
-try {
-    $config = $app->make('config');
+var_dump(get_class($app));
 
-    echo "Config OK<br>";
+echo "<br>";
 
-    var_dump(get_class($config));
-} catch (Throwable $e) {
-    echo "<pre>";
-    echo $e;
-    echo "</pre>";
-}
+echo "Has config? ";
+var_dump($app->bound('config'));
+
+echo "<br>";
+
+echo "Has events? ";
+var_dump($app->bound('events'));
+
+echo "<br>";
+
+echo "Has files? ";
+var_dump($app->bound('files'));
+
+echo "<br>";
+
+echo "Has log? ";
+var_dump($app->bound('log'));
 
 exit;
