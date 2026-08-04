@@ -1,0 +1,62 @@
+services:
+
+    app:
+        environment:
+            HOME: /tmp
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+        container_name: kino_app
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        depends_on:
+            - mysql
+            - redis
+        user: "1000:1000"
+
+    nginx:
+        image: nginx:latest
+        container_name: kino_nginx
+        ports:
+            - "80:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - app
+
+    mysql:
+        image: mysql:8.0
+        container_name: kino_mysql
+        restart: always
+        environment:
+            MYSQL_DATABASE: kino
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: kino
+            MYSQL_PASSWORD: kino
+        ports:
+            - "3306:3306"
+        volumes:
+            - mysql_data:/var/lib/mysql
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: kino_phpmyadmin
+        restart: always
+        environment:
+            PMA_HOST: kino_mysql
+        ports:
+            - "8080:80"
+        depends_on:
+            - mysql
+
+
+    redis:
+        image: redis:7
+        container_name: kino_redis
+        ports:
+            - "6379:6379"
+
+volumes:
+    mysql_data:
