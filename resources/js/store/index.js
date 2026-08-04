@@ -66,7 +66,7 @@ export default createStore({
             await new Promise((resolve) => setTimeout(resolve, 5000));
 
             try {
-                const response = await axios.put('/api/film-views-increment', {
+                const response = await axios.post('/api/film-views-increment', {
                     slug,
                 });
 
@@ -96,7 +96,7 @@ export default createStore({
             commit('SET_ERRORS', []);
 
             try {
-                await axios.put('/api/film-add-comment', {
+                await axios.post('/api/film-add-comment', {
                     subject: payload.subject,
                     body: payload.body,
                     film_id: payload.film_id,
