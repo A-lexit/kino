@@ -12,4 +12,16 @@ echo "Step 3: App bootstrapped\n";
 $kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
 echo "Step 4: Kernel created\n";
 
+flush();
+
+$request = \Illuminate\Http\Request::capture();
+echo "Step 5: Request captured\n";
+flush();
+
+$response = $kernel->handle($request);
+echo "Step 6: Response handled\n";
+flush();
+
+echo "Response status: " . $response->getStatusCode() . "\n";
+
 exit;
