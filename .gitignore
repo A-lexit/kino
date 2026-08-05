@@ -64,3 +64,5 @@ pnpm-debug.log*
 # Optional local
 /.php-cs-fixer.cache
 /.phpstan.cache
+.vercel
+.env*
