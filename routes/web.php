@@ -129,5 +129,7 @@ Route::get('/test-env', fn() => dd(config('services.google')));
 
 
 
-Route::get('{category}/{slug}', [App\Http\Controllers\FilmController::class, 'show'])->name('single');
+Route::get('{category}/{slug}', [App\Http\Controllers\FilmController::class, 'show'])
+    ->where('category', '^(?!admin$).*')
+    ->name('single');
 
