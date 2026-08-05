@@ -26,11 +26,13 @@ $app->singleton(\Illuminate\Contracts\Debug\ExceptionHandler::class, function ($
     return new class($app) extends \Illuminate\Foundation\Exceptions\Handler {
         public function render($request, \Throwable $e)
         {
-            return response(
-                "CAUGHT: " . get_class($e) . "\n" .
+            $content = "CAUGHT: " . get_class($e) . "\n" .
                 "MESSAGE: " . $e->getMessage() . "\n" .
                 "FILE: " . $e->getFile() . ":" . $e->getLine() . "\n\n" .
-                "TRACE:\n" . $e->getTraceAsString(),
+                "TRACE:\n" . $e->getTraceAsString();
+
+            return new \Symfony\Component\HttpFoundation\Response(
+                $content,
                 500,
                 ['Content-Type' => 'text/plain']
             );
