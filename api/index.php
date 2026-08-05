@@ -4,12 +4,15 @@ header('Content-Type: text/plain');
 require __DIR__ . '/../vendor/autoload.php';
 
 $tmpStorage = '/tmp/storage';
+$tmpBootstrapCache = '/tmp/bootstrap/cache';
+
 $dirs = [
     $tmpStorage . '/logs',
     $tmpStorage . '/framework/cache/data',
     $tmpStorage . '/framework/sessions',
     $tmpStorage . '/framework/views',
     $tmpStorage . '/app',
+    $tmpBootstrapCache,
 ];
 foreach ($dirs as $dir) {
     if (!is_dir($dir)) {
@@ -18,6 +21,8 @@ foreach ($dirs as $dir) {
 }
 
 $_ENV['VIEW_COMPILED_PATH'] = $tmpStorage . '/framework/views';
+$_ENV['APP_PACKAGES_CACHE'] = $tmpBootstrapCache . '/packages.php';
+$_ENV['APP_SERVICES_CACHE'] = $tmpBootstrapCache . '/services.php';
 
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 $app->useStoragePath($tmpStorage);
