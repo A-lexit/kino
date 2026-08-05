@@ -29,7 +29,6 @@ Route::middleware(['web', 'auth'])->post('film-add-comment', [App\Http\Controlle
 
 
 Route::fallback(function() {
-    abort(404);
-
+    return response()->json(['message' => 'API route not found'], 404);
 });
 
