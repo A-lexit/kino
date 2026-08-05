@@ -107,5 +107,5 @@ require __DIR__ . '/admin/films.php';
 });
 
 
-
+Route::get('{category}/{slug}', [App\Http\Controllers\FilmController::class, 'show'])->name('single');
 
