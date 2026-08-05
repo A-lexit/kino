@@ -27,7 +27,6 @@ Route::post('film-likes-increment', [App\Http\Controllers\Api\FilmController::cl
 
 Route::middleware(['auth:sanctum'])->post('film-add-comment', [App\Http\Controllers\Api\CommentController::class, 'store'])->name('film-add-comment');
 
-
 Route::fallback(function() {
     return response()->json(['message' => 'API route not found'], 404);
 });

@@ -127,3 +127,7 @@ Route::post('/telegram/webhook', [App\Http\Controllers\TelegramWebhookController
 
 Route::get('/test-env', fn() => dd(config('services.google')));
 
+
+
+Route::get('{category}/{slug}', [App\Http\Controllers\FilmController::class, 'show'])->name('single');
+
