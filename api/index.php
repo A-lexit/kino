@@ -37,6 +37,9 @@ if (($_GET['debug_routes'] ?? false)) {
     }
     exit;
 }
+
+$_SERVER['SCRIPT_NAME'] = '/index.php';
+
 $request = \Illuminate\Http\Request::capture();
 $response = $kernel->handle($request);
 $response->send();
