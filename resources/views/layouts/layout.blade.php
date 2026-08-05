@@ -14,6 +14,9 @@
     <meta property="og:description" content="@yield('description', $settings->description ?? '')">
     <meta property="og:url" content="{{ url()->current() }}">
 
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <meta name="twitter:card" content="summary_large_image">
 
