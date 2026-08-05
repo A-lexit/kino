@@ -125,5 +125,5 @@ Route::post('/telegram/webhook', [App\Http\Controllers\TelegramWebhookController
     ->withoutMiddleware(['web', 'csrf']);   // знімаємо всю групу web
 
 
-
+Route::get('/test-env', fn() => dd(config('services.google')));
 
