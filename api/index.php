@@ -27,23 +27,7 @@ $_ENV['APP_SERVICES_CACHE'] = $tmpBootstrapCache . '/services.php';
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 $app->useStoragePath($tmpStorage);
 
-$app->singleton(\Illuminate\Contracts\Debug\ExceptionHandler::class, function ($app) {
-    return new class($app) extends \Illuminate\Foundation\Exceptions\Handler {
-        public function render($request, \Throwable $e)
-        {
-            $content = "CAUGHT: " . get_class($e) . "\n" .
-                "MESSAGE: " . $e->getMessage() . "\n" .
-                "FILE: " . $e->getFile() . ":" . $e->getLine() . "\n\n" .
-                "TRACE:\n" . $e->getTraceAsString();
 
-            return new \Symfony\Component\HttpFoundation\Response(
-                $content,
-                500,
-                ['Content-Type' => 'text/plain']
-            );
-        }
-    };
-});
 
 $kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
 if (($_GET['debug_routes'] ?? false)) {
