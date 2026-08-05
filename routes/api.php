@@ -25,7 +25,7 @@ Route::get('film-json', [App\Http\Controllers\Api\FilmController::class, 'show']
 Route::post('film-views-increment', [App\Http\Controllers\Api\FilmController::class, 'viewsIncrement'])->name('film-views-increment');
 Route::post('film-likes-increment', [App\Http\Controllers\Api\FilmController::class, 'likesIncrement'])->name('film-likes-increment');
 
-Route::post('film-add-comment', [App\Http\Controllers\Api\CommentController::class, 'store'])->name('film-add-comment');
+Route::post('film-add-comment', [App\Http\Controllers\Api\CommentController::class, 'store']);
 
 Route::fallback(function() {
     return response()->json(['message' => 'API route not found'], 404);
