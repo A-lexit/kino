@@ -46,6 +46,14 @@ $app->singleton(\Illuminate\Contracts\Debug\ExceptionHandler::class, function ($
 });
 
 $kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
+if (($_GET['debug_routes'] ?? false)) {
+    $kernel->bootstrap();
+    header('Content-Type: text/plain');
+    foreach (app('router')->getRoutes() as $route) {
+        echo implode('|', $route->methods()) . ' ' . $route->uri() . "\n";
+    }
+    exit;
+}
 $request = \Illuminate\Http\Request::capture();
 $response = $kernel->handle($request);
 $response->send();
