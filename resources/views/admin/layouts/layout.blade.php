@@ -643,6 +643,16 @@
                                     <p>Новий підписник</p>
                                 </a>
                             </li>
+
+
+                            <li class="nav-item mb-5">
+                                <a href="{{ route('admin.telegram.index') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-telegram"></i>
+                                    <p>Telegram підписники</p>
+                                </a>
+                            </li>
+
+
                         </ul>
                     </li>
                 </ul>

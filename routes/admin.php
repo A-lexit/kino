@@ -104,6 +104,11 @@ require __DIR__ . '/admin/films.php';
     Route::post('/years/bulk-action', [\App\Http\Controllers\Admin\YearController::class, 'bulkAction'])->name('years.bulk-action');
     Route::resource('/years', \App\Http\Controllers\Admin\YearController::class)->except(['show']);
 
+
+    Route::get('telegram-subscribers', [App\Http\Controllers\Admin\TelegramSubscriberController::class, 'index'])->name('telegram.index');
+    Route::post('telegram-subscribers/{subscriber}/toggle-ban', [App\Http\Controllers\Admin\TelegramSubscriberController::class, 'toggleBan'])->name('telegram.toggle-ban');
+    Route::delete('telegram-subscribers/{subscriber}', [App\Http\Controllers\Admin\TelegramSubscriberController::class, 'destroy'])->name('telegram.destroy');
+
 });
 
 

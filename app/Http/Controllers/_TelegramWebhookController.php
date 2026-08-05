@@ -2,13 +2,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Film;
-use App\Models\TelegramSubscriber;
 use App\Enums\FilmStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
-class TelegramWebhookController extends Controller
+class TelegramWebhookController0 extends Controller
 {
     public function handle(Request $request)
     {
@@ -23,51 +23,12 @@ class TelegramWebhookController extends Controller
 
         $data = $request->all();
 
-        // Автоматично витягуємо дані користувача з повідомлення або callback
-        $from = $data['message']['from'] ?? $data['callback_query']['from'] ?? null;
-        $chatId = $data['message']['chat']['id'] ?? $data['callback_query']['message']['chat']['id'] ?? null;
-
-        $subscriber = null;
-        if ($from && $chatId) {
-            $subscriber = TelegramSubscriber::updateOrCreate(
-                ['chat_id' => $chatId],
-                [
-                    'username' => $from['username'] ?? null,
-                    'first_name' => $from['first_name'] ?? null,
-                ]
-            );
-        }
-
-        // Обробка текстових повідомлень (наприклад, /start)
-        if (isset($data['message'])) {
-            $text = trim($data['message']['text'] ?? '');
-
-            if ($subscriber && $subscriber->is_banned) {
-                if ($text === '/start') {
-                    $this->sendTelegramMessage($chatId, '⛔ На жаль, ваш акаунт заблоковано.');
-                }
-                return response('OK', 200);
-            }
-
-            if ($text === '/start') {
-                $this->sendTelegramMessage($chatId, "👋 Вітаємо, {$subscriber->first_name}!\nВи успішно підписалися на сповіщення.");
-            }
-        }
-
         // Обробка callback від кнопок
         if (isset($data['callback_query'])) {
             $callback = $data['callback_query'];
             $action   = $callback['data'] ?? '';
+            $chatId   = $callback['message']['chat']['id'] ?? null;
             $messageId = $callback['message']['message_id'] ?? null;
-
-            if ($subscriber && $subscriber->is_banned) {
-                Http::post('https://api.telegram.org/bot' . config('services.telegram.token') . '/answerCallbackQuery', [
-                    'callback_query_id' => $callback['id'],
-                    'text' => '⛔ Ваш акаунт заблоковано в адмінці.',
-                    'show_alert' => true
-                ]);
-                return response('OK', 200);
-            }
 
             $filmId = null;
             $newStatus = null;
@@ -88,6 +49,7 @@ class TelegramWebhookController extends Controller
 
                 if ($film) {
                     $film->update(['publish_status' => $newStatus]);
+                    /*Cache::forget("film_{$film->slug}");*/    // Cache::forget тут не потрібен — FilmObserver::saved() вже це робить
 
                     // Відповідаємо Telegram, що кнопку оброблено
                     Http::post('https://api.telegram.org/bot' . config('services.telegram.token') . '/answerCallbackQuery', [
@@ -118,11 +80,4 @@ class TelegramWebhookController extends Controller
         return response('OK', 200);
     }
 
-    private function sendTelegramMessage($chatId, $text)
-    {
-        Http::post('https://api.telegram.org/bot' . config('services.telegram.token') . '/sendMessage', [
-            'chat_id' => $chatId,
-            'text' => $text,
-        ]);
-    }
 }

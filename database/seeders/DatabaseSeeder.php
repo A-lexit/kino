@@ -63,6 +63,7 @@ class DatabaseSeeder extends Seeder
         $this->call(StatusesTableSeeder::class);
         $this->call(SelectionsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
+        $this->call([TelegramAdminSeeder::class,]);
 
         // 2. Завантажуємо всі створені довідники в пам'ять для Many-to-Many зв'язків
         $captions  = Caption::all();

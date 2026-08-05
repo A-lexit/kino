@@ -4,6 +4,7 @@ use App\Http\Middleware\DraftOrPublicFilm;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -123,6 +124,8 @@ Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
 Route::post('/telegram/webhook', [App\Http\Controllers\TelegramWebhookController::class, 'handle'])
     ->name('telegram.webhook')
     ->withoutMiddleware(['web', 'csrf']);   // знімаємо всю групу web
+
+
 
 
 Route::get('/test-env', fn() => dd(config('services.google')));
