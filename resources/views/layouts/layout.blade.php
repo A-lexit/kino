@@ -62,6 +62,22 @@
     <link rel="stylesheet"
           href="{{ asset('assets/front/css/style.css') }}">
 
+    <style>
+
+        .child p {
+            font-size: 13px;
+            font-weight: 200;
+        }
+
+
+        .child-infilm p {
+            font-size: 11px;
+            width: 150px;
+        }
+    </style>
+
+
+
 
     {{-- Vite --}}
     @vite('resources/js/app.js')

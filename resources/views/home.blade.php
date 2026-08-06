@@ -17,7 +17,7 @@
                     <div class="title_cat_image">
                     </div>
                     <a href="{{route('single', ['category' => $film->category->slug,'slug' => $film->slug])}}">
-                        <h3>{{$film->title}}</h3>
+                        <p>{{$film->title}}</p>
                     </a>
                 </div>
             @endforeach
@@ -35,7 +35,7 @@
                          class="home-poster-img" alt="{{ $serial->title }}" width="194" height="293" loading="lazy" decoding="async" />
                     <div class="title_cat_image"></div>
                     <a href="{{route('single', ['category' => $serial->category->slug,'slug' => $serial->slug])}}">
-                        <h3>{{$serial->title}}</h3>
+                        <p>{{$serial->title}}</p>
                     </a>
                 </div>
             @endforeach
@@ -53,7 +53,7 @@
                          class="home-poster-img" alt="{{ $mult->title }}" width="194" height="293" loading="lazy" decoding="async" />
                     <div class="title_cat_image"></div>
                     <a href="{{route('single', ['category' => $mult->category->slug,'slug' => $mult->slug])}}">
-                        <h3>{{$mult->title}}</h3>
+                        <p>{{$mult->title}}</p>
                     </a>
                 </div>
             @endforeach
@@ -70,7 +70,7 @@
               <img src="{{ app(\App\Media\FilmImageResolver::class)->image($multserial)}}"
                 class="home-poster-img" alt="{{ $multserial->title }}" width="194" height="293" loading="lazy" decoding="async" />
                 <a href="{{route('single', ['category' => $multserial->category->slug,'slug' => $multserial->slug])}}">
-                    <h3>{{$multserial->title}}</h3>
+                    <p>{{$multserial->title}}</p>
                 </a>
             </div>
         @endforeach
