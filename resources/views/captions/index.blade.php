@@ -17,7 +17,7 @@
             <div class="container-archive">
 
                 @foreach($captions as $caption)
-                    <h3><a href="{{route('captions.show',['slug' => $caption->slug])}}">{{$caption->title}}</a></h3>
+                    <p><a href="{{route('captions.show',['slug' => $caption->slug])}}">{{$caption->title}}</a></p>
                 @endforeach
 
                 <div class="pagination-new">

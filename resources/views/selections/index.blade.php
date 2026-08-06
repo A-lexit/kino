@@ -16,7 +16,7 @@
             <div class="container-archive">
 
                 @foreach($selections as $selection)
-                    <h3><a href="{{route('selections.show',['slug' => $selection->slug])}}">{{$selection->title}}</a></h3>
+                    <p><a href="{{route('selections.show',['slug' => $selection->slug])}}">{{$selection->title}}</a></p>
                 @endforeach
 
                 <div class="pagination-new">

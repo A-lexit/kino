@@ -15,7 +15,7 @@
         <div class="archive-area section-archive">
             <div class="container-archive">
                 @foreach($directors as $director)
-                    <h3><a href="{{route('directors.show',['slug' => $director->slug])}}">{{$director->name}}</a></h3>
+                    <p><a href="{{route('directors.show',['slug' => $director->slug])}}">{{$director->name}}</a></p>
                 @endforeach
 
                 <div class="pagination-new">

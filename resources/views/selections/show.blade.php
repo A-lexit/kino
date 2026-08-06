@@ -30,7 +30,7 @@
     'category' => $film->category->slug,
     'slug' => $film->slug,
 ]) }}">
-                        <h3>{{$film->title}}</h3>
+                        <p>{{$film->title}}</p>
                     </a>
                 </div>
                 @endforeach

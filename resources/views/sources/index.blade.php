@@ -16,7 +16,7 @@
             <div class="container-archive">
 
                 @foreach($sources as $source)
-                    <h3><a href="{{route('sources.single',['slug' => $source->slug])}}">{{$source->title}}</a></h3>
+                    <p><a href="{{route('sources.single',['slug' => $source->slug])}}">{{$source->title}}</a></p>
                 @endforeach
 
                 <div class="pagination-new">

@@ -16,7 +16,7 @@
 
             <div class="container-archive">
                 @foreach($ratings as $rating)
-                    <h3><a href="{{route('ratings.show',['slug' => $rating->slug])}}">{{$rating->title}}</a></h3>
+                    <p><a href="{{route('ratings.show',['slug' => $rating->slug])}}">{{$rating->title}}</a></p>
                 @endforeach
 
                 <div class="pagination-new">

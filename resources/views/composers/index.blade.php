@@ -15,7 +15,7 @@
         <div class="archive-area section-archive">
             <div class="container-archive">
                 @foreach($composers as $composer)
-                    <h3><a href="{{route('composers.show',['slug' => $composer->slug])}}">{{$composer->name}}</a></h3>
+                    <p><a href="{{route('composers.show',['slug' => $composer->slug])}}">{{$composer->name}}</a></p>
                 @endforeach
 
                 <div class="pagination-new">

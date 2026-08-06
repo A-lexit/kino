@@ -16,7 +16,7 @@
             <div class="container-archive">
 
                 @foreach($years as $year)
-                    <h3><a href="{{route('years.show',['slug' => $year->slug])}}">{{$year->title}}</a></h3>
+                    <p><a href="{{route('years.show',['slug' => $year->slug])}}">{{$year->title}}</a></p>
                 @endforeach
 
                 <div class="pagination-new">

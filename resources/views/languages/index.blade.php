@@ -16,7 +16,7 @@
             <div class="container-archive">
 
                 @foreach($languages as $language)
-                    <h3><a href="{{route('languages.show',['slug' => $language->slug])}}">{{$language->title}}</a></h3>
+                    <p><a href="{{route('languages.show',['slug' => $language->slug])}}">{{$language->title}}</a></p>
                 @endforeach
 
                 <div class="pagination-new">

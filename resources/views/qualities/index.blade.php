@@ -16,7 +16,7 @@
             <div class="container-archive">
 
                 @foreach($qualities as $quality)
-                    <h3><a href="{{route('qualities.show',['slug' => $quality->slug])}}">{{$quality->title}}</a></h3>
+                    <p><a href="{{route('qualities.show',['slug' => $quality->slug])}}">{{$quality->title}}</a></p>
                 @endforeach
 
                 <div class="pagination-new">

@@ -17,7 +17,7 @@
             <div class="container-archive">
 
                 @foreach($producers as $producer)
-                    <h3><a href="{{route('producers.show',['slug' => $producer->slug])}}">{{$producer->name}}</a></h3>
+                    <p><a href="{{route('producers.show',['slug' => $producer->slug])}}">{{$producer->name}}</a></p>
                 @endforeach
 
                 <div class="pagination-new">

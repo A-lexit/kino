@@ -16,7 +16,7 @@
         <div class="archive-area section-archive">
             <div class="container-archive">
                 @foreach($actors as $actor)
-                    <h3><a href="{{route('actors.show',['slug' => $actor->slug])}}">{{$actor->name}}</a></h3>
+                    <p><a href="{{route('actors.show',['slug' => $actor->slug])}}">{{$actor->name}}</a></p>
                 @endforeach
 
                 <div class="pagination-new">
