@@ -16,8 +16,8 @@
         <div class="archive-area container-default section-single">
 
 
-            <div ><h1 >{{$film->title}}</h1></div>
-            <div ><h2>{{$film->origin_title}}</h2></div>
+            <div class="film-title"><h1 >{{$film->title}}</h1></div>
+            <div class="mb-4"><h5>{{$film->origin_title}}</h5></div>
 
             <table>
                 <tr><div class="blog-title-area">
@@ -176,18 +176,32 @@
             </table>
 
             <h3 class="text-start mt-5">Трейлер</h3>
-            @include('films.inc.trailer', ['film' => $film])
+
+            @if(!empty($film->trailer))
+                @include('films.inc.trailer', ['film' => $film])
+            @else
+                <div class="film-empty-block">
+                    🎬 Трейлер буде додано найближчим часом.
+                </div>
+            @endif
 
 
             <h3 class="text-start mt-5">Опис</h3>
-            <div class="film-description">
-                <p>{!!$film->description!!}</p>
-            </div>
+
+            @if(!empty(trim(strip_tags($film->description))))
+                <div class="film-description">
+                    {!! $film->description !!}
+                </div>
+            @else
+                <div class="film-empty-block">
+                    📖 Опис фільму ще готується.
+                </div>
+            @endif
 
 
 
-            <div class="watchmore-h4 mt-5">
-                <h4>Дивитись ще {{ $film->category->title }}</h4>
+            <div class="watchmore mt-5">
+                <h3>Дивитись ще {{ $film->category->title }}</h3>
             </div>
 
 

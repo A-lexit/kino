@@ -67,6 +67,9 @@
         .child p {
             font-size: 13px;
             font-weight: 200;
+            max-width: 195px;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
 
@@ -82,6 +85,7 @@
 
         .film-gallery-grid {
             margin-top: 8px;
+            margin-bottom: 0px !important;
         }
 
 
@@ -91,6 +95,17 @@
 
         .sidetitle h3 {
             text-align: left;
+            font-weight: 600;
+        }
+
+        .watchmore h3 {
+            text-align: left;
+        }
+
+        .child-archive img {
+            max-width: 155px;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     </style>
 

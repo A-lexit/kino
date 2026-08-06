@@ -12,9 +12,7 @@
     'images' => app(\App\Media\FilmImageResolver::class)->gallery($film)
 ])
 
-        <p>Дата: {{ $film->display_date }}</p>
-        <div class="mb-3">
-        </div>
+        <p class="mt-4 mb-2">Дата виходу: {{ $film->display_date }}</p>
 
         <tr><div class="blog-title-area">
                 <div class="tag-cloud-single">

@@ -84,12 +84,18 @@ label {
 
 .archive-area h1 {
     margin-top: 0;
-    margin-bottom: 15px;
+    /*margin-bottom: 5px;*/
     color: #476ad5;
     font-weight: bold;
 }
 
 
+.film-title h1 {
+    margin-top: 0px;
+    margin-bottom: 5px;
+    color: #476ad5;
+    font-weight: bold;
+}
 
 .row-sidebar {
     box-sizing: border-box;
@@ -275,6 +281,8 @@ footer {
 
 .text-owlkarousel {
     font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .child img {
@@ -377,6 +385,8 @@ footer {
 
 .child-archive p {
     font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Default Posts Section */
@@ -396,8 +406,9 @@ footer {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 31.5px;
 }
+
 
 .child,
 .child-infilm {
@@ -405,6 +416,11 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.child-infilm p {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .child {
@@ -418,6 +434,7 @@ footer {
 .child a {
     color: #000;
 }
+
 
 .child h3 {
     margin-top: 5px;
@@ -485,6 +502,7 @@ footer {
 .nnn {
     display: flex;
     justify-content: space-between;
+    gap: 10px;
 }
 
 .nnn img {
@@ -704,4 +722,40 @@ footer {
         width: auto;
         height: 45px;
     }
+}
+
+
+
+/* Пагінація */
+.pagination {
+    gap: 4px;
+}
+
+.pagination .page-link {
+    color: #5b5e75;
+    background-color: #fff;
+    border: 1px solid #dcdcdc;
+    transition: .2s;
+}
+
+.pagination .page-link:hover {
+    color: #fff;
+    background-color: #5b5e75;
+    border-color: #5b5e75;
+}
+
+.pagination .page-item.active .page-link {
+    color: #fff;
+    background-color: #5b5e75;
+    border-color: #5b5e75;
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #b7b7b7;
+    background: #f7f7f7;
+    border-color: #ececec;
+}
+
+.pagination .page-link:focus {
+    box-shadow: none;
 }
