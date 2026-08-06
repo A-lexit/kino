@@ -197,7 +197,7 @@
                         </div>
 
                         <a href="{{route('single', ['category' => $filmm->category->slug,'slug' => $filmm->slug])}}">
-                            <h3>{{$filmm->title}}</h3>
+                            <p>{{$filmm->title}}</p>
                         </a>
                     </div>
                 @endforeach
