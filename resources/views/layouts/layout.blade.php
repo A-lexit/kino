@@ -107,6 +107,39 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+
+
+
+        .footer{
+            background:#212529;
+            border-top:3px solid #5b5e75;
+
+        }
+
+        .footer-logo a{
+            color:#fff;
+            font-size:22px;
+            font-weight:700;
+            text-decoration:none;
+            transition:.2s;
+        }
+
+        .footer-logo a:hover{
+            color:#8ea0ff;
+        }
+
+        .footer-copy{
+            color:#9ca3af;
+            font-size:14px;
+            margin-top:6px;
+        }
+
+        .footer-description{
+            color:#bfc3cf;
+            font-size:14px;
+            line-height:1.5;
+        }
     </style>
 
 
@@ -177,26 +210,31 @@
 </main>
 
 {{-- Footer --}}
-<footer class="py-4 mt-auto">
+<footer class="footer mt-auto py-4">
 
     <div class="container">
 
         <div class="row align-items-center">
 
-            <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+            <div class="col-lg-6 text-center text-lg-start mb-3 mb-lg-0">
 
-                © {{ date('Y') }}
-                <a href="{{ route('home') }}">
-                    {{ $settings->title ?? 'Kino' }}
-                </a>
+                <div class="footer-logo">
+                    <a href="{{ route('home') }}">
+                        {{ $settings->title ?? 'Kino' }}
+                    </a>
+                </div>
+
+                <div class="footer-copy">
+                    © {{ date('Y') }} Всі права захищені.
+                </div>
 
             </div>
 
-            <div class="col-md-6 text-center text-md-end">
+            <div class="col-lg-6 text-center text-lg-end">
 
-                <small class="text-secondary">
-                    Онлайн-каталог фільмів та серіалів
-                </small>
+                <div class="footer-description">
+                    Онлайн-каталог фільмів, серіалів, мультфільмів та мультсеріалів.
+                </div>
 
             </div>
 
