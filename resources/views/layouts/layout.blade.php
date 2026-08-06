@@ -83,6 +83,11 @@
         .film-gallery-grid {
             margin-top: 8px;
         }
+
+
+        .blog-title-area {
+            margin-top: 7px;
+        }
     </style>
 
 

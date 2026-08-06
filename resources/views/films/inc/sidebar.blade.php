@@ -97,8 +97,8 @@
                 </div></tr>
         @endisset
 
-        @auth
-        <div class="bestfilmss">
+
+        <div class="bestfilmss mt-5">
         <h3>Кращі {{ $film->category->title }} (likes)</h3>
 
         <ul>
@@ -113,10 +113,10 @@
 
                 <h3>Обрані Фільми</h3>
                 <ul>
-            @foreach($featuredFilms as $fearuredfilm)
+            @foreach($featuredFilms as $featuredFilm)
                     <hr>
                     <li><a href="{{route('single', ['category' => $film->category->slug,
-'slug' => $fearuredfilm->slug])}}">{{$fearuredfilm->title}}</a></li>
+'slug' => $featuredFilm->slug])}}">{{$featuredFilm->title}}</a></li>
 
 
             @endforeach
@@ -124,11 +124,10 @@
             </div>
                 <hr>
 </div>
-        @endauth
 
 
 
-        <h3 class="sidebar-title">
+        <h3 class="sidebar-title mt-5">
             Підписатися
         </h3>
         @include('admin.layouts.alerts')
@@ -149,7 +148,7 @@
     </div>
 
 
-    <h3 class="sidebar-title">
+    <h3 class="sidebar-title mt-4">
         Скоро в кіно (API)
     </h3>
 

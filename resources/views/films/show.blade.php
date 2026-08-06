@@ -178,13 +178,15 @@
             <h3 class="text-start mt-5">Трейлер</h3>
             @include('films.inc.trailer', ['film' => $film])
 
-            <div id="description">
+
+            <h3 class="text-start mt-5">Опис</h3>
+            <div class="film-description">
                 <p>{!!$film->description!!}</p>
             </div>
 
 
 
-            <div class="watchmore-h4">
+            <div class="watchmore-h4 mt-5">
                 <h4>Дивитись ще {{ $film->category->title }}</h4>
             </div>
 
