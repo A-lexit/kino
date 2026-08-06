@@ -88,6 +88,10 @@
         .blog-title-area {
             margin-top: 7px;
         }
+
+        .sidetitle h3 {
+            text-align: left;
+        }
     </style>
 
 

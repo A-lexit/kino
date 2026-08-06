@@ -98,7 +98,7 @@
         @endisset
 
 
-        <div class="bestfilmss mt-5">
+        <div class="sidetitle bestfilmss mt-5">
         <h3>Кращі {{ $film->category->title }} (likes)</h3>
 
         <ul>
@@ -109,7 +109,7 @@
             @endforeach
         </ul>
 
-            <div class="mt-5">
+            <div class="sidetitle text-start mt-5">
 
                 <h3>Обрані Фільми</h3>
                 <ul>
@@ -126,10 +126,11 @@
 </div>
 
 
-
-        <h3 class="sidebar-title mt-5">
+        <div class="sidetitle text-start mt-5">
+        <h3 class="sidebar-title">
             Підписатися
         </h3>
+        </div>
         @include('admin.layouts.alerts')
         <form action="{{ route('subscribe') }}" method="POST" class="mb-4">
             @csrf
@@ -147,11 +148,11 @@
         <hr>
     </div>
 
-
-    <h3 class="sidebar-title mt-4">
+    <div class="sidetitle text-start mt-5">
+    <h3 class="sidetitle sidebar-title mt-4">
         Скоро в кіно (API)
     </h3>
-
+    </div>
     @foreach($upcomingMovies as $movie)
 
         <div class="py-2">
