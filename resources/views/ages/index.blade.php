@@ -21,10 +21,10 @@
                     <p><a href="{{route('ages.show',['slug' => $age->slug])}}">{{$age->title}}</a></p>
                 @endforeach
 
-                <div class="pagination-new">
-                    {{$ages->links()}}
-                </div>
+            </div>
 
+            <div class="pagination-new">
+                {{$ages->links()}}
             </div>
         </div>
     </div>

@@ -65,26 +65,16 @@ label {
    2. LAYOUT & CONTAINERS
    ========================================== */
 .container,
-.container-karuselowl,
-.container-arch,
-.container-footer {
+.container-arch {
     margin: 0 auto;
     max-width: 1140px;
     width: 100%;
     position: relative;
 }
 
-.width-container-home {
-    width: 100%;
-}
-
-.width-container-nohome {
-    width: 700%;
-}
 
 .flex-single,
-.flex-arch,
-.flex-featured-home {
+.flex-arch {
     display: flex;
 }
 
@@ -627,9 +617,8 @@ footer {
         align-items: center;
     }
 
-    .pagination-new {
-        width: 100%;
-    }
+
+
 }
 
 @media (max-width: 767px) {

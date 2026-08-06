@@ -19,9 +19,10 @@
                     <p><a href="{{route('actors.show',['slug' => $actor->slug])}}">{{$actor->name}}</a></p>
                 @endforeach
 
-                <div class="pagination-new">
-                    {{$actors->links()}}
-                </div>
+
+            </div>
+            <div class="pagination-new">
+                {{$actors->links()}}
             </div>
         </div>
     </div>

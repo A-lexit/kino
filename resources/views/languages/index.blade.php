@@ -19,11 +19,13 @@
                     <p><a href="{{route('languages.show',['slug' => $language->slug])}}">{{$language->title}}</a></p>
                 @endforeach
 
-                <div class="pagination-new">
-                    {{$languages->links()}}
-                </div>
+
 
             </div>
+            <div class="pagination-new">
+                {{$languages->links()}}
+            </div>
+
         </div>
     </div>
 

@@ -20,11 +20,13 @@
                     <p><a href="{{route('captions.show',['slug' => $caption->slug])}}">{{$caption->title}}</a></p>
                 @endforeach
 
-                <div class="pagination-new">
-                    {{$captions->links()}}
-                </div>
+
 
             </div>
+            <div class="pagination-new">
+                {{$captions->links()}}
+            </div>
+
         </div>
     </div>
 

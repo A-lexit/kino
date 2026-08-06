@@ -19,11 +19,13 @@
                     <p><a href="{{route('genres.show',['slug' => $genre->slug])}}">{{$genre->title}}</a></p>
                 @endforeach
 
-                <div class="pagination-new">
-                    {{$genres->links()}}
-                </div>
+
 
             </div>
+            <div class="pagination-new">
+                {{$genres->links()}}
+            </div>
+
         </div>
     </div>
 

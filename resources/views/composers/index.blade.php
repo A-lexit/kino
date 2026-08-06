@@ -18,10 +18,12 @@
                     <p><a href="{{route('composers.show',['slug' => $composer->slug])}}">{{$composer->name}}</a></p>
                 @endforeach
 
-                <div class="pagination-new">
-                    {{$composers->links()}}
-                </div>
+
             </div>
+            <div class="pagination-new">
+                {{$composers->links()}}
+            </div>
+
         </div>
     </div>
 

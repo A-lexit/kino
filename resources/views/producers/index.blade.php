@@ -20,11 +20,13 @@
                     <p><a href="{{route('producers.show',['slug' => $producer->slug])}}">{{$producer->name}}</a></p>
                 @endforeach
 
-                <div class="pagination-new">
-                    {{$producers->links()}}
-                </div>
+
 
             </div>
+            <div class="pagination-new">
+                {{$producers->links()}}
+            </div>
+
         </div>
     </div>
 

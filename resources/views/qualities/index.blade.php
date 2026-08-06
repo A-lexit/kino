@@ -19,11 +19,13 @@
                     <p><a href="{{route('qualities.show',['slug' => $quality->slug])}}">{{$quality->title}}</a></p>
                 @endforeach
 
-                <div class="pagination-new">
-                    {{$qualities->links()}}
-                </div>
+
 
             </div>
+            <div class="pagination-new">
+                {{$qualities->links()}}
+            </div>
+
         </div>
     </div>
 

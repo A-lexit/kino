@@ -13,14 +13,15 @@
     <div class="container-arch flex-arch">
         <div class="archive-area section-archive">
             <div class="container-archive">
+
                 @foreach($countries as $country)
                     <p><a href="{{route('countries.show',['slug' => $country->slug])}}">{{$country->title}}</a></p>
                 @endforeach
 
-                <div class="pagination-new">
-                    {{$countries->links()}}
-                </div>
+            </div>
 
+            <div class="pagination-new">
+                {{$countries->links()}}
             </div>
         </div>
     </div>

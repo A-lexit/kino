@@ -19,10 +19,9 @@
                     <p><a href="{{route('ratings.show',['slug' => $rating->slug])}}">{{$rating->title}}</a></p>
                 @endforeach
 
-                <div class="pagination-new">
-                    {{$ratings->links()}}
-                </div>
-
+            </div>
+            <div class="pagination-new">
+                {{$ratings->links()}}
             </div>
         </div>
     </div>

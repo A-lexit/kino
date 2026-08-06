@@ -19,10 +19,9 @@
                     <p><a href="{{route('selections.show',['slug' => $selection->slug])}}">{{$selection->title}}</a></p>
                 @endforeach
 
-                <div class="pagination-new">
-                    {{$selections->links()}}
-                </div>
-
+            </div>
+            <div class="pagination-new">
+                {{$countries->links()}}
             </div>
         </div>
     </div>

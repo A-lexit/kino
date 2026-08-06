@@ -19,10 +19,12 @@
                     <p><a href="{{route('companies.show',['slug' => $company->slug])}}">{{$company->title}}</a></p>
                 @endforeach
 
-                <div class="pagination-new">
-                    {{$companies->links()}}
-                </div>
+
             </div>
+            <div class="pagination-new">
+                {{$companies->links()}}
+            </div>
+
         </div>
     </div>
 

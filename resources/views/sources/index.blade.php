@@ -19,10 +19,9 @@
                     <p><a href="{{route('sources.single',['slug' => $source->slug])}}">{{$source->title}}</a></p>
                 @endforeach
 
-                <div class="pagination-new">
-                    {{$sources->links()}}
-                </div>
-
+            </div>
+            <div class="pagination-new">
+                {{$countries->links()}}
             </div>
         </div>
     </div>

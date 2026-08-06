@@ -18,10 +18,12 @@
                     <p><a href="{{route('directors.show',['slug' => $director->slug])}}">{{$director->name}}</a></p>
                 @endforeach
 
-                <div class="pagination-new">
-                    {{$directors->links()}}
-                </div>
+
             </div>
+            <div class="pagination-new">
+                {{$directors->links()}}
+            </div>
+
         </div>
     </div>
 

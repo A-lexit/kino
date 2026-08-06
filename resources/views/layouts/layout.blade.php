@@ -74,6 +74,15 @@
             font-size: 11px;
             width: 150px;
         }
+
+        .pagination-new {
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        .film-gallery-grid {
+            margin-top: 8px;
+        }
     </style>
 
 
