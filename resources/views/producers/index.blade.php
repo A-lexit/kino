@@ -1,6 +1,6 @@
 @extends('layouts/layout')
 @include('layouts.inc.seo', [
-    'name' => 'Продюсери',
+    'title' => 'Продюсери',
     'description' => 'Список усіх продюсерів на сайті.'
 ])
 

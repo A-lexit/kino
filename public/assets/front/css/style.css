@@ -111,7 +111,7 @@ header {
 
 header h1,
 header h2 {
-    padding: 15px 0;
+    /*padding: 15px 0;*/
     text-align: center;
     color: #000;
 }
@@ -605,9 +605,9 @@ footer {
     }
 
 
-    .row-sidebar {
+    /*.row-sidebar {
         display: none;
-    }
+    }*/
 
     header {
         margin-bottom: 48px;
@@ -696,7 +696,7 @@ footer {
 
 
     .child {
-        width: 100%;
+        /*width: 100%;*/
         display: flex;
         flex-direction: column;
         align-items: center;

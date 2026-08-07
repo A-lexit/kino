@@ -77,91 +77,37 @@
             {{-- =========================
                  MOBILE: QUICK INFO
                  ========================= --}}
-
             <section class="film-mobile-block film-mobile-info">
 
                 <h2>Інформація</h2>
 
                 <div class="film-info-list">
 
-                    {{-- Вік --}}
                     <div class="film-info-row">
-            <span class="film-detail-label">
-                <a href="{{ route('ages.index') }}">
-                    Вік:
-                </a>
-            </span>
-
-                        <div>
-                            <a href="{{ route('ages.show', ['slug' => $film->age->slug]) }}">
-                                {{ $film->age->title }}
-                            </a>
-                        </div>
+                        <span>Вік:</span>
+                        <a href="{{ route('ages.show', ['slug' => $film->age->slug]) }}">
+                            {{ $film->age->title }}
+                        </a>
                     </div>
 
-
-                    {{-- Якість відео --}}
                     <div class="film-info-row">
-            <span class="film-detail-label">
-                <a href="{{ route('qualities.index') }}">
-                    Якість відео:
-                </a>
-            </span>
-
-                        <div class="span-show">
-                            <a href="{{ route('qualities.show', ['slug' => $film->quality->slug]) }}">
-                                {{ $film->quality->title }}
-                            </a>
-                        </div>
+                        <span>Якість відео:</span>
+                        <a href="{{ route('qualities.show', ['slug' => $film->quality->slug]) }}">
+                            {{ $film->quality->title }}
+                        </a>
                     </div>
 
-
-                    {{-- Рейтинг --}}
                     <div class="film-info-row">
-            <span class="film-detail-label">
-                <a href="{{ route('ratings.index') }}">
-                    Рейтинг:
-                </a>
-            </span>
-
-                        <div class="span-show">
-                            <a href="{{ route('ratings.show', ['slug' => $film->rating->slug]) }}">
-                                {{ $film->rating->title }}
-                            </a>
-                        </div>
+                        <span>Рейтинг:</span>
+                        <a href="{{ route('ratings.show', ['slug' => $film->rating->slug]) }}">
+                            {{ $film->rating->title }}
+                        </a>
                     </div>
 
-
-                    {{-- Добірки --}}
-                    @if($film->selections->count())
-                        <div class="film-info-row">
-                <span class="film-detail-label">
-                    <a href="{{ route('selections.index') }}">
-                        Добірки:
-                    </a>
-                </span>
-
-                            <div class="span-show">
-                                @foreach($film->selections as $selection)
-                                    <a href="{{ route('selections.show', ['slug' => $selection->slug]) }}">
-                                        {{ $selection->title }}
-                                    </a>@if(!$loop->last), @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
-
-                    {{-- Озвучка --}}
                     @if($film->languages->count())
                         <div class="film-info-row">
-                <span class="film-detail-label">
-                    <a href="{{ route('languages.index') }}">
-                        Озвучка:
-                    </a>
-                </span>
-
-                            <div class="span-show">
+                            <span>Озвучка:</span>
+                            <div>
                                 @foreach($film->languages as $language)
                                     <a href="{{ route('languages.show', ['slug' => $language->slug]) }}">
                                         {{ $language->title }}
@@ -171,17 +117,10 @@
                         </div>
                     @endif
 
-
-                    {{-- Субтитри --}}
                     @if($film->captions->count())
                         <div class="film-info-row">
-                <span class="film-detail-label">
-                    <a href="{{ route('captions.index') }}">
-                        Субтитри:
-                    </a>
-                </span>
-
-                            <div class="span-show">
+                            <span>Субтитри:</span>
+                            <div>
                                 @foreach($film->captions as $caption)
                                     <a href="{{ route('captions.show', ['slug' => $caption->slug]) }}">
                                         {{ $caption->title }}
@@ -191,45 +130,28 @@
                         </div>
                     @else
                         <div class="film-info-row">
-                <span class="film-detail-label">
-                    Субтитри:
-                </span>
-
-                            <div>
-                                Немає
-                            </div>
+                            <span>Субтитри:</span>
+                            <span>Немає</span>
                         </div>
                     @endif
 
-
-                    {{-- IMDB --}}
                     @if($film->imdb_rating)
                         <div class="film-info-row">
-                <span class="film-detail-label">
-                    IMDB:
-                </span>
-
-                            <div>
-                                ⭐ {{ $film->imdb_rating }} / 10
-                            </div>
+                            <span>IMDB:</span>
+                            <span>⭐ {{ $film->imdb_rating }} / 10</span>
                         </div>
                     @endif
 
-
-                    {{-- Примітка --}}
                     @isset($film->note)
                         <div class="film-info-note">
-                            <span>Примітка:</span>
-                            <div>
-                                {{ $film->note }}
-                            </div>
+                            <strong>Примітка:</strong>
+                            <div>{{ $film->note }}</div>
                         </div>
                     @endisset
 
                 </div>
 
             </section>
-
 
 
             {{-- =========================
@@ -495,11 +417,6 @@
                 </div>
 
             </section>
-
-
-
-
-
 
 
             {{-- =========================

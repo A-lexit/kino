@@ -29,7 +29,12 @@ class ViewServiceProvider extends ServiceProvider
         View::composer('layouts.layout', CarouselComposer::class);
         View::composer('layouts.layout', MenuComposer::class);
 
-        View::composer('films.inc.sidebar', UpcomingMoviesComposer::class);
+        /*View::composer('films.inc.sidebar', UpcomingMoviesComposer::class);*/
+
+        View::composer(['films.inc.sidebar', 'films.show'], UpcomingMoviesComposer::class);
+
+
+
     }
 
 }

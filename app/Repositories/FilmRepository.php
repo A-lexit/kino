@@ -49,7 +49,7 @@ class FilmRepository
             ->where('category_id', $category_id)
             ->with('category')
             ->inRandomOrder()
-            ->limit(5)
+            ->limit(6)
             ->get();
     }
 
