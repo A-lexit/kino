@@ -14,10 +14,16 @@
 
     <div class="container-arch flex-arch">
         <div class="archive-area section-archive">
-            <div class="container-archive">
-                @foreach($actors as $actor)
-                    <p><a href="{{route('actors.show',['slug' => $actor->slug])}}">{{$actor->name}}</a></p>
-                @endforeach
+            <div class="container-archive-block">
+
+                <div class="archive-grid">
+                    @foreach($actors as $actor)
+                        <a href="{{ route('actors.show', ['slug' => $actor->slug]) }}"
+                           class="archive-item">
+                            {{ $actor->name }}
+                        </a>
+                    @endforeach
+                </div>
 
 
             </div>

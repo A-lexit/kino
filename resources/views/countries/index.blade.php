@@ -1,30 +1,41 @@
 @extends('layouts/layout')
+@include('layouts.inc.seo', [
+    'title' => 'Країни',
+    'description' => 'Список усіх країн на сайті.'
+])
+
 @section('content')
 
-
     <div class="container-arch flex-arch">
+
         @include('layouts.inc.breadcrumbs', ['breadcrumbs' => [
             ['title' => 'Головна', 'url' => route('home')],
             ['title' => 'Країни', 'url' => null],
         ]])
+
     </div>
 
-
     <div class="container-arch flex-arch">
+
         <div class="archive-area section-archive">
-            <div class="container-archive">
+
+            <div class="archive-grid">
 
                 @foreach($countries as $country)
-                    <p><a href="{{route('countries.show',['slug' => $country->slug])}}">{{$country->title}}</a></p>
+                    <a href="{{ route('countries.show', ['slug' => $country->slug]) }}"
+                       class="archive-item">
+                        {{ $country->title }}
+                    </a>
                 @endforeach
 
             </div>
 
             <div class="pagination-new">
-                {{$countries->links()}}
+                {{ $countries->links() }}
             </div>
+
         </div>
+
     </div>
 
 @endsection
-

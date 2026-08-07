@@ -68,7 +68,7 @@ label {
 .container-arch {
     margin: 0 auto;
     max-width: 1140px;
-    width: 100%;
+    /*width: 100%;*/
     position: relative;
 }
 
