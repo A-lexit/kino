@@ -91,7 +91,7 @@
                         <tr><div class="blog-title-area">
                                 @if($film->companies->count())
                                     <div class="tag-cloud-single">
-                                        <td class="first-col-film"><span><a href="{{route('companies.index')}}">Компанія:</a></span></td>
+                                        <td class="first-col-film"><span><a href="{{route('companies.index')}}">Кінокомпанія:</a></span></td>
                                         <td>@foreach($film->companies as $company)
                                                 <small><a href="{{ route('companies.show', ['slug'=>$company->slug]) }}" title="">{{$company->title}}@if (!$loop->last),@endif</a> </small>
                                             @endforeach</td>

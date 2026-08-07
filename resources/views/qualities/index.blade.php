@@ -19,6 +19,12 @@
 
         <div class="archive-area section-archive">
 
+            <h1>Якості відео</h1>
+
+            <p class="archive-description">
+                Оберіть якість відео, щоб переглянути всі фільми та серіали у відповідному форматі.
+            </p>
+
             <div class="archive-grid">
 
                 @foreach($qualities as $quality)

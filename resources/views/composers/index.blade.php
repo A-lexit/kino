@@ -20,6 +20,12 @@
 
         <div class="archive-area section-archive">
 
+            <h1>Композитори</h1>
+
+            <p class="archive-description">
+                Оберіть композитора, щоб переглянути всі фільми та серіали з його музичним супроводом.
+            </p>
+
             <div class="archive-grid">
 
                 @foreach($composers as $composer)

@@ -19,6 +19,12 @@
 
         <div class="archive-area section-archive">
 
+            <h1>Мови озвучки</h1>
+
+            <p class="archive-description">
+                Оберіть мову, щоб переглянути всі фільми та серіали з відповідною озвучкою або субтитрами.
+            </p>
+
             <div class="archive-grid">
 
                 @foreach($languages as $language)

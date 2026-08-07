@@ -19,6 +19,12 @@
 
         <div class="archive-area section-archive">
 
+            <h1>Кінокомпанії</h1>
+
+            <p class="archive-description">
+                Оберіть кінокомпанію, щоб переглянути всі фільми та серіали, випущені нею.
+            </p>
+
             <div class="archive-grid">
 
                 @foreach($companies as $company)

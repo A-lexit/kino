@@ -18,6 +18,11 @@
     <div class="container-arch flex-arch">
 
         <div class="archive-area section-archive">
+            <h1>Режисери</h1>
+
+            <p class="archive-description">
+                Оберіть режисера, щоб переглянути всі фільми та серіали, які він створив.
+            </p>
 
             <div class="archive-grid">
 

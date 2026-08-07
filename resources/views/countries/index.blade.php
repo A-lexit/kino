@@ -19,6 +19,12 @@
 
         <div class="archive-area section-archive">
 
+            <h1>Країни</h1>
+
+            <p class="archive-description">
+                Оберіть країну, щоб переглянути всі фільми та серіали, створені у ній.
+            </p>
+
             <div class="archive-grid">
 
                 @foreach($countries as $country)

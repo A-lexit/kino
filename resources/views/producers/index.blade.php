@@ -19,6 +19,12 @@
 
         <div class="archive-area section-archive">
 
+            <h1>Продюсери</h1>
+
+            <p class="archive-description">
+                Оберіть продюсера, щоб переглянути всі фільми та серіали, над якими він працював.
+            </p>
+
             <div class="archive-grid">
 
                 @foreach($producers as $producer)

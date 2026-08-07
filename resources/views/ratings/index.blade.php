@@ -15,19 +15,25 @@
 
     </div>
 
+
+
     <div class="container-arch flex-arch">
 
         <div class="archive-area section-archive">
 
-            <div class="archive-grid">
+            <h1>Рейтинги</h1>
 
+            <p class="archive-description">
+                Оберіть рейтинг, щоб переглянути всі фільми та серіали з відповідною оцінкою.
+            </p>
+
+            <div class="archive-grid">
                 @foreach($ratings as $rating)
                     <a href="{{ route('ratings.show', ['slug' => $rating->slug]) }}"
                        class="archive-item">
                         {{ $rating->title }}
                     </a>
                 @endforeach
-
             </div>
 
             <div class="pagination-new">

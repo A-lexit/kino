@@ -19,6 +19,12 @@
 
         <div class="archive-area section-archive">
 
+            <h1>Добірки</h1>
+
+            <p class="archive-description">
+                Оберіть добірку, щоб переглянути тематичні колекції фільмів та серіалів.
+            </p>
+
             <div class="archive-grid">
 
                 @foreach($selections as $selection)

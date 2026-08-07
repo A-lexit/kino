@@ -19,6 +19,12 @@
 
         <div class="archive-area section-archive">
 
+            <h1>Жанри</h1>
+
+            <p class="archive-description">
+                Оберіть жанр, щоб переглянути всі фільми та серіали цієї категорії.
+            </p>
+
             <div class="archive-grid">
 
                 @foreach($genres as $genre)
