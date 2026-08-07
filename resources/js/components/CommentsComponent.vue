@@ -9,21 +9,21 @@
                 </div>
             </div>-->
 
-            <div class="mb-3">
+            <div class="mb-3 mt-4">
 
-                <label for="commentBody" class="h5 form-label">
+                <h5>
                     Коментар
-                    <small class="text-secondary">
+                    <small class="text-secondary fs-6">
                         (тільки для зареєстрованих користувачів)
                     </small>
-                </label>
+                </h5>
 
                 <textarea
                     class="form-control"
                     id="commentBody"
                     rows="3"
                     v-model="body">
-                </textarea>
+    </textarea>
 
                 <div
                     class="alert alert-warning mt-2"
