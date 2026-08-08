@@ -9,8 +9,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Blank Page</li>
+                        <li class="breadcrumb-item"><a href="#">Головна</a></li>
+                        <li class="breadcrumb-item active">{{ $film->title }}</li>
                     </ol>
                 </div>
             </div>
@@ -29,18 +29,13 @@
                     <div class="card">
 
                         <div class="card-header">
-
                             <h3 class="card-title">Фільм "{{$film->title}}"</h3>
-
-
-
                         </div>
 
                         <form role="form" method="post" action="{{ route('admin.films.update', ['film' => $film->id]) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
-
 
                                 <div class="form-group">
                                     <label for="title">Назва</label>
@@ -59,22 +54,21 @@
 
 
                                 <div class="form-group">
-                                    <label for="duration">Тривалість:</label>
+                                    <label for="duration">Тривалість (текст):</label>
                                     <input type="text" name="duration"
                                            class="form-control @error('duration') is-invalid @enderror" id="duration"
                                            value="{{ old('duration', $film->duration) }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="other_actor">Інші атори:</label>
+                                    <label for="other_actor">Інші атори (текст):</label>
                                     <input type="text" name="other_actor"
                                            class="form-control @error('other_actor') is-invalid @enderror" id="other_actor"
                                            value="{{ old('other_actor', $film->other_actor) }}">
                                 </div>
 
 
-
-                                <div class="form-group">             {{--Бралось з demo adminlte  (textarea)--}}
+                                <div class="form-group">
                                     <label for="description">Опис</label>
                                     <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="description" rows="3" value="">{{old('description') ?? $film->description}}</textarea>
                                 </div>
@@ -90,6 +84,12 @@
                                     <select class="form-control @error('category_id') is-invalid @enderror"
                                             id="category_id"
                                             name="category_id">
+
+                                        <option
+                                            value="" {{ old('category_id', $film->category_id ?? null) === null ? 'selected' : '' }}>
+                                            Обрати категорію
+                                        </option>
+
                                         @foreach($formData['categories'] as $id => $title)
                                             @php
                                                 $slug = match((int)$id) {
@@ -106,6 +106,8 @@
                                             </option>
                                         @endforeach
                                     </select>
+
+                                    <small class="form-text text-muted">Фільм без категорії зберігається як чернетка і не показується на сайті.</small>
                                 </div>
 
 
@@ -115,6 +117,13 @@
                                     <div class="form-group">
                                         <label for="season_id">Кількість сезонів</label>
                                         <select class="form-control @error('season_id') is-invalid @enderror" id="season_id" name="season_id">
+
+                                            {{-- Порожній option --}}
+                                            <option value="" {{ old('season_id', $film->season_id ?? null) === null ? 'selected' : '' }}>
+                                                Обрати кількість сезонів
+                                            </option>
+
+                                            {{-- Реальні значення --}}
                                             @foreach($formData['seasons'] as $id => $title)
                                                 <option value="{{ $id }}" {{ old('season_id', $film->season_id ?? null) == $id ? 'selected' : '' }}>
                                                     {{ $title }}
@@ -128,6 +137,11 @@
                                     <div class="form-group">
                                         <label for="status_id">Статус</label>
                                         <select class="form-control @error('status_id') is-invalid @enderror" id="status_id" name="status_id">
+
+                                            <option value="" {{ old('status_id', $film->status_id ?? null) === null ? 'selected' : '' }}>
+                                                Обрати статус
+                                            </option>
+
                                             @foreach($formData['statuses'] as $id => $title)
                                                 <option value="{{ $id }}" {{ old('status_id', $film->status_id ?? null) == $id ? 'selected' : '' }}>
                                                     {{ $title }}
@@ -143,6 +157,9 @@
                                     <label for="duration_id">Тривалість</label>
                                     <select class="form-control @error('duration_id') is-invalid @enderror" id="duration_id" name="duration_id">
 
+                                        <option value="" {{ old('duration_id', $film->getRawOriginal('duration_id')) === null ? 'selected' : '' }}>
+                                            Обрати тривалість
+                                        </option>
 
                                         @foreach($formData['durations'] as $id => $title)
                                             @if(old('duration_id', $film->getRawOriginal('duration_id')) == $id)
@@ -163,8 +180,13 @@
 
 
                                 <div class="form-group">
-                                    <label for="year_id">Рік</label>
+                                    <label for="year_id">Рік випуску</label>
                                     <select class="form-control @error('year_id') is-invalid @enderror" id="year_id" name="year_id">
+
+
+                                        <option value="" {{ old('year_id', $film->year_id ?? null) === null ? 'selected' : '' }}>
+                                            Обрати рік випуску
+                                        </option>
 
                                         @foreach($formData['years'] as $id => $title)
                                             @if(old('year_id',$film->year_id) == $id )
@@ -187,6 +209,10 @@
                                     <label for="quality_id">Якість відео</label>
                                     <select class="form-control @error('quality_id') is-invalid @enderror" id="quality_id" name="quality_id">
 
+                                        <option value="" {{ old('quality_id', $film->quality_id ?? null) === null ? 'selected' : '' }}>
+                                            Обрати якість відео
+                                        </option>
+
                                         @foreach($formData['qualities'] as $id => $title)
                                             @if(old('quality_id',$film->quality_id) == $id )
                                                 <option value="{{ $id }}"
@@ -207,6 +233,10 @@
                                 <div class="form-group">
                                     <label for="rating_id">Рейтинг</label>
                                     <select class="form-control @error('rating_id') is-invalid @enderror" id="rating_id" name="rating_id">
+
+                                        <option value="" {{ old('rating_id', $film->rating_id ?? null) === null ? 'selected' : '' }}>
+                                            Обрати рейтинг
+                                        </option>
 
                                         @foreach($formData['ratings'] as $id => $title)
                                             @if(old('rating_id',$film->rating_id) == $id )
@@ -231,6 +261,11 @@
                                     <label for="age_id">Вік</label>
                                     <select class="form-control @error('age_id') is-invalid @enderror" id="age_id" name="age_id">
 
+
+                                        <option value="" {{ old('age_id', $film->age_id ?? null) === null ? 'selected' : '' }}>
+                                            Обрати вік
+                                        </option>
+
                                         @foreach($formData['ages'] as $id => $title)
                                             @if(old('age_id',$film->age_id) == $id )
                                                 <option value="{{ $id }}"
@@ -251,7 +286,6 @@
                                     <select name="directors[]" id="directors" class="select2" multiple="multiple"
                                             data-placeholder="Вибір режисерів" style="width: 100%;">
 
-                                        <pre> {{ var_dump($formData['directors']) }} {{ var_dump(old('directors')) }} {{ var_dump($film->directors->pluck('id')->all()) }} </pre>
 
                                         @foreach($formData['directors'] as $id => $name)
                                             @if(in_array($id, old('directors',$film->directors->pluck('id')->all())))
@@ -292,9 +326,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="companies">Компанії</label>
+                                    <label for="companies">Кінокомпанії</label>
                                     <select name="companies[]" id="companies" class="select2" multiple="multiple"
-                                            data-placeholder="Вибір компаній" style="width: 100%;">
+                                            data-placeholder="Вибір кінокомпаній" style="width: 100%;">
 
 
                                         @foreach($formData['companies'] as $id => $title)
@@ -314,9 +348,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="actors">Топ-актори</label>
+                                    <label for="actors">ТОП-актори</label>
                                     <select name="actors[]" id="actors" class="select2" multiple="multiple"
-                                            data-placeholder="Выбор тегов" style="width: 100%;">
+                                            data-placeholder="Вибір ТОП-акторів" style="width: 100%;">
 
                                         @foreach($formData['actors'] as $id => $name)
                                             @if(in_array($id, old('actors',$film->actors->pluck('id')->all())))
@@ -335,9 +369,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="languages">Мова</label>
+                                    <label for="languages">Мови озвучки</label>
                                     <select name="languages[]" id="languages" class="select2" multiple="multiple"
-                                            data-placeholder="Выбор тегов" style="width: 100%;">
+                                            data-placeholder="Вибір мов озвучки" style="width: 100%;">
 
 
                                         @foreach($formData['languages'] as $id => $title)
@@ -357,9 +391,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="genres">Жанр</label>
+                                    <label for="genres">Жанри</label>
                                     <select name="genres[]" id="genres" class="select2" multiple="multiple"
-                                            data-placeholder="Выбір жанру" style="width: 100%;">
+                                            data-placeholder="Выбір жанрів" style="width: 100%;">
 
 
                                         @foreach($formData['genres'] as $id => $title)
@@ -379,7 +413,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="selections">Добірка</label>
+                                    <label for="selections">Добірки</label>
                                     <select name="selections[]" id="selections" class="select2" multiple="multiple"
                                             data-placeholder="Выбір добірок" style="width: 100%;">
 
@@ -424,9 +458,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="countries">Країна</label>
+                                    <label for="countries">Країни</label>
                                     <select name="countries[]" id="countries" class="select2" multiple="multiple"
-                                            data-placeholder="Выбір країни" style="width: 100%;">
+                                            data-placeholder="Выбір країн" style="width: 100%;">
 
 
                                         @foreach($formData['countries'] as $id => $title)
@@ -447,9 +481,9 @@
 
 
                                 <div class="form-group">
-                                    <label for="producers">Продюсер</label>
+                                    <label for="producers">Продюсери</label>
                                     <select name="producers[]" id="producers" class="select2" multiple="multiple"
-                                            data-placeholder="Выбір продюсера" style="width: 100%;">
+                                            data-placeholder="Выбір продюсерів" style="width: 100%;">
 
 
 
@@ -473,7 +507,7 @@
                                     <label for="note">Примітка:</label>
                                     <input type="text" name="note"
                                            class="form-control @error('note') is-invalid @enderror" id="note"
-                                           value="{{$film->note}}">
+                                           value="{{ old('note', $film->note) }}">
                                 </div>
 
 
@@ -499,7 +533,7 @@
 
 
                                 <div class="form-group">
-                                    <label for="gal_image1">Кадр 1</label>
+                                    <label for="gal_image1">Зображення галереї 1</label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" name="gal_image1" id="gal_image1" class="custom-file-input image-upload-preview" data-preview="#preview-gal_image1">
@@ -517,7 +551,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="gal_image2">Кадр 2</label>
+                                    <label for="gal_image2">Зображення галереї 2</label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" name="gal_image2" id="gal_image2" class="custom-file-input image-upload-preview" data-preview="#preview-gal_image2">
@@ -535,7 +569,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="gal_image3">Кадр 3</label>
+                                    <label for="gal_image3">Зображення галереї 3</label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" name="gal_image3" id="gal_image3" class="custom-file-input image-upload-preview" data-preview="#preview-gal_image3">
@@ -552,7 +586,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="gal_image4">Кадр 4</label>
+                                    <label for="gal_image4">Зображення галереї 4</label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" name="gal_image4" id="gal_image4" class="custom-file-input image-upload-preview" data-preview="#preview-gal_image4">
@@ -569,7 +603,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="gal_image5">Кадр 5</label>
+                                    <label for="gal_image5">Зображення галереї 5</label>
                                     <div class="input-group">
                                         <div class="custom-file">
                                             <input type="file" name="gal_image5" id="gal_image5" class="custom-file-input image-upload-preview" data-preview="#preview-gal_image5">

@@ -31,19 +31,23 @@ class FilmRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'min:2', 'max:120'],
-            'category_id' => ['integer'],
-            'year_id' => ['integer'],
-            'season_id' => ['integer'],
-            'rating_id' => ['integer'],
-            'status_id' => ['integer'],
-            'age_id' => ['integer'],
-            'quality_id' => ['integer'],
-            'duration_id' => ['integer'],
+            'category_id' => ['nullable', 'integer'],
+            'year_id'     => ['nullable', 'integer'],
+            'season_id'   => ['nullable', 'integer'],
+            'rating_id'   => ['nullable', 'integer'],
+            'status_id'   => ['nullable', 'integer'],
+            'age_id'      => ['nullable', 'integer'],
+            'quality_id'  => ['nullable', 'integer'],
+            'duration_id' => ['nullable', 'integer'],
             'view' => ['integer'],
             'datepicker'  => ['nullable', 'string'],
 
             'trailer_youtube_url' => 'nullable|string|max:255',
             'trailer_file'         => 'nullable|file|mimes:mp4,webm,ogg|max:51200', // 50MB
+
+
+
+
         ];
     }
 

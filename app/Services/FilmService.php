@@ -158,10 +158,21 @@ class FilmService
 
     protected function afterSaveActions(Film $film, Request $request): void
     {
-        $film->togglePublishStatus($request->get('publish_status'));
-        $film->toggleFeatured($request->get('is_featured'));
+        // Якщо категорія не вибрана — фільм примусово залишається чернеткою,
+        // незалежно від того, чи позначено "Опублікувати"
+        if (empty($film->category_id) || $film->category_id === $this->uncategorizedCategoryId()) {
+            $film->togglePublishStatus(null); // null !== 'published' → завжди Draft
+        } else {
+            $film->togglePublishStatus($request->get('publish_status'));
+        }
 
+        $film->toggleFeatured($request->get('is_featured'));
         $this->relationService->sync($film, $request->all());
+    }
+
+    protected function uncategorizedCategoryId(): ?int
+    {
+        return \App\Models\Category::where('slug', 'uncategorized')->value('id');
     }
 
 

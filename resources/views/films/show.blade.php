@@ -254,17 +254,28 @@
                 @endif
 
 
-                    <div class="film-detail-row">
-    <span class="film-detail-label">
-        <a href="{{ route('years.index') }}">Рік випуску:</a>
-    </span>
 
-                        <div class="span-show">
-                            <a href="{{ route('years.show', ['slug' => $film->year->slug]) }}">
-                                {{ $film->year->title }}
-                            </a>
+
+
+
+                    @if($film->year)
+                        <div class="film-detail-row">
+        <span class="film-detail-label">
+            <a href="{{ route('years.index') }}">Рік випуску:</a>
+        </span>
+
+                            <div class="span-show">
+                                <a href="{{ route('years.show', ['slug' => $film->year->slug]) }}">
+                                    {{ $film->year->title }}
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    @endif
+
+
+
+
+
 
 
                     @if($film->category->isSeries())

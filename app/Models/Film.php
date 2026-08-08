@@ -17,11 +17,11 @@ class Film extends Model
 
     // Значення за замовчуванням для нових записів
     protected $attributes = [
-        'category_id' => 1,
-        'age_id'      => 1,
+        /*'category_id' => 1,*/
+       /* 'age_id'      => 1,
         'quality_id'  => 1,
         'rating_id'   => 1,
-        'year_id'     => 1,
+        'year_id'     => 1,*/
     ];
 
     // ====================== ВЛАСТИВОСТІ ======================

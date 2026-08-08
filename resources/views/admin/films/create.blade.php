@@ -10,7 +10,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Blank Page</li>
+                        <li class="breadcrumb-item active">Новий фільм</li>
                     </ol>
                 </div>
             </div>
@@ -54,14 +54,14 @@
 
 
                                 <div class="form-group">
-                                    <label for="duration">Тривалість</label>
+                                    <label for="duration">Тривалість (текст)</label>
                                     <input type="text" name="duration"
                                            class="form-control @error('duration') is-invalid @enderror" id="duration" value="{{old('duration')}}">
                                 </div>
 
 
                                 <div class="form-group">
-                                    <label for="other_actor">Інші актори</label>
+                                    <label for="other_actor">Інші актори (текст)</label>
                                     <input type="text" name="other_actor"
                                            class="form-control @error('other_actor') is-invalid @enderror" id="other_actor"
                                            placeholder="Інші актори" value="{{old('other_actor')}}">
@@ -69,224 +69,21 @@
 
 
 
-                                <div class="form-group">
-                                    <label for="genres">Жанр</label>
-                                    <select name="genres[]" id="genres" class="select2" multiple="multiple"
-                                            data-placeholder="Выбір жанрів" style="width: 100%;">
-                                        @foreach($formData['genres'] as $id => $title)
-                                            @if(in_array($id, old('genres',$formData['genres']))) )
-                                            <option value="{{ $id }}"
-                                                    selected >
-                                                {{ $title }}
-                                            </option>
-                                            @else
-                                                <option value="{{ $id }}">
-                                                    {{ $title }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-
-                                    </select>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label for="countries">Країна</label>
-                                    <select name="countries[]" id="countries" class="select2" multiple="multiple"
-                                            data-placeholder="Выбір країн" style="width: 100%;">
-                                        @foreach($formData['countries'] as $id => $title)
-                                            @if(in_array($id, old('countries',$formData['countries']))) )
-                                            <option value="{{ $id }}"
-                                                    selected >
-                                                {{ $title }}
-                                            </option>
-                                            @else
-                                                <option value="{{ $id }}">
-                                                    {{ $title }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="companies">Компанія</label>
-                                    <select name="companies[]" id="companies" class="select2" multiple="multiple"
-                                            data-placeholder="Вибір компанії" style="width: 100%;">
-                                        @foreach($formData['companies'] as $id => $title)
-                                            @if(in_array($id, old('companies',$formData['companies']))) )
-                                            <option value="{{ $id }}"
-                                                    selected >
-                                                {{ $title }}
-                                            </option>
-                                            @else
-                                                <option value="{{ $id }}">
-                                                    {{ $title }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="producers">Продюсер</label>
-                                    <select name="producers[]" id="producers" class="select2" multiple="multiple"
-                                            data-placeholder="Выбір прдюсерів" style="width: 100%;">
-                                        @foreach($formData['producers'] as $id => $name)
-                                            @if(in_array($id, old('producers',$formData['producers']))) )
-                                            <option value="{{ $id }}"
-                                                    selected >
-                                                {{ $name }}
-                                            </option>
-                                            @else
-                                                <option value="{{ $id }}">
-                                                    {{ $name }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="directors">Режисер</label>
-                                    <select name="directors[]" id="directors" class="select2" multiple="multiple"
-                                            data-placeholder="Выбір режисерів" style="width: 100%;">
-
-
-                                        @foreach($formData['directors'] as $id => $name)
-                                            @if(in_array($id, old('producers',$formData['directors']))) )
-                                            <option value="{{ $id }}"
-                                                    selected >
-                                                {{ $name }}
-                                            </option>
-                                            @else
-                                                <option value="{{ $id }}">
-                                                    {{ $name }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label for="composers">Композитор</label>
-                                    <select name="composers[]" id="composers" class="select2" multiple="multiple"
-                                            data-placeholder="Вибір композиторів" style="width: 100%;">
-
-                                        @foreach($formData['composers'] as $id => $name)
-                                            @if(in_array($id, old('composers',$formData['composers']))) )
-                                            <option value="{{ $id }}"
-                                                    selected >
-                                                {{ $name }}
-                                            </option>
-                                            @else
-                                                <option value="{{ $id }}">
-                                                    {{ $name }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label for="languages">Мова</label>
-                                    <select name="languages[]" id="languages" class="select2" multiple="multiple"
-                                            data-placeholder="Выбір мов" style="width: 100%;">
-
-                                        @foreach($formData['languages'] as $id => $title)
-                                            {{--<option value="{{ $k }}">{{ $v }}</option>--}}
-                                            @if(in_array($id, old('languages',$formData['languages']))) )
-                                            <option value="{{ $id }}"
-                                                    selected >
-                                                {{ $title }}
-                                            </option>
-                                            @else
-                                                <option value="{{ $id }}">
-                                                    {{ $title }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label for="captions">Субтитри</label>
-                                    <select name="captions[]" id="captions" class="select2" multiple="multiple"
-                                            data-placeholder="Выбір субтитрів" style="width: 100%;">
-
-                                        @foreach($formData['captions'] as $id => $title)
-                                            @if(in_array($id, old('captions',$formData['captions']))) )
-                                            <option value="{{ $id }}"
-                                                    selected >
-                                                {{ $title }}
-                                            </option>
-                                            @else
-                                                <option value="{{ $id }}">
-                                                    {{ $title }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label for="selections">Добірка</label>
-                                    <select name="selections[]" id="selections" class="select2" multiple="multiple"
-                                            data-placeholder="Выбір добірок" style="width: 100%;">
-
-
-                                        @foreach($formData['selections'] as $id => $title)
-                                            {{--<option value="{{ $k }}">{{ $v }}</option>--}}
-                                            @if(in_array($id, old('selections',$formData['selections']))) )
-                                            <option value="{{ $id }}"
-                                                    selected >
-                                                {{ $title }}
-                                            </option>
-                                            @else
-                                                <option value="{{ $id }}">
-                                                    {{ $title }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label for="actors">Топ-актори</label>
-                                    <select name="actors[]" id="actors" class="select2" multiple="multiple"
-                                            data-placeholder="Выбор тегов" style="width: 100%;">
-
-                                        @foreach($formData['actors'] as $id => $name)
-                                            @if(in_array($id, old('actors',$formData['actors']))) )
-                                            <option value="{{ $id }}"
-                                                    selected >
-                                                {{ $name }}
-                                            </option>
-                                            @else
-                                                <option value="{{ $id }}">
-                                                    {{ $name }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-
-
                                 @php
                                     use App\Enums\CategorySlug;
                                 @endphp
 
-                                    <!-- Категорія -->
                                 <div class="form-group">
                                     <label for="category_id">Категорія</label>
+
                                     <select class="form-control @error('category_id') is-invalid @enderror"
                                             id="category_id"
                                             name="category_id">
+
+                                        <option value="" {{ old('category_id') ? '' : 'selected' }}>
+                                            Обрати категорію
+                                        </option>
+
                                         @foreach($formData['categories'] as $id => $title)
                                             @php
                                                 $slug = match((int)$id) {
@@ -298,11 +95,17 @@
 
                                             <option value="{{ $id }}"
                                                     data-slug="{{ $slug }}"
-                                                {{ old('category_id', $film->category_id ?? null) == $id ? 'selected' : '' }}>
+                                                {{ old('category_id') == $id ? 'selected' : '' }}>
                                                 {{ $title }}
                                             </option>
                                         @endforeach
+
                                     </select>
+
+                                    @error('category_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    <small class="form-text text-muted">Фільм без категорії зберігається як чернетка і не показується на сайті.</small>
                                 </div>
 
 
@@ -311,108 +114,138 @@
                                     <div class="form-group">
                                         <label for="season_id">Кількість сезонів</label>
                                         <select class="form-control @error('season_id') is-invalid @enderror" id="season_id" name="season_id">
+
+                                            <option value="" {{ old('season_id') ? '' : 'selected' }}>
+                                                Обрати кількість сезонів
+                                            </option>
+
                                             @foreach($formData['seasons'] as $id => $title)
-                                                <option value="{{ $id }}" {{ old('season_id', $film->season_id ?? null) == $id ? 'selected' : '' }}>
+                                                <option value="{{ $id }}" {{ old('season_id') == $id ? 'selected' : '' }}>
                                                     {{ $title }}
                                                 </option>
                                             @endforeach
                                         </select>
+                                        @error('season_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
 
 
                                     <div class="form-group">
                                         <label for="status_id">Статус</label>
                                         <select class="form-control @error('status_id') is-invalid @enderror" id="status_id" name="status_id">
+
+                                            <option value="" {{ old('status_id') ? '' : 'selected' }}>
+                                                Обрати статус</option>
+
                                             @foreach($formData['statuses'] as $id => $title)
-                                                <option value="{{ $id }}" {{ old('status_id', $film->status_id ?? null) == $id ? 'selected' : '' }}>
+                                                <option value="{{ $id }}" {{ old('status_id') == $id ? 'selected' : '' }}>
                                                     {{ $title }}
                                                 </option>
                                             @endforeach
                                         </select>
+                                        @error('status_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+
                                     </div>
                                 </div>
 
 
 
                                 <div class="form-group">
-                                    <label for="duration_id">Тривалісттттть</label>
-                                    <select class="form-control @error('duration_id') is-invalid @enderror" id="duration_id" name="duration_id">
+                                    <label for="duration_id">Тривалість</label>
+                                    <select class="form-control @error('duration_id') is-invalid @enderror"
+                                            id="duration_id"
+                                            name="duration_id">
+
+                                        <option value="" {{ old('duration_id') ? '' : 'selected' }}>
+                                            Обрати тривалість
+                                        </option>
 
                                         @foreach($formData['durations'] as $id => $title)
-                                            @if(in_array($id, old('durations',$formData['durations']))) )
                                             <option value="{{ $id }}"
-                                                    selected >
+                                                {{ old('duration_id') == $id ? 'selected' : '' }}>
                                                 {{ $title }}
                                             </option>
-                                            @else
-                                                <option value="{{ $id }}">
-                                                    {{ $title }}
-                                                </option>
-                                            @endif
                                         @endforeach
                                     </select>
+
+                                    @error('duration_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
 
 
 
                                 <div class="form-group">
-                                    <label for="age_id">Вік</label>
+                                    <label for="age_id">Вікові обмеження</label>
                                     <select class="form-control @error('age_id') is-invalid @enderror" id="age_id" name="age_id">
 
+                                        <option value="" {{ old('age_id') ? '' : 'selected' }}>
+                                            Обрати мінімальний вік
+                                        </option>
 
                                         @foreach($formData['ages'] as $id => $title)
-                                            @if(in_array($id, old('ages',$formData['ages']))) )
                                             <option value="{{ $id }}"
-                                                    selected >
+                                                {{ old('age_id') == $id ? 'selected' : '' }}>
                                                 {{ $title }}
                                             </option>
-                                            @else
-                                                <option value="{{ $id }}">
-                                                    {{ $title }}
-                                                </option>
-                                            @endif
                                         @endforeach
-                                   </select>
-                               </div>
 
-                               <div class="form-group">
+                                    </select>
+                                    @error('age_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+
+
+                                <div class="form-group">
                                     <label for="quality_id">Якість відео</label>
-                                    <select class="form-control @error('quality_id') is-invalid @enderror" id="quality_id" name="quality_id">
+                                    <select class="form-control @error('quality_id') is-invalid @enderror"
+                                            id="quality_id"
+                                            name="quality_id">
+
+                                        <option value="" {{ old('quality_id') ? '' : 'selected' }}>
+                                            Обрати якість відео
+                                        </option>
 
                                         @foreach($formData['qualities'] as $id => $title)
-                                            {{--<option value="{{ $k }}">{{ $v }}</option>--}}
-                                            @if(in_array($id, old('qualities',$formData['qualities']))) )
                                             <option value="{{ $id }}"
-                                                    selected >
+                                                {{ old('quality_id') == $id ? 'selected' : '' }}>
                                                 {{ $title }}
                                             </option>
-                                            @else
-                                                <option value="{{ $id }}">
-                                                    {{ $title }}
-                                                </option>
-                                            @endif
                                         @endforeach
                                     </select>
+
+                                    @error('quality_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="rating_id">Рейтинг</label>
-                                    <select class="form-control @error('rating_id') is-invalid @enderror" id="rating_id" name="rating_id">
+                                    <select class="form-control @error('rating_id') is-invalid @enderror"
+                                            id="rating_id"
+                                            name="rating_id">
+
+                                        <option value="" {{ old('rating_id') ? '' : 'selected' }}>
+                                            Обрати рейтинг
+                                        </option>
 
                                         @foreach($formData['ratings'] as $id => $title)
-                                            @if(in_array($id, old('ratings',$formData['ratings']))) )
                                             <option value="{{ $id }}"
-                                                    selected >
+                                                {{ old('rating_id') == $id ? 'selected' : '' }}>
                                                 {{ $title }}
                                             </option>
-                                            @else
-                                                <option value="{{ $id }}">
-                                                    {{ $title }}
-                                                </option>
-                                            @endif
                                         @endforeach
                                     </select>
+
+                                    @error('rating_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
 
@@ -420,17 +253,15 @@
                                     <label for="year_id">Рік випуску</label>
                                     <select class="form-control @error('year_id') is-invalid @enderror" id="year_id" name="year_id">
 
+                                        <option value="" {{ old('year_id') ? '' : 'selected' }}>
+                                            Обрати рік випуску
+                                        </option>
+
                                         @foreach($formData['years'] as $id => $title)
-                                            @if(in_array($id, old('years',$formData['years']))) )
                                             <option value="{{ $id }}"
-                                                    selected >
+                                                {{ old('year_id') == $id ? 'selected' : '' }}>
                                                 {{ $title }}
                                             </option>
-                                            @else
-                                                <option value="{{ $id }}">
-                                                    {{ $title }}
-                                                </option>
-                                            @endif
                                         @endforeach
 
                                     </select>
@@ -438,11 +269,202 @@
 
 
 
+
+
+                                <div class="form-group">
+                                    <label for="genres">Жанри</label>
+                                    <select name="genres[]"
+                                            id="genres"
+                                            class="select2"
+                                            multiple="multiple"
+                                            data-placeholder="Вибір жанрів"
+                                            style="width: 100%;">
+                                        @foreach($formData['genres'] as $id => $title)
+                                            <option value="{{ $id }}"
+                                                {{ in_array($id, old('genres', [])) ? 'selected' : '' }}>
+                                                {{ $title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="countries">Країни</label>
+                                    <select name="countries[]"
+                                            id="countries"
+                                            class="select2"
+                                            multiple="multiple"
+                                            data-placeholder="Вибір країн"
+                                            style="width: 100%;">
+                                        @foreach($formData['countries'] as $id => $title)
+                                            <option value="{{ $id }}"
+                                                {{ in_array($id, old('countries', [])) ? 'selected' : '' }}>
+                                                {{ $title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="companies">Кінокомпанії</label>
+                                    <select name="companies[]"
+                                            id="companies"
+                                            class="select2"
+                                            multiple="multiple"
+                                            data-placeholder="Вибір кінокомпаній"
+                                            style="width: 100%;">
+                                        @foreach($formData['companies'] as $id => $title)
+                                            <option value="{{ $id }}"
+                                                {{ in_array($id, old('companies', [])) ? 'selected' : '' }}>
+                                                {{ $title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="producers">Продюсери</label>
+                                    <select name="producers[]"
+                                            id="producers"
+                                            class="select2"
+                                            multiple="multiple"
+                                            data-placeholder="Вибір продюсерів"
+                                            style="width: 100%;">
+                                        @foreach($formData['producers'] as $id => $name)
+                                            <option value="{{ $id }}"
+                                                {{ in_array($id, old('producers', [])) ? 'selected' : '' }}>
+                                                {{ $name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="directors">Режисери</label>
+                                    <select name="directors[]"
+                                            id="directors"
+                                            class="select2"
+                                            multiple="multiple"
+                                            data-placeholder="Вибір режисерів"
+                                            style="width: 100%;">
+                                        @foreach($formData['directors'] as $id => $name)
+                                            <option value="{{ $id }}"
+                                                {{ in_array($id, old('directors', [])) ? 'selected' : '' }}>
+                                                {{ $name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="composers">Композитори</label>
+                                    <select name="composers[]"
+                                            id="composers"
+                                            class="select2"
+                                            multiple="multiple"
+                                            data-placeholder="Вибір композиторів"
+                                            style="width: 100%;">
+                                        @foreach($formData['composers'] as $id => $name)
+                                            <option value="{{ $id }}"
+                                                {{ in_array($id, old('composers', [])) ? 'selected' : '' }}>
+                                                {{ $name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="languages">Мови озвучки</label>
+                                    <select name="languages[]"
+                                            id="languages"
+                                            class="select2"
+                                            multiple="multiple"
+                                            data-placeholder="Вибір мов озвучки"
+                                            style="width: 100%;">
+                                        @foreach($formData['languages'] as $id => $title)
+                                            <option value="{{ $id }}"
+                                                {{ in_array($id, old('languages', [])) ? 'selected' : '' }}>
+                                                {{ $title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="captions">Субтитри</label>
+                                    <select name="captions[]"
+                                            id="captions"
+                                            class="select2"
+                                            multiple="multiple"
+                                            data-placeholder="Вибір субтитрів"
+                                            style="width: 100%;">
+                                        @foreach($formData['captions'] as $id => $title)
+                                            <option value="{{ $id }}"
+                                                {{ in_array($id, old('captions', [])) ? 'selected' : '' }}>
+                                                {{ $title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="selections">Добірки</label>
+                                    <select name="selections[]"
+                                            id="selections"
+                                            class="select2"
+                                            multiple="multiple"
+                                            data-placeholder="Вибір добірок"
+                                            style="width: 100%;">
+                                        @foreach($formData['selections'] as $id => $title)
+                                            <option value="{{ $id }}"
+                                                {{ in_array($id, old('selections', [])) ? 'selected' : '' }}>
+                                                {{ $title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="actors">ТОП-актори</label>
+                                    <select name="actors[]"
+                                            id="actors"
+                                            class="select2"
+                                            multiple="multiple"
+                                            data-placeholder="Вибір ТОП-акторів"
+                                            style="width: 100%;">
+                                        @foreach($formData['actors'] as $id => $name)
+                                            <option value="{{ $id }}"
+                                                {{ in_array($id, old('actors', [])) ? 'selected' : '' }}>
+                                                {{ $name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+
+
+
+
+
                                 <div class="form-group">
                                     <label for="note">Примітка</label>
-                                    <input type="text" name="note"
-                                           class="form-control @error('note') is-invalid @enderror" id="note"
-                                           placeholder="Примітка">
+                                    <input type="text"
+                                           name="note"
+                                           class="form-control @error('note') is-invalid @enderror"
+                                           id="note"
+                                           placeholder="Примітка"
+                                           value="{{ old('note') }}">
+
+                                    @error('note')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
 
@@ -569,20 +591,22 @@
                                 <!-- checkbox -->
                                 <div class="form-group mt-3">
                                     <label>
-                                        <input type="checkbox" class="minimal" name="is_featured">
-                                    </label>
-                                    <label>
+                                        <input type="checkbox"
+                                               class="minimal"
+                                               name="is_featured"
+                                               value="1"
+                                            {{ old('is_featured') ? 'checked' : '' }}>
                                         Рекомендувати
                                     </label>
                                 </div>
 
-
                                 <!-- checkbox -->
                                 <div class="form-group">
                                     <label>
-                                        <input type="checkbox" name="publish_status" value="published">
-                                    </label>
-                                    <label>
+                                        <input type="checkbox"
+                                               name="publish_status"
+                                               value="published"
+                                            {{ old('publish_status') === 'published' ? 'checked' : '' }}>
                                         Опублікувати
                                     </label>
                                 </div>
@@ -591,12 +615,21 @@
                                 <div class="form-group mt-3">
                                     <label>Date:</label>
                                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                        <input type="text" class="form-control datetimepicker-input" name="datepicker" data-target="#reservationdate">
+                                        <input type="text"
+                                               class="form-control datetimepicker-input @error('datepicker') is-invalid @enderror"
+                                               name="datepicker"
+                                               data-target="#reservationdate"
+                                               value="{{ old('datepicker') }}">
                                         <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="bi bi-calendar3"></i></div>
                                         </div>
                                     </div>
+
+                                    @error('datepicker')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
 
                             </div>
                             <div class="card-footer">
