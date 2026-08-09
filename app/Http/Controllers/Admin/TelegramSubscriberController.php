@@ -13,39 +13,6 @@ class TelegramSubscriberController extends Controller
         return view('admin.telegram.index', compact('subscribers'));
     }
 
-    /*public function toggleBan(TelegramSubscriber $subscriber)
-    {
-        $subscriber->update(['is_banned' => !$subscriber->is_banned]);
-        return back()->with('success', 'Статус користувача змінено');
-    }
-
-    public function destroy(TelegramSubscriber $subscriber)
-    {
-        $subscriber->delete();
-        return back()->with('success', 'Підписника видалено');
-    }*/
-
-    /**Для коректної роботи AJAX*/
-    /*public function toggleBan(TelegramSubscriber $subscriber)
-    {
-        $subscriber->update(['is_banned' => !$subscriber->is_banned]);
-
-        return response()->json([
-            'success' => true,
-            'is_banned' => (int) $subscriber->is_banned,
-        ]);
-    }
-
-    public function destroy(TelegramSubscriber $subscriber)
-    {
-        $subscriber->delete();
-
-        return response()->json([
-            'success' => true,
-        ]);
-    }*/
-
-
     /**Для коректної роботи AJAX + захист адміна від видалення*/
     public function toggleBan(TelegramSubscriber $subscriber)
     {

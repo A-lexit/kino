@@ -29,81 +29,94 @@
          RELEASE DATE
          ========================= --}}
 
-    <p class="mt-4 mb-2">
+    {{--<p class="mt-4 mb-2">
         Дата виходу: {{ $film->display_date }}
-    </p>
+    </p>--}}
+
+
+
+
+
 
 
     {{-- =========================
          QUICK INFO
          ========================= --}}
 
-    <div class="film-sidebar-info">
+    <div class="film-sidebar-info mt-4">
 
         {{-- Вік --}}
-        <div class="blog-title-area">
-            <div class="tag-cloud-single">
+        @if($film->age)
+            <div class="blog-title-area">
+                <div class="tag-cloud-single">
 
-                <span class="first-col-film">
-                    <a href="{{ route('ages.index') }}">
-                        Вік:
+            <span class="first-col-film">
+                <a href="{{ route('ages.index') }}">
+                    Вік:
+                </a>
+            </span>
+
+                    <span>
+                <small>
+                    <a href="{{ route('ages.show', ['slug' => $film->age->slug]) }}">
+                        {{ $film->age->title }}
                     </a>
-                </span>
+                </small>
+            </span>
 
-                <span>
-                    <small>
-                        <a href="{{ route('ages.show', ['slug' => $film->age->slug]) }}">
-                            {{ $film->age->title }}
-                        </a>
-                    </small>
-                </span>
-
+                </div>
             </div>
-        </div>
+        @endif
 
 
         {{-- Якість --}}
-        <div class="blog-title-area">
-            <div class="tag-cloud-single">
+        @if($film->quality)
+            <div class="blog-title-area">
+                <div class="tag-cloud-single">
 
-                <span class="first-col-film">
-                    <a href="{{ route('qualities.index') }}">
-                        Якість відео:
+            <span class="first-col-film">
+                <a href="{{ route('qualities.index') }}">
+                    Якість відео:
+                </a>
+            </span>
+
+                    <span>
+                <small>
+                    <a href="{{ route('qualities.show', ['slug' => $film->quality->slug]) }}">
+                        {{ $film->quality->title }}
                     </a>
-                </span>
+                </small>
+            </span>
 
-                <span>
-                    <small>
-                        <a href="{{ route('qualities.show', ['slug' => $film->quality->slug]) }}">
-                            {{ $film->quality->title }}
-                        </a>
-                    </small>
-                </span>
-
+                </div>
             </div>
-        </div>
+        @endif
 
 
         {{-- Рейтинг --}}
-        <div class="blog-title-area">
-            <div class="tag-cloud-single">
+        @if($film->rating)
+            <div class="blog-title-area">
+                <div class="tag-cloud-single">
 
-                <span class="first-col-film">
-                    <a href="{{ route('ratings.index') }}">
-                        Рейтинг:
+            <span class="first-col-film">
+                <a href="{{ route('ratings.index') }}">
+                    Рейтинг:
+                </a>
+            </span>
+
+                    <span>
+                <small>
+                    <a href="{{ route('ratings.show', ['slug' => $film->rating->slug]) }}">
+                        {{ $film->rating->title }}
                     </a>
-                </span>
+                </small>
+            </span>
 
-                <span>
-                    <small>
-                        <a href="{{ route('ratings.show', ['slug' => $film->rating->slug]) }}">
-                            {{ $film->rating->title }}
-                        </a>
-                    </small>
-                </span>
-
+                </div>
             </div>
-        </div>
+        @endif
+
+
 
 
         {{-- Добірки --}}

@@ -613,7 +613,7 @@
 
 
                                 <div class="form-group mt-3">
-                                    <label>Date:</label>
+                                    <label>Дата публікації:</label>
                                     <div class="input-group date" id="reservationdate" data-target-input="nearest">
                                         <input type="text"
                                                class="form-control datetimepicker-input @error('datepicker') is-invalid @enderror"

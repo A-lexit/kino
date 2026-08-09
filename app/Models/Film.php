@@ -82,27 +82,17 @@ class Film extends Model
 
     public function duration(): BelongsTo
     {
-        // Виправлено зв'язок: вказуємо правильне поле 'duration_id'
-        return $this->belongsTo(Duration::class, 'duration_id')->withDefault([
-            'title' => 'Не вказано',
-            'slug'  => 'ne-vkazano',
-        ]);
+        return $this->belongsTo(Duration::class, 'duration_id');
     }
 
     public function quality(): BelongsTo
     {
-        return $this->belongsTo(Quality::class, 'quality_id')->withDefault([
-            'title' => 'Не вказано',
-            'slug'  => 'ne-vkazano',
-        ]);
+        return $this->belongsTo(Quality::class, 'quality_id');
     }
 
     public function season(): BelongsTo
     {
-        return $this->belongsTo(Season::class, 'season_id')->withDefault([
-            'slug'  => 'uncategorized', // або 'default'
-            'title' => 'Без категорії'
-        ]);
+        return $this->belongsTo(Season::class, 'season_id');
     }
 
     public function category(): BelongsTo
@@ -115,34 +105,22 @@ class Film extends Model
 
     public function year(): BelongsTo
     {
-        return $this->belongsTo(Year::class, 'year_id')->withDefault([
-            'title' => 'Не вказано',
-            'slug'  => 'ne-vkazano',
-        ]);
+        return $this->belongsTo(Year::class, 'year_id');
     }
 
     public function rating(): BelongsTo
     {
-        return $this->belongsTo(Rating::class, 'rating_id')->withDefault([
-            'title' => 'Не вказано',
-            'slug'  => 'ne-vkazano',
-        ]);
+        return $this->belongsTo(Rating::class, 'rating_id');
     }
 
     public function status(): BelongsTo
     {
-        return $this->belongsTo(Status::class, 'status_id')->withDefault([
-            'slug'  => 'uncategorized', // або 'default'
-            'title' => 'Без категорії'
-        ]);
+        return $this->belongsTo(Status::class, 'status_id');
     }
 
     public function age(): BelongsTo
     {
-        return $this->belongsTo(Age::class, 'age_id')->withDefault([
-            'title' => 'Не вказано',
-            'slug'  => 'ne-vkazano',
-        ]);
+        return $this->belongsTo(Age::class, 'age_id');
     }
 
     public function user(): BelongsTo
@@ -214,8 +192,8 @@ class Film extends Model
         }
 
         $parts = array_filter([
-            $this->category->title ?? null,
-            $this->year->title ? $this->year->title . ' рік' : null,
+            $this->category?->title,
+            $this->year ? $this->year->title . ' рік' : null,
             $this->genres->pluck('title')->implode(', ') ?: null,
         ]);
 

@@ -39,12 +39,15 @@
 
             <header class="film-header">
 
-                {{--<h1>{{ $film->title }}</h1>--}}
-                <div class="film-title"><h1 >{{$film->title}}</h1></div>
+                {{-- Назва фільму --}}
+                <div class="film-title">
+                    <h1 class="film-title-text">{{ $film->title }}</h1>
+                </div>
 
+                {{-- Оригінальна назва --}}
                 @if($film->origin_title)
                     <div class="film-origin-title">
-                        {{ $film->origin_title }}
+                        <span class="film-origin-title-text">{{ $film->origin_title }}</span>
                     </div>
                 @endif
 
@@ -85,51 +88,57 @@
                 <div class="film-info-list">
 
                     {{-- Вік --}}
-                    <div class="film-info-row">
-            <span class="film-detail-label">
-                <a href="{{ route('ages.index') }}">
-                    Вік:
-                </a>
-            </span>
+                    @if($film->age)
+                        <div class="film-info-row">
+        <span class="film-detail-label">
+            <a href="{{ route('ages.index') }}">
+                Вік:
+            </a>
+        </span>
 
-                        <div>
-                            <a href="{{ route('ages.show', ['slug' => $film->age->slug]) }}">
-                                {{ $film->age->title }}
-                            </a>
+                            <div>
+                                <a href="{{ route('ages.show', ['slug' => $film->age->slug]) }}">
+                                    {{ $film->age->title }}
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
 
                     {{-- Якість відео --}}
-                    <div class="film-info-row">
-            <span class="film-detail-label">
-                <a href="{{ route('qualities.index') }}">
-                    Якість відео:
-                </a>
-            </span>
+                    @if($film->quality)
+                        <div class="film-info-row">
+        <span class="film-detail-label">
+            <a href="{{ route('qualities.index') }}">
+                Якість відео:
+            </a>
+        </span>
 
-                        <div class="span-show">
-                            <a href="{{ route('qualities.show', ['slug' => $film->quality->slug]) }}">
-                                {{ $film->quality->title }}
-                            </a>
+                            <div class="span-show">
+                                <a href="{{ route('qualities.show', ['slug' => $film->quality->slug]) }}">
+                                    {{ $film->quality->title }}
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
 
                     {{-- Рейтинг --}}
-                    <div class="film-info-row">
-            <span class="film-detail-label">
-                <a href="{{ route('ratings.index') }}">
-                    Рейтинг:
-                </a>
-            </span>
+                    @if($film->rating)
+                        <div class="film-info-row">
+        <span class="film-detail-label">
+            <a href="{{ route('ratings.index') }}">
+                Рейтинг:
+            </a>
+        </span>
 
-                        <div class="span-show">
-                            <a href="{{ route('ratings.show', ['slug' => $film->rating->slug]) }}">
-                                {{ $film->rating->title }}
-                            </a>
+                            <div class="span-show">
+                                <a href="{{ route('ratings.show', ['slug' => $film->rating->slug]) }}">
+                                    {{ $film->rating->title }}
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
 
                     {{-- Добірки --}}
@@ -175,11 +184,11 @@
                     {{-- Субтитри --}}
                     @if($film->captions->count())
                         <div class="film-info-row">
-                <span class="film-detail-label">
-                    <a href="{{ route('captions.index') }}">
-                        Субтитри:
-                    </a>
-                </span>
+        <span class="film-detail-label">
+            <a href="{{ route('captions.index') }}">
+                Субтитри:
+            </a>
+        </span>
 
                             <div class="span-show">
                                 @foreach($film->captions as $caption)
@@ -189,17 +198,10 @@
                                 @endforeach
                             </div>
                         </div>
-                    @else
-                        <div class="film-info-row">
-                <span class="film-detail-label">
-                    Субтитри:
-                </span>
-
-                            <div>
-                                Немає
-                            </div>
-                        </div>
                     @endif
+
+
+
 
 
                     {{-- IMDB --}}
@@ -261,7 +263,9 @@
                     @if($film->year)
                         <div class="film-detail-row">
         <span class="film-detail-label">
-            <a href="{{ route('years.index') }}">Рік випуску:</a>
+            <a href="{{ route('years.index') }}">
+                Рік випуску:
+            </a>
         </span>
 
                             <div class="span-show">
@@ -280,37 +284,49 @@
 
                     @if($film->category->isSeries())
 
-                        <div class="film-detail-row">
-                            <span class="film-detail-label">Сезони:</span>
+                        @if($film->category->isSeries())
 
-                            <div>
-                                {{ $film->season->title }}
-                            </div>
-                        </div>
+                            @if($film->season)
+                                <div class="film-detail-row">
+                                    <span class="film-detail-label">Сезони:</span>
 
-                        <div class="film-detail-row">
-                            <span class="film-detail-label">Статус:</span>
+                                    <div>
+                                        {{ $film->season->title }}
+                                    </div>
+                                </div>
+                            @endif
 
-                            <div>
-                                {{ $film->status->title }}
-                            </div>
-                        </div>
+                            @if($film->status)
+                                <div class="film-detail-row">
+                                    <span class="film-detail-label">Статус:</span>
+
+                                    <div>
+                                        {{ $film->status->title }}
+                                    </div>
+                                </div>
+                            @endif
+
+                        @endif
 
                     @endif
 
 
-                    <div class="film-detail-row">
-                        <span class="film-detail-label span-index">Тривалість:</span>
 
-                        <div class="span-show">
-                            @if($film->duration_id->totalMinutes < 60)
-                                {{ $film->duration_id->getMinutes() }} хв
-                            @else
-                                {{ $film->duration_id->getHours() }} год
-                                {{ $film->duration_id->getMinutes() }} хв
-                            @endif
+
+                    @if($film->duration_id)
+                        <div class="film-detail-row">
+                            <span class="film-detail-label span-index">Тривалість:</span>
+
+                            <div class="span-show">
+                                @if($film->duration_id->totalMinutes < 60)
+                                    {{ $film->duration_id->getMinutes() }} хв
+                                @else
+                                    {{ $film->duration_id->getHours() }} год
+                                    {{ $film->duration_id->getMinutes() }} хв
+                                @endif
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
 
                     @if($film->countries->count())
@@ -382,43 +398,45 @@
                     @endif
 
 
-                    <div class="film-detail-row">
-    <span class="film-detail-label">
-        <a href="{{ route('composers.index') }}">Композитор:</a>
-    </span>
+                    @if($film->composers->count())
+                        <div class="film-detail-row">
+        <span class="film-detail-label">
+            <a href="{{ route('composers.index') }}">
+                Композитор:
+            </a>
+        </span>
 
-                        <div class="span-show">
-                            @foreach($film->composers as $composer)
-                                <a href="{{ route('composers.show', ['slug' => $composer->slug]) }}">
-                                    {{ $composer->name }}
-                                </a>@if(!$loop->last), @endif
-                            @endforeach
+                            <div class="span-show">
+                                @foreach($film->composers as $composer)
+                                    <a href="{{ route('composers.show', ['slug' => $composer->slug]) }}">
+                                        {{ $composer->name }}
+                                    </a>@if(!$loop->last), @endif
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
 
-                    <div class="film-detail-row">
-                        <span class="film-detail-label">Користувач:</span>
 
-                        <div class="span-show">
-                            {{ $film->user->name }}
+
+
+                    @if($film->actors->count())
+                        <div class="film-detail-row">
+        <span class="film-detail-label">
+            <a href="{{ route('actors.index') }}">
+                Топ-актори:
+            </a>
+        </span>
+
+                            <div class="span-show">
+                                @foreach($film->actors as $actor)
+                                    <a href="{{ route('actors.show', ['slug' => $actor->slug]) }}">
+                                        {{ $actor->name }}
+                                    </a>@if(!$loop->last), @endif
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
-
-
-                    <div class="film-detail-row">
-    <span class="film-detail-label">
-        <a href="{{ route('actors.index') }}">Топ-актори:</a>
-    </span>
-
-                        <div class="span-show">
-                            @foreach($film->actors as $actor)
-                                <a href="{{ route('actors.show', ['slug' => $actor->slug]) }}">
-                                    {{ $actor->name }}
-                                </a>@if(!$loop->last), @endif
-                            @endforeach
-                        </div>
-                    </div>
+                    @endif
 
 
                     @if($film->other_actor)
@@ -477,7 +495,12 @@
                  ========================= --}}
             <section class="film-section">
 
-                <h2>Дивитись ще {{ $film->category->title }}</h2>
+                <h2 class="related-films-title">
+                    Дивитись ще
+                    <span class="related-category-title">
+        {{ $film->category->title }}
+    </span>
+                </h2>
 
                 <div class="related-films">
 
@@ -493,10 +516,12 @@
                             >
 
                             <a href="{{ route('single', [
-                                'category' => $filmm->category->slug,
-                                'slug' => $filmm->slug
-                            ]) }}">
-                                {{ $filmm->title }}
+                'category' => $filmm->category->slug,
+                'slug' => $filmm->slug
+            ]) }}">
+                <span class="related-film-title">
+                    {{ $filmm->title }}
+                </span>
                             </a>
 
                         </div>
@@ -504,6 +529,8 @@
                     @endforeach
 
                 </div>
+
+
 
             </section>
 

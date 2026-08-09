@@ -282,7 +282,7 @@ footer {
 .text-owlkarousel {
     font-size: 10px;
     overflow: hidden;
-    text-overflow: ellipsis;
+    /*text-overflow: ellipsis;*/
 }
 
 .child img {
@@ -386,7 +386,7 @@ footer {
 .child-archive p {
     font-size: 12px;
     overflow: hidden;
-    text-overflow: ellipsis;
+    /*text-overflow: ellipsis;*/
 }
 
 /* Default Posts Section */
@@ -420,7 +420,7 @@ footer {
 
 .child-infilm p {
     overflow: hidden;
-    text-overflow: ellipsis;
+    /*text-overflow: ellipsis;*/
 }
 
 .child {

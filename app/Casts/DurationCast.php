@@ -8,9 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class DurationCast implements CastsAttributes
 {
-    public function get(Model $model, string $key, mixed $value, array $attributes): DurationValue
+    public function get($model, string $key, $value, array $attributes)
     {
-        return new DurationValue((int)$value);
+        if ($value === null) {
+            return null;
+        }
+
+        return new DurationValue((int) $value);
     }
 
     public function set(Model $model, string $key, mixed $value, array $attributes): ?int
