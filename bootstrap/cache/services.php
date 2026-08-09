@@ -30,9 +30,10 @@
     26 => 'Laravel\\Ui\\UiServiceProvider',
     27 => 'Livewire\\LivewireServiceProvider',
     28 => 'Carbon\\Laravel\\ServiceProvider',
-    29 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    30 => 'App\\Providers\\AppServiceProvider',
-    31 => 'App\\Providers\\ViewServiceProvider',
+    29 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    30 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    31 => 'App\\Providers\\AppServiceProvider',
+    32 => 'App\\Providers\\ViewServiceProvider',
   ),
   'eager' => 
   array (
@@ -50,9 +51,10 @@
     11 => 'Laravel\\Ui\\UiServiceProvider',
     12 => 'Livewire\\LivewireServiceProvider',
     13 => 'Carbon\\Laravel\\ServiceProvider',
-    14 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    15 => 'App\\Providers\\AppServiceProvider',
-    16 => 'App\\Providers\\ViewServiceProvider',
+    14 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    15 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    16 => 'App\\Providers\\AppServiceProvider',
+    17 => 'App\\Providers\\ViewServiceProvider',
   ),
   'deferred' => 
   array (

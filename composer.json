@@ -82,8 +82,7 @@
     "extra": {
         "laravel": {
             "dont-discover": [
-                "laravel/pao",
-                "nunomaduro/collision"
+                "laravel/pao"
             ]
         }
     },
