@@ -62,7 +62,7 @@
     <link rel="stylesheet"
           href="{{ asset('assets/front/css/style.css') }}">
 
-    <style>
+    {{--<style>
 
         .child p {
             font-size: 13px;
@@ -860,7 +860,7 @@
             overflow: hidden;
         }
 
-    </style>
+    </style>--}}
 
 
 

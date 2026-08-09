@@ -1,9 +1,44 @@
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-/* ==========================================
-   1. RESET & BASE STYLES
-   ========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+/* =========================================================
+   1. VARIABLES
+   ========================================================= */
+
+:root {
+    --color-primary: #5b5e75;
+    --color-primary-hover: #ff5604;
+    --color-title: #476ad5;
+
+    --color-text: #313131;
+    --color-text-muted: #777;
+    --color-text-light: #9ca3af;
+
+    --color-white: #fff;
+    --color-bg: #fff;
+    --color-bg-soft: #f0f0f0;
+    --color-bg-section: #e9e9e9;
+    --color-bg-archive: #edf0f2;
+
+    --color-border: #e1e7e9;
+    --color-border-light: #e0e0e0;
+    --color-border-pagination: #dcdcdc;
+
+    --color-footer: #212529;
+
+    --radius-sm: 10px;
+    --radius-md: 15px;
+    --radius-lg: 20px;
+
+    --transition: .2s ease;
+}
+
+
+/* =========================================================
+   2. RESET & BASE
+   ========================================================= */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -16,21 +51,25 @@ html {
 }
 
 body {
+    min-height: 100vh;
+
     font-family: 'Montserrat', sans-serif;
     font-size: 15px;
-    color: #313131;
-    background: #fff;
-    min-height: 100vh;
+    color: var(--color-text);
+
+    background: var(--color-bg);
 }
 
 a {
-    color: #5b5e75;
+    color: var(--color-primary);
     text-decoration: none;
     font-weight: 600;
+
+    transition: var(--transition);
 }
 
 a:hover {
-    color: #ff5604;
+    color: var(--color-primary-hover);
 }
 
 h1 {
@@ -48,7 +87,7 @@ ul {
 }
 
 ul li {
-    list-style-type: none;
+    list-style: none;
 }
 
 img {
@@ -61,17 +100,18 @@ label {
     margin-top: 30px;
 }
 
-/* ==========================================
-   2. LAYOUT & CONTAINERS
-   ========================================== */
+
+/* =========================================================
+   3. LAYOUT & CONTAINERS
+   ========================================================= */
+
 .container,
 .container-arch {
-    margin: 0 auto;
-    max-width: 1140px;
-    /*width: 100%;*/
     position: relative;
-}
 
+    max-width: 1140px;
+    margin: 0 auto;
+}
 
 .flex-single,
 .flex-arch {
@@ -82,36 +122,35 @@ label {
     width: 73%;
 }
 
-.archive-area h1 {
-    margin-top: 0;
-    /*margin-bottom: 5px;*/
-    color: #476ad5;
-    font-weight: bold;
-}
-
-
+.archive-area h1,
 .film-title h1 {
-    margin-top: 0px;
+    margin-top: 0;
     margin-bottom: 5px;
-    color: #476ad5;
-    font-weight: bold;
+
+    color: var(--color-title);
+    font-weight: 700;
 }
 
 .row-sidebar {
-    box-sizing: border-box;
     display: block;
+
     padding-right: 20px;
+
+    box-sizing: border-box;
 }
 
-/* Header */
+
+/* =========================================================
+   4. HEADER
+   ========================================================= */
+
 header {
-    background-color: #fff;
-    border-bottom: 10px solid #e1e7e9;
+    background-color: var(--color-bg);
+    border-bottom: 10px solid var(--color-border);
 }
 
 header h1,
 header h2 {
-    /*padding: 15px 0;*/
     text-align: center;
     color: #000;
 }
@@ -122,27 +161,12 @@ header h2 {
 
 .infoheader {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+
     width: 100%;
     padding: 10px 20px;
-    box-sizing: border-box;
 }
-
-.logo {
-    padding-top: 30px;
-    padding-bottom: 25px;
-    text-align: center;
-    width: 100%;
-    height: auto;
-    font-size: 36px;
-}
-
-.logo1 {
-    display: none;
-}
-
-
 
 .infoapi {
     display: flex;
@@ -156,43 +180,94 @@ header h2 {
 }
 
 .header__menu {
-    display: flex;
     position: relative;
     z-index: 2;
+
+    display: flex;
 }
 
 .header__menu li {
-    list-style: none;
     margin: 0 0 0 36px;
+
+    list-style: none;
+
     color: #000;
     font-size: 16px;
     text-transform: uppercase;
-    text-decoration: none;
+}
+
+.logo {
+    width: 100%;
+    height: auto;
+
+    padding-top: 30px;
+    padding-bottom: 25px;
+
+    text-align: center;
+
+    font-size: 36px;
+}
+
+.logo1 {
+    display: none;
 }
 
 
-/* Footer */
+/* =========================================================
+   5. FOOTER
+   ========================================================= */
+
 footer {
     display: inline-block;
     width: 100%;
 }
 
+.footer {
+    background: var(--color-footer);
+    border-top: 3px solid var(--color-primary);
+}
+
+.footer-logo a {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.footer-logo a:hover {
+    color: #8ea0ff;
+}
+
+.footer-copy {
+    margin-top: 6px;
+
+    color: var(--color-text-light);
+    font-size: 14px;
+}
+
+.footer-description {
+    color: #bfc3cf;
+    font-size: 14px;
+    line-height: 1.5;
+}
 
 
-/* ==========================================
-   3. COMPONENTS, CAROUSEL & SECTIONS
-   ========================================== */
-/* Позиціонування та стилізація стрілок Owl Carousel (зменшені, без фону) */
+/* =========================================================
+   6. OWL CAROUSEL
+   ========================================================= */
+
 .owl-carousel {
     position: relative;
 }
 
-/* Для Owl Carousel v2 */
 .owl-nav {
     position: absolute;
     top: 50%;
+
     width: 100%;
+
     transform: translateY(-50%);
+
     pointer-events: none;
 }
 
@@ -200,27 +275,35 @@ footer {
 .owl-next {
     position: absolute !important;
     top: 50% !important;
-    transform: translateY(-50%) !important;
-    pointer-events: auto;
+
     z-index: 10;
+
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+
     width: 28px !important;
     height: 28px !important;
-    line-height: 28px !important;
-    font-size: 14px !important;
-    text-align: center;
+
     padding: 0 !important;
     margin: 0 !important;
-    background: transparent !important;
+
+    font-size: 14px !important;
+    line-height: 28px !important;
+    text-align: center;
+
     color: #333 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    background: transparent !important;
+
+    transform: translateY(-50%) !important;
+
+    pointer-events: auto;
 }
 
 .owl-prev:hover,
 .owl-next:hover {
+    color: var(--color-primary-hover) !important;
     background: transparent !important;
-    color: #ff5604 !important;
 }
 
 .owl-prev {
@@ -231,31 +314,40 @@ footer {
     right: -55px !important;
 }
 
-/* Для Owl Carousel v1 */
+
+/* Owl Carousel v1 */
+
 .owl-buttons .owl-prev,
 .owl-buttons .owl-next {
     position: absolute !important;
     top: 50% !important;
-    transform: translateY(-50%) !important;
+
     z-index: 10;
+
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+
     width: 28px !important;
     height: 28px !important;
-    line-height: 28px !important;
-    font-size: 14px !important;
-    text-align: center;
+
     padding: 0 !important;
     margin: 0 !important;
-    background: transparent !important;
+
+    font-size: 14px !important;
+    line-height: 28px !important;
+    text-align: center;
+
     color: #333 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    background: transparent !important;
+
+    transform: translateY(-50%) !important;
 }
 
 .owl-buttons .owl-prev:hover,
 .owl-buttons .owl-next:hover {
+    color: var(--color-primary-hover) !important;
     background: transparent !important;
-    color: #ff5604 !important;
 }
 
 .owl-buttons .owl-prev {
@@ -266,29 +358,79 @@ footer {
     right: -55px !important;
 }
 
-
-.wp-post-image img,
-.size-medium img,
-.attachment-medium img {
-    max-width: 100%;
-    height: 250px;
-}
-
 .carousel-img {
     max-width: 100%;
     height: 180px;
 }
 
 .text-owlkarousel {
-    font-size: 10px;
     overflow: hidden;
-    /*text-overflow: ellipsis;*/
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   7. FILM CARDS
+   ========================================================= */
+
+.child,
+.child-infilm {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.child {
+    width: 190px;
+}
+
+.child-infilm {
+    width: 180px;
 }
 
 .child img {
     max-width: 195px;
     height: 293px;
+
     vertical-align: bottom;
+}
+
+.child a {
+    color: #000;
+}
+
+.child h3 {
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+.child p {
+    max-width: 195px;
+
+    overflow: hidden;
+
+    font-size: 13px;
+    font-weight: 200;
+
+    text-align: center;
+
+    text-overflow: ellipsis;
+}
+
+.child-infilm p {
+    width: 150px;
+
+    overflow: hidden;
+
+    font-size: 11px;
+}
+
+.child-archive {
+    position: relative;
+    width: 155px;
 }
 
 .child-archive img {
@@ -296,21 +438,42 @@ footer {
     height: 235px;
 }
 
-.test-block-featur {
-    display: inline-block;
-    max-height: 200px;
+.child-archive p {
+    overflow: hidden;
+    font-size: 12px;
 }
 
-/* Featured Section */
+.first-col-film {
+    width: 200px;
+    height: 30px;
+}
+
+.film-title-text,
+.related-film-title {
+    display: -webkit-box;
+
+    overflow: hidden;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+
+/* =========================================================
+   8. FEATURED SECTION
+   ========================================================= */
+
 .section-featured {
-    background-color: #e9e9e9;
     margin-bottom: 100px;
     padding: 20px;
+
+    background-color: var(--color-bg-section);
 }
 
 .block-featured {
     padding-bottom: 55px;
-    border: 2px #000 solid;
+
+    border: 2px solid #000;
 }
 
 .one-small-fetured {
@@ -324,15 +487,19 @@ footer {
 
 .big-fetured-post-card {
     position: relative;
-    line-height: 1.3;
-    font-family: Helvetica, sans-serif;
-    color: #000;
+
     overflow: auto;
+
+    color: #000;
+    font-family: Helvetica, sans-serif;
+    line-height: 1.3;
 }
 
 .third-fetured {
-    display: block;
     position: relative;
+
+    display: block;
+
     height: 0;
     margin-bottom: 80px;
 }
@@ -343,7 +510,9 @@ footer {
 
 .right-post-card-cat {
     display: block;
+
     margin-left: 110px;
+
     overflow: hidden;
 }
 
@@ -351,6 +520,7 @@ footer {
     color: #dc3545;
     border-color: #dc3545;
     background-color: #fff;
+
     font-size: 20px;
     line-height: 20px;
 }
@@ -361,143 +531,155 @@ footer {
     background-color: #fff;
 }
 
-/* Archive Section */
+
+/* =========================================================
+   9. ARCHIVE
+   ========================================================= */
+
 .section-archive {
-    background-color: #edf0f2;
-    border-radius: 10px;
     margin-bottom: 50px;
     padding: 20px;
+
+    background-color: var(--color-bg-archive);
+    border-radius: var(--radius-sm);
 }
 
 .container-archive {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
     position: relative;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
     width: 100%;
     gap: 30px;
 }
 
-.child-archive {
-    width: 155px;
-    position: relative;
+.archive-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 14px;
+
+    margin-top: 20px;
 }
 
-.child-archive p {
-    font-size: 12px;
-    overflow: hidden;
-    /*text-overflow: ellipsis;*/
+.archive-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 54px;
+    padding: 12px 16px;
+
+    color: var(--color-text);
+    background: var(--color-white);
+
+    border: 1px solid #e4e7eb;
+    border-radius: var(--radius-sm);
+
+    font-weight: 500;
+    text-align: center;
+
+    transition: var(--transition);
 }
 
-/* Default Posts Section */
-.section-default-posts {
+.archive-item:hover {
+    color: var(--color-primary);
+
+    background: #f8f9fa;
+    border-color: var(--color-primary);
+}
+
+.archive-area .first-col-film span {
     display: inline-block;
-    background-color: #e9e9e9;
+
+    font-size: 19px !important;
+    line-height: 1.2 !important;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   10. DEFAULT POSTS
+   ========================================================= */
+
+.section-default-posts {
+    display: block;
+
+    width: 100%;
     margin-bottom: 100px;
     padding: 20px;
+
+    background-color: var(--color-bg-section);
 }
 
 .section-default-posts h2 {
-    text-align: center;
     padding-bottom: 20px;
+    text-align: center;
 }
 
 .container-default {
     display: flex;
-    justify-content: flex-start;
     flex-wrap: wrap;
+    justify-content: flex-start;
+
+    width: 100%;
     gap: 31.5px;
 }
 
 
-.child,
-.child-infilm {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+/* =========================================================
+   11. CATEGORY
+   ========================================================= */
 
-.child-infilm p {
-    overflow: hidden;
-    /*text-overflow: ellipsis;*/
-}
-
-.child {
-    width: 190px;
-}
-
-.child-infilm {
-    width: 180px;
-}
-
-.child a {
-    color: #000;
-}
-
-
-.child h3 {
-    margin-top: 5px;
-    font-size: 13px;
-}
-
-
-.first-col-film {
-    width: 200px;
-    height: 30px;
-}
-
-/* Category Cards */
 .section-home-category {
-    background-color: #e9e9e9;
     margin-bottom: 100px;
     padding: 20px;
+
+    background-color: var(--color-bg-section);
 }
 
 .container-cat {
     display: flex;
-    justify-content: flex-start;
     flex-wrap: nowrap;
+
     width: 100%;
 }
 
-
-
 .title-cat {
-    text-decoration: underline;
     margin-bottom: 15px;
+
     font-size: 36px;
+    text-decoration: underline;
 }
 
 
+/* =========================================================
+   12. SINGLE PAGE
+   ========================================================= */
 
-
-/* Single Page Section */
 .section-single {
     display: block;
-    background-color: #f0f0f0;
+
     margin-bottom: 100px;
     padding: 20px;
+
+    background-color: var(--color-bg-soft);
+    border-radius: var(--radius-lg);
+
     font-size: 15px;
-    border-radius: 20px;
 }
-
-
 
 .date {
-    text-align: center;
     margin-bottom: 15px;
+    text-align: center;
 }
-
 
 .card-title {
     text-align: center;
 }
-
-
-
-
-
 
 .nnn {
     display: flex;
@@ -506,20 +688,438 @@ footer {
 }
 
 .nnn img {
-    height: 200px;
     width: 150px;
+    height: 200px;
 }
-
 
 .film-description {
     margin-top: 5px;
 }
 
-/* ==========================================
-   5. MEDIA QUERIES (DESKTOP TO MOBILE)
-   ========================================== */
-@media (max-width: 1139px) {
 
+/* =========================================================
+   13. FILM SHOW PAGE
+   ========================================================= */
+
+.film-page {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 30px;
+
+    margin-bottom: 100px;
+}
+
+.film-sidebar-desktop {
+    width: 27%;
+    flex: 0 0 27%;
+
+    min-width: 0;
+}
+
+.film-main {
+    display: block;
+    flex: 1;
+
+    min-width: 0;
+    padding: 20px;
+
+    background-color: var(--color-bg-soft);
+    border-radius: var(--radius-lg);
+
+    font-size: 15px;
+}
+
+.film-header {
+    margin: 0 0 20px;
+    padding: 0 0 6px;
+
+    text-align: left;
+
+    background: transparent;
+
+    border-bottom: 2px solid var(--color-border);
+}
+
+.film-header h1 {
+    margin: 0;
+    text-align: left;
+}
+
+.film-origin-title {
+    margin-top: 8px;
+
+    font-size: 1.1rem;
+    text-align: left;
+}
+
+.film-mobile-block {
+    display: none;
+}
+
+.film-poster {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    border-radius: 12px;
+}
+
+.film-release-date {
+    margin: 16px 0 0;
+}
+
+.film-mobile-info {
+    margin-top: 25px;
+}
+
+.film-mobile-info h2,
+.film-mobile-sidebar h2 {
+    margin: 0 0 15px;
+
+    font-size: 22px;
+}
+
+.film-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.film-info-row {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 8px;
+
+    line-height: 1.5;
+}
+
+.film-info-row > span:first-child {
+    flex: 0 0 auto;
+    font-weight: 600;
+}
+
+.film-info-row > div {
+    min-width: 0;
+}
+
+.film-info-note {
+    margin-top: 10px;
+    padding-top: 10px;
+
+    border-top: 1px solid #d7d7d7;
+}
+
+.film-info-note strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.film-details {
+    margin-top: 25px;
+}
+
+.film-detail-row {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 10px;
+
+    padding: 7px 0;
+
+    line-height: 1.5;
+}
+
+.film-detail-row > span:first-child {
+    flex: 0 0 150px;
+}
+
+.film-detail-row > div {
+    min-width: 0;
+}
+
+.film-detail-label {
+    position: relative;
+
+    display: inline-block;
+
+    font-size: 15px;
+    line-height: 1.3 !important;
+    font-weight: 500;
+
+    bottom: 1.5px;
+}
+
+.span-show {
+    font-size: 13px !important;
+}
+
+.span-index {
+    font-size: 14.6px !important;
+}
+
+
+/* =========================================================
+   14. FILM SECTIONS
+   ========================================================= */
+
+.film-section {
+    margin-top: 40px;
+}
+
+.film-section h2 {
+    margin: 0 0 15px;
+
+    font-size: 24px;
+    line-height: 1.3;
+}
+
+.film-empty-block {
+    padding: 15px 18px;
+
+    color: #666;
+    background: var(--color-white);
+
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-sm);
+}
+
+.film-description {
+    line-height: 1.7;
+}
+
+.film-description p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   15. RELATED FILMS
+   ========================================================= */
+
+.related-films {
+    display: grid;
+
+    grid-template-columns: repeat(6, 1fr);
+
+    gap: 14px;
+}
+
+.related-film {
+    min-width: 0;
+}
+
+.related-film img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+}
+
+.related-film a {
+    display: block;
+
+    margin-top: 8px;
+
+    color: var(--color-text);
+
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.related-film a:hover {
+    color: var(--color-primary);
+}
+
+.related-category-title {
+    display: inline-block;
+
+    max-width: 70%;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    vertical-align: bottom;
+}
+
+
+/* =========================================================
+   16. MOBILE SIDEBAR
+   ========================================================= */
+
+.film-mobile-sidebar {
+    margin-top: 40px;
+}
+
+.sidebar-list {
+    margin: 0 0 30px;
+    padding: 0;
+
+    list-style: none;
+}
+
+.sidebar-list li {
+    padding: 8px 0;
+
+    border-bottom: 1px solid #d7d7d7;
+}
+
+.sidebar-list li:first-child {
+    border-top: 1px solid #d7d7d7;
+}
+
+.sidebar-list a {
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.sidebar-list a:hover {
+    color: var(--color-primary);
+}
+
+
+/* =========================================================
+   17. UPCOMING MOVIES
+   ========================================================= */
+
+.upcoming-movie {
+    padding: 10px 0;
+
+    border-bottom: 1px solid #d7d7d7;
+}
+
+.upcoming-movie a {
+    display: block;
+
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+.upcoming-movie a:hover {
+    color: var(--color-primary);
+}
+
+.upcoming-movie small {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--color-text-muted);
+}
+
+
+/* =========================================================
+   18. COMMENTS
+   ========================================================= */
+
+.film-comments {
+    margin-top: 40px;
+}
+
+
+/* =========================================================
+   19. PAGINATION
+   ========================================================= */
+
+.pagination-new {
+    width: 100%;
+    margin-top: 40px;
+
+    overflow-x: auto;
+
+    text-align: center;
+    white-space: nowrap;
+}
+
+.pagination {
+    display: flex;
+
+    flex-wrap: nowrap;
+    width: max-content;
+
+    gap: 4px;
+
+    margin: auto;
+}
+
+.pagination .page-link {
+    color: var(--color-primary);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border-pagination);
+
+    transition: var(--transition);
+}
+
+.pagination .page-link:hover {
+    color: #fff;
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.pagination .page-item.active .page-link {
+    color: #fff;
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #b7b7b7;
+    background-color: #f7f7f7;
+    border-color: #ececec;
+}
+
+.pagination .page-link:focus {
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   20. DEFAULT POSTS — RESPONSIVE GRID
+   ========================================================= */
+
+@media (min-width: 769px) {
+    .section-default-posts {
+        display: block;
+        width: 100%;
+    }
+
+    .container-default {
+        display: grid;
+
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+
+        gap: 20px;
+
+        width: 100%;
+    }
+
+    .child {
+        width: auto;
+        min-width: 0;
+    }
+
+    .child img {
+        width: 100%;
+        max-width: 195px;
+        height: auto;
+    }
+
+    .child p {
+        max-width: 195px;
+        text-align: center;
+    }
+}
+
+
+/* =========================================================
+   21. TABLET
+   ========================================================= */
+
+@media (max-width: 1139px) {
     .container-arch {
         margin: 0 20px;
     }
@@ -528,28 +1128,22 @@ footer {
         flex-wrap: wrap;
     }
 
-
-
     .container-default {
-        margin-left: auto;
         margin-right: auto;
+        margin-left: auto;
     }
 
     .child {
         width: 31%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
     }
 
     .section-single {
         padding: 20px;
     }
 
-
     .container-footer {
-        padding-left: 25px;
         padding-right: 25px;
+        padding-left: 25px;
     }
 }
 
@@ -559,28 +1153,28 @@ footer {
     }
 }
 
-
-
 @media (max-width: 991px) {
     .archive-area {
         width: 100%;
     }
 
-
-
     .section-single {
         padding-top: 20px;
-        padding-left: 50px;
         padding-right: 50px;
+        padding-left: 50px;
     }
 
     .logo1 {
         display: block;
-        padding-top: 30px;
-        padding-bottom: 25px;
-        text-align: center;
+
         width: 100%;
         height: auto;
+
+        padding-top: 30px;
+        padding-bottom: 25px;
+
+        text-align: center;
+
         font-size: 36px;
     }
 
@@ -591,26 +1185,30 @@ footer {
     .container-karuselowl {
         margin-top: 50px;
     }
-}
 
-@media (min-width: 768px) and (max-width: 991px) {
-    .nnn {
-        display: flex;
-        justify-content: space-between;
+    .film-page {
+        gap: 20px;
     }
 
-    .nnn img {
-        height: 200px;
-        width: 150px;
+    .film-sidebar-desktop {
+        width: 30%;
+        flex-basis: 30%;
     }
 
+    .film-main {
+        padding: 18px;
+    }
 
-    /*.row-sidebar {
-        display: none;
-    }*/
+    .film-header h1 {
+        font-size: 28px;
+    }
 
-    header {
-        margin-bottom: 48px;
+    .related-films {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -632,31 +1230,66 @@ footer {
         text-align: center;
     }
 
-
     .child {
         width: 47%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
     }
-
-
-
-
-
 }
 
-@media (max-width: 767px) {
-    .nnn {
-        display: flex;
-        justify-content: space-between;
+
+/* =========================================================
+   22. MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+    .section-default-posts {
+        display: block;
+        width: 100%;
     }
 
-    .nnn img {
-        height: 150px;
-        width: 100px;
+    .container-default {
+        display: grid;
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 20px;
+
+        width: 100%;
     }
 
+    .child {
+        width: auto;
+        min-width: 0;
+    }
+
+    .child img {
+        width: 100%;
+        max-width: 195px;
+        height: auto;
+    }
+
+    .child p {
+        max-width: 195px;
+        text-align: center;
+    }
+
+
+    /* Header */
+
+    .infoheader {
+        font-size: 9px;
+    }
+
+    .logo {
+        padding-top: 7px;
+        padding-bottom: 5px;
+    }
+
+    .container-header {
+        position: absolute;
+    }
+
+
+    /* General */
 
     .flex-featured-home,
     .page-navigation ul {
@@ -671,32 +1304,149 @@ footer {
         margin-bottom: 20px;
     }
 
-    .logo {
-        padding-top: 7px;
-        padding-bottom: 5px;
+
+    /* Film page */
+
+    .film-page {
+        display: block;
+
+        margin-bottom: 50px;
     }
 
-    .container-header {
-        position: absolute;
+    .film-sidebar-desktop {
+        display: none;
+    }
+
+    .film-main {
+        width: 100%;
+
+        padding: 15px;
+
+        border-radius: var(--radius-md);
+
+        font-size: 15px;
+    }
+
+    .film-header {
+        margin-bottom: 20px;
+    }
+
+    .film-header h1 {
+        font-size: 26px;
+        line-height: 1.25;
+    }
+
+    .film-origin-title {
+        font-size: 16px;
+    }
+
+    .film-mobile-block {
+        display: block;
+    }
+
+    .film-mobile-poster {
+        margin-top: 20px;
+    }
+
+    .film-poster {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .film-mobile-info {
+        margin-top: 25px;
+    }
+
+    .film-info-row {
+        display: flex;
+
+        gap: 8px;
+
+        padding: 2px 0;
+
+        line-height: 1.5;
+    }
+
+    .film-info-row > span:first-child {
+        flex: 0 0 150px;
+
+        font-weight: 600;
+    }
+
+    .film-info-row > div {
+        min-width: 0;
+    }
+
+    .film-details {
+        margin-top: 30px;
+    }
+
+    .film-detail-row {
+        display: flex;
+        padding: 7px 0;
+    }
+
+    .film-detail-row > span:first-child {
+        display: inline;
+        margin-right: 5px;
+    }
+
+    .film-section {
+        margin-top: 35px;
+    }
+
+    .film-section h2 {
+        font-size: 22px;
+    }
+
+    .related-films {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .film-mobile-sidebar {
+        margin-top: 40px;
+    }
+
+    .film-comments {
+        margin-top: 35px;
+    }
+
+    .film-info-note {
+        display: flex;
+
+        align-items: flex-start;
+
+        gap: 8px;
+    }
+
+    .film-info-note > span {
+        flex: 0 0 150px;
+    }
+
+    .film-info-note > div {
+        flex: 1;
+        min-width: 0;
     }
 }
 
-@media (max-width: 620px) {
 
-    .infoheader {
-        font-size: 9px;
+/* =========================================================
+   23. SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 580px) {
+    .archive-grid {
+        grid-template-columns: 1fr;
     }
-}
 
-@media only screen and (max-width: 580px) {
     .logo img {
         width: auto;
         height: 55px;
     }
 
-
     .child {
-        /*width: 100%;*/
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -712,50 +1462,40 @@ footer {
     }
 
     .nnn img {
-        height: 130px;
         width: 100px;
+        height: 130px;
     }
 }
 
-@media only screen and (max-width: 481px) {
+@media (max-width: 481px) {
     .logo img {
         width: auto;
         height: 45px;
     }
 }
 
+@media (max-width: 480px) {
+    .film-main {
+        padding: 12px;
+        border-radius: 12px;
+    }
 
+    .film-header h1 {
+        font-size: 23px;
+    }
 
-/* Пагінація */
-.pagination {
-    gap: 4px;
-}
+    .film-origin-title {
+        font-size: 15px;
+    }
 
-.pagination .page-link {
-    color: #5b5e75;
-    background-color: #fff;
-    border: 1px solid #dcdcdc;
-    transition: .2s;
-}
+    .film-section h2,
+    .film-mobile-info h2,
+    .film-mobile-sidebar h2 {
+        font-size: 20px;
+    }
 
-.pagination .page-link:hover {
-    color: #fff;
-    background-color: #5b5e75;
-    border-color: #5b5e75;
-}
-
-.pagination .page-item.active .page-link {
-    color: #fff;
-    background-color: #5b5e75;
-    border-color: #5b5e75;
-}
-
-.pagination .page-item.disabled .page-link {
-    color: #b7b7b7;
-    background: #f7f7f7;
-    border-color: #ececec;
-}
-
-.pagination .page-link:focus {
-    box-shadow: none;
+    .related-films {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
 }
