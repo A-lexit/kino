@@ -1371,5 +1371,36 @@ footer {
 [data-bs-theme="dark"] h1 a,
 [data-bs-theme="dark"] h1 a:visited {
     color: #1d78ff !important;
-    text-align: left;
+    /*text-align: left;*/
+}
+
+.section-default-posts h1{
+    text-align: center !important;
+}
+
+
+.archive-area h1 {
+    text-align: left !important;
+}
+
+
+
+
+
+.child p {
+    font-size: 13px;
+    font-weight: 500; /* збільшено з 200 для кращої читабельності */
+    max-width: 195px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color-text); /* змінено з var(--color-text-muted) на насичений dark */
+}
+
+.child a p {
+    color: var(--color-text) !important;
+}
+
+.child a:hover p {
+    color: var(--color-primary-hover) !important;
 }
