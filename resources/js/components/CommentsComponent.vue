@@ -123,7 +123,13 @@ textarea#commentBody.form-control {
 }
 
 /* 3. КАРТКИ КОМЕНТАРІВ */
-.comment-card,
+
+/* Світла тема: тонка, ледь помітна рамка */
+.comment-card {
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Темна тема: зберігаємо темну рамку */
 :global([data-bs-theme="dark"]) .comment-card {
     border: 1px solid #3a4150 !important;
 }
@@ -138,20 +144,6 @@ textarea#commentBody.form-control {
     background-color: var(--color-bg-section, #1c2026) !important;
     color: var(--color-text, #e1e3e8) !important;
     border: none !important;
-}
-</style>
-
-<!-- ГЛОБАЛЬНЕ ПЕРЕВИЗНАЧЕННЯ ФОКУСУ СТИЛІВ BOOTSTRAP -->
-<style>
-[data-bs-theme="dark"] textarea#commentBody:focus,
-[data-bs-theme="dark"] textarea#commentBody:active,
-[data-bs-theme="dark"] textarea#commentBody:focus-visible {
-    border-color: #3a4150 !important;
-    box-shadow: none !important;
-    outline: none !important;
-    -webkit-box-shadow: none !important;
-    --bs-focus-ring-color: transparent !important;
-    --bs-form-control-focus-border-color: #3a4150 !important;
 }
 </style>
 
