@@ -25,11 +25,11 @@
 
     @once
         <style>
-            .breadcrumbs{
+            .breadcrumbs {
                 margin: 0 0 16px;
-                font-size: 13px;
+                font-size: 13px !important;
             }
-            .breadcrumbs-list{
+            .breadcrumbs-list {
                 display: flex;
                 flex-wrap: wrap;
                 align-items: center;
@@ -38,25 +38,30 @@
                 margin: 0;
                 padding: 0;
             }
-            .breadcrumbs-item{
+            .breadcrumbs-item {
                 display: flex;
                 align-items: center;
+                font-size: 13px !important;
             }
-            .breadcrumbs-item a{
+            .breadcrumbs-item a {
                 color: inherit;
                 text-decoration: none;
                 opacity: 0.75;
+                font-size: 13px !important;
+                font-weight: 400 !important;
             }
-            .breadcrumbs-item a:hover{
+            .breadcrumbs-item a:hover {
                 text-decoration: underline;
                 opacity: 1;
             }
-            .breadcrumbs-item span[aria-current="page"]{
+            .breadcrumbs-item span[aria-current="page"] {
                 opacity: 1;
-                font-weight: 500;
+                font-size: 13px !important;
+                font-weight: 500 !important;
             }
-            .breadcrumbs-sep{
+            .breadcrumbs-sep {
                 opacity: 0.4;
+                font-size: 13px !important;
             }
         </style>
     @endonce

@@ -1,45 +1,132 @@
 @charset "UTF-8";
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
 /* =========================================================
-   1. VARIABLES
+   1. THEME VARIABLES (LIGHT THEME BY DEFAULT)
    ========================================================= */
-
 :root {
+    /* Brand & Accent Colors */
     --color-primary: #5b5e75;
-    --color-primary-hover: #ff5604;
-    --color-title: #476ad5;
+    --color-primary-hover: #1d62d8;
+    --color-accent: #476ad5;
+    --color-danger: #dc3545;
+    --color-danger-hover: #bb2d3b;
 
-    --color-text: #313131;
-    --color-text-muted: #777;
+    /* Text Colors */
+    --color-text: #040303;
+    --color-text-muted: #777777;
     --color-text-light: #9ca3af;
+    --color-heading: #000000;
 
-    --color-white: #fff;
-    --color-bg: #fff;
-    --color-bg-soft: #f0f0f0;
+    /* Backgrounds */
+    --color-bg: #ffffff;
+    --color-bg-soft: #f7f7f7;
     --color-bg-section: #e9e9e9;
-    --color-bg-archive: #edf0f2;
+    --color-bg-section-alt: #edf0f2;
+    --color-bg-film: #f0f0f0;
+    --color-card-bg: #ffffff;
 
+    /* Borders */
     --color-border: #e1e7e9;
-    --color-border-light: #e0e0e0;
-    --color-border-pagination: #dcdcdc;
+    --color-border-light: #e4e7eb;
+    --color-border-dark: #d7d7d7;
+    --color-border-custom: #e0e0e0;
 
-    --color-footer: #212529;
+    /* Fixed Utilities */
+    --color-white: #ffffff;
+    --color-black: #000000;
 
+    /* Header & Footer */
+    --color-header-nav-bg: #ececec;
+    --color-footer-bg: #212529;
+    --color-footer-border: #5b5e75;
+    --color-footer-text: #bfc3cf;
+
+    /* Layout & UI */
     --radius-sm: 10px;
-    --radius-md: 15px;
+    --radius-md: 12px;
     --radius-lg: 20px;
+    --transition-fast: 0.18s ease;
+    --transition-normal: 0.2s ease;
+}
+/* =========================================================
+   2. DARK THEME OVERRIDES
+   ========================================================= */
+/* Системна темна тема (якщо у користувача в ОС увімкнено Dark Mode) */
+@media (prefers-color-scheme: dark) {
+    :root:not(.light-theme):not([data-bs-theme="light"]) {
+        --color-primary: #8ea0ff;
+        --color-primary-hover: #ffffff;
+        --color-accent: #6b8aff;
+        --color-danger: #e65c65;
+        --color-danger-hover: #dc3545;
 
-    --transition: .2s ease;
+        --color-text: #e1e3e8;
+        --color-text-muted: #adb5bd;
+        --color-text-light: #888d96;
+        --color-heading: #ffffff;
+
+        --color-bg: #121418;
+        --color-bg-soft: #1a1d24;
+        --color-bg-section: #1c2026;
+        --color-bg-section-alt: #222730;
+        --color-bg-film: #1a1e24;
+        --color-card-bg: #1e222a;
+
+        --color-border: #2a2f3a;
+        --color-border-light: #2d3340;
+        --color-border-dark: #3a4150;
+        --color-border-custom: #2c353f;
+
+        --color-header-nav-bg: #212529;
+        --color-footer-bg: #0b0c0e;
+        --color-footer-border: #3a4150;
+        --color-footer-text: #a0a6b5;
+    }
 }
 
+/* Явний клас або атрибут темної теми (для будь-якого JS-перемикача) */
+[data-bs-theme="dark"],
+[data-theme="dark"],
+.dark-theme,
+.dark,
+body.dark-theme,
+body.dark {
+    --color-primary: #8ea0ff;
+    --color-primary-hover: #ffffff;
+    --color-accent: #6b8aff;
+    --color-danger: #e65c65;
+    --color-danger-hover: #dc3545;
+
+    --color-text: #e1e3e8;
+    --color-text-muted: #adb5bd;
+    --color-text-light: #888d96;
+    --color-heading: #ffffff;
+
+    --color-bg: #121418;
+    --color-bg-soft: #1a1d24;
+    --color-bg-section: #1c2026;
+    --color-bg-section-alt: #222730;
+    --color-bg-film: #1a1e24;
+    --color-card-bg: #1e222a;
+
+    --color-border: #2a2f3a;
+    --color-border-light: #2d3340;
+    --color-border-dark: #3a4150;
+    --color-border-custom: #2c353f;
+
+    --color-header-nav-bg: #212529;
+    --color-footer-bg: #0b0c0e;
+    --color-footer-border: #3a4150;
+    --color-footer-text: #a0a6b5;
+}
 
 /* =========================================================
-   2. RESET & BASE
+   3. RESET & BASE STYLES
    ========================================================= */
-
-* {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -51,30 +138,35 @@ html {
 }
 
 body {
-    min-height: 100vh;
-
     font-family: 'Montserrat', sans-serif;
     font-size: 15px;
     color: var(--color-text);
-
-    background: var(--color-bg);
+    background-color: var(--color-bg);
+    min-height: 100vh;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
-a {
-    color: var(--color-primary);
+a,
+a:visited {
+    color: var(--color-text) !important;
     text-decoration: none;
-    font-weight: 600;
-
-    transition: var(--transition);
+    transition: color var(--transition-normal), opacity var(--transition-normal);
 }
 
-a:hover {
-    color: var(--color-primary-hover);
+a:hover,
+a:focus {
+    color: var(--color-primary-hover) !important;
+    text-decoration: none;
 }
 
 h1 {
-    margin-top: 40px;
+    margin-top: 10px;
     margin-bottom: 30px;
+    color: var(--color-heading);
+}
+
+h2, h3, h4 {
+    color: var(--color-heading);
 }
 
 h3 {
@@ -84,9 +176,6 @@ h3 {
 ul {
     padding: 0;
     margin: 0;
-}
-
-ul li {
     list-style: none;
 }
 
@@ -100,17 +189,24 @@ label {
     margin-top: 30px;
 }
 
+/* Перемикач теми */
+.theme-toggle {
+    transition: transform var(--transition-normal), color var(--transition-normal);
+    cursor: pointer;
+}
+
+.theme-toggle:hover {
+    transform: rotate(15deg);
+}
 
 /* =========================================================
-   3. LAYOUT & CONTAINERS
+   4. LAYOUT, HEADER & NAVIGATION
    ========================================================= */
-
 .container,
 .container-arch {
-    position: relative;
-
-    max-width: 1140px;
     margin: 0 auto;
+    max-width: 1140px;
+    position: relative;
 }
 
 .flex-single,
@@ -125,34 +221,28 @@ label {
 .archive-area h1,
 .film-title h1 {
     margin-top: 0;
-    margin-bottom: 5px;
-
-    color: var(--color-title);
-    font-weight: 700;
+    margin-bottom: 25px;
+    color: var(--color-accent);
+    font-weight: bold;
 }
 
 .row-sidebar {
-    display: block;
-
-    padding-right: 20px;
-
     box-sizing: border-box;
+    display: block;
+    padding-right: 20px;
 }
 
-
-/* =========================================================
-   4. HEADER
-   ========================================================= */
-
+/* Header */
 header {
     background-color: var(--color-bg);
     border-bottom: 10px solid var(--color-border);
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
 }
 
 header h1,
 header h2 {
     text-align: center;
-    color: #000;
+    color: var(--color-heading);
 }
 
 .header-wide {
@@ -161,11 +251,24 @@ header h2 {
 
 .infoheader {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-
+    align-items: center;
     width: 100%;
     padding: 10px 20px;
+    box-sizing: border-box;
+}
+
+.logo {
+    padding-top: 30px;
+    padding-bottom: 25px;
+    text-align: center;
+    width: 100%;
+    height: auto;
+    font-size: 36px;
+}
+
+.logo1 {
+    display: none;
 }
 
 .infoapi {
@@ -180,182 +283,159 @@ header h2 {
 }
 
 .header__menu {
+    display: flex;
     position: relative;
     z-index: 2;
-
-    display: flex;
 }
 
 .header__menu li {
     margin: 0 0 0 36px;
-
-    list-style: none;
-
-    color: #000;
+    color: var(--color-heading);
     font-size: 16px;
     text-transform: uppercase;
 }
 
-.logo {
+.navbar-nav .nav-link,
+.header__menu a {
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    position: relative;
+    display: inline-flex !important;
+    align-items: center;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    line-height: 1 !important;
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+}
+
+/* Активний пункт меню */
+.navbar-nav .nav-link.active::after,
+.header__menu a.active::after,
+.header__menu .router-link-active::after,
+.header__menu .router-link-exact-active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
     width: 100%;
-    height: auto;
-
-    padding-top: 30px;
-    padding-bottom: 25px;
-
-    text-align: center;
-
-    font-size: 36px;
+    height: 2px;
+    background-color: #0d6efd;
 }
 
-.logo1 {
-    display: none;
+.bg-body-tertiary {
+    --bs-bg-opacity: 0 !important;
+    background-color: transparent !important;
 }
 
+.border-bottom-customm {
+    border-bottom: 1px solid var(--color-border-custom);
+}
 
-/* =========================================================
-   5. FOOTER
-   ========================================================= */
+.header-nav-bg-customm {
+    background-color: var(--color-header-nav-bg);
+}
 
+/* Footer */
 footer {
     display: inline-block;
     width: 100%;
 }
 
 .footer {
-    background: var(--color-footer);
-    border-top: 3px solid var(--color-primary);
+    background: var(--color-footer-bg);
+    border-top: 3px solid var(--color-footer-border);
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
 }
 
 .footer-logo a {
-    color: #fff;
+    color: var(--color-white) !important;
     font-size: 22px;
     font-weight: 700;
-    text-decoration: none;
 }
 
 .footer-logo a:hover {
-    color: #8ea0ff;
+    color: var(--color-accent) !important;
 }
 
 .footer-copy {
-    margin-top: 6px;
-
     color: var(--color-text-light);
     font-size: 14px;
+    margin-top: 6px;
 }
 
 .footer-description {
-    color: #bfc3cf;
+    color: var(--color-footer-text);
     font-size: 14px;
     line-height: 1.5;
 }
 
-
 /* =========================================================
-   6. OWL CAROUSEL
+   5. COMPONENTS & CARDS
    ========================================================= */
 
+/* Owl Carousel Navigation */
 .owl-carousel {
     position: relative;
 }
 
-.owl-nav {
+.owl-nav,
+.owl-buttons {
     position: absolute;
     top: 50%;
-
     width: 100%;
-
     transform: translateY(-50%);
-
     pointer-events: none;
 }
 
 .owl-prev,
-.owl-next {
-    position: absolute !important;
-    top: 50% !important;
-
-    z-index: 10;
-
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-
-    width: 28px !important;
-    height: 28px !important;
-
-    padding: 0 !important;
-    margin: 0 !important;
-
-    font-size: 14px !important;
-    line-height: 28px !important;
-    text-align: center;
-
-    color: #333 !important;
-    background: transparent !important;
-
-    transform: translateY(-50%) !important;
-
-    pointer-events: auto;
-}
-
-.owl-prev:hover,
-.owl-next:hover {
-    color: var(--color-primary-hover) !important;
-    background: transparent !important;
-}
-
-.owl-prev {
-    left: -55px !important;
-}
-
-.owl-next {
-    right: -55px !important;
-}
-
-
-/* Owl Carousel v1 */
-
+.owl-next,
 .owl-buttons .owl-prev,
 .owl-buttons .owl-next {
     position: absolute !important;
     top: 50% !important;
-
+    transform: translateY(-50%) !important;
+    pointer-events: auto;
     z-index: 10;
-
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-
     width: 28px !important;
     height: 28px !important;
-
+    line-height: 28px !important;
+    font-size: 14px !important;
+    text-align: center;
     padding: 0 !important;
     margin: 0 !important;
-
-    font-size: 14px !important;
-    line-height: 28px !important;
-    text-align: center;
-
-    color: #333 !important;
     background: transparent !important;
-
-    transform: translateY(-50%) !important;
+    color: var(--color-text) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
+.owl-prev:hover,
+.owl-next:hover,
 .owl-buttons .owl-prev:hover,
 .owl-buttons .owl-next:hover {
-    color: var(--color-primary-hover) !important;
     background: transparent !important;
+    color: var(--color-primary-hover) !important;
 }
 
+.owl-prev,
 .owl-buttons .owl-prev {
     left: -55px !important;
 }
 
+.owl-next,
 .owl-buttons .owl-next {
     right: -55px !important;
+}
+
+.wp-post-image img,
+.size-medium img,
+.attachment-medium img {
+    max-width: 100%;
+    height: 250px;
 }
 
 .carousel-img {
@@ -364,116 +444,49 @@ footer {
 }
 
 .text-owlkarousel {
-    overflow: hidden;
-
     font-size: 10px;
+    overflow: hidden;
 }
 
+/* Grids & Cards */
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 20px;
+}
 
-/* =========================================================
-   7. FILM CARDS
-   ========================================================= */
-
-.child,
-.child-infilm {
-    position: relative;
-
+.archive-item {
     display: flex;
-    flex-direction: column;
     align-items: center;
-}
-
-.child {
-    width: 190px;
-}
-
-.child-infilm {
-    width: 180px;
-}
-
-.child img {
-    max-width: 195px;
-    height: 293px;
-
-    vertical-align: bottom;
-}
-
-.child a {
-    color: #000;
-}
-
-.child h3 {
-    margin-top: 5px;
-    font-size: 13px;
-}
-
-.child p {
-    max-width: 195px;
-
-    overflow: hidden;
-
-    font-size: 13px;
-    font-weight: 200;
-
+    justify-content: center;
+    min-height: 54px;
+    padding: 12px 16px;
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+    font-weight: 500;
     text-align: center;
-
-    text-overflow: ellipsis;
+    transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
 }
 
-.child-infilm p {
-    width: 150px;
-
-    overflow: hidden;
-
-    font-size: 11px;
+.archive-item:hover {
+    background: var(--color-bg-soft);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
 }
-
-.child-archive {
-    position: relative;
-    width: 155px;
-}
-
-.child-archive img {
-    max-width: 155px;
-    height: 235px;
-}
-
-.child-archive p {
-    overflow: hidden;
-    font-size: 12px;
-}
-
-.first-col-film {
-    width: 200px;
-    height: 30px;
-}
-
-.film-title-text,
-.related-film-title {
-    display: -webkit-box;
-
-    overflow: hidden;
-
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-}
-
-
-/* =========================================================
-   8. FEATURED SECTION
-   ========================================================= */
 
 .section-featured {
+    background-color: var(--color-bg-section);
     margin-bottom: 100px;
     padding: 20px;
-
-    background-color: var(--color-bg-section);
+    border-radius: var(--radius-md);
 }
 
 .block-featured {
     padding-bottom: 55px;
-
-    border: 2px solid #000;
+    border: 2px var(--color-heading) solid;
 }
 
 .one-small-fetured {
@@ -487,19 +500,15 @@ footer {
 
 .big-fetured-post-card {
     position: relative;
-
-    overflow: auto;
-
-    color: #000;
-    font-family: Helvetica, sans-serif;
     line-height: 1.3;
+    font-family: Helvetica, sans-serif;
+    color: var(--color-text);
+    overflow: auto;
 }
 
 .third-fetured {
-    position: relative;
-
     display: block;
-
+    position: relative;
     height: 0;
     margin-bottom: 80px;
 }
@@ -510,175 +519,181 @@ footer {
 
 .right-post-card-cat {
     display: block;
-
     margin-left: 110px;
-
     overflow: hidden;
 }
 
 .button.delete-main-post {
-    color: #dc3545;
-    border-color: #dc3545;
-    background-color: #fff;
-
+    color: var(--color-danger);
+    border-color: var(--color-danger);
+    background-color: var(--color-card-bg);
     font-size: 20px;
     line-height: 20px;
 }
 
 .button.delete-main-post:hover {
-    color: #bb2d3b;
-    border-color: #b02a37;
-    background-color: #fff;
+    color: var(--color-danger-hover);
+    border-color: var(--color-danger-hover);
+    background-color: var(--color-card-bg);
 }
 
-
-/* =========================================================
-   9. ARCHIVE
-   ========================================================= */
-
 .section-archive {
+    background-color: var(--color-bg-section-alt);
+    border-radius: var(--radius-sm);
     margin-bottom: 50px;
     padding: 20px;
-
-    background-color: var(--color-bg-archive);
-    border-radius: var(--radius-sm);
 }
 
 .container-archive {
-    position: relative;
-
     display: flex;
-    flex-wrap: wrap;
     justify-content: flex-start;
-
+    flex-wrap: wrap;
+    position: relative;
     width: 100%;
     gap: 30px;
 }
 
-.archive-grid {
-    display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 14px;
-
-    margin-top: 20px;
+.child-archive {
+    width: 155px;
+    position: relative;
 }
 
-.archive-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    min-height: 54px;
-    padding: 12px 16px;
-
-    color: var(--color-text);
-    background: var(--color-white);
-
-    border: 1px solid #e4e7eb;
+.child-archive img {
+    max-width: 155px;
+    height: 235px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     border-radius: var(--radius-sm);
-
-    font-weight: 500;
-    text-align: center;
-
-    transition: var(--transition);
 }
 
-.archive-item:hover {
-    color: var(--color-primary);
-
-    background: #f8f9fa;
-    border-color: var(--color-primary);
+.child-archive p {
+    font-size: 12px;
+    overflow: hidden;
 }
-
-.archive-area .first-col-film span {
-    display: inline-block;
-
-    font-size: 19px !important;
-    line-height: 1.2 !important;
-    font-weight: 500;
-}
-
-
-/* =========================================================
-   10. DEFAULT POSTS
-   ========================================================= */
 
 .section-default-posts {
     display: block;
-
     width: 100%;
+    box-sizing: border-box;
+    background-color: var(--color-bg-section);
     margin-bottom: 100px;
     padding: 20px;
+    border-radius: var(--radius-md);
+}
 
-    background-color: var(--color-bg-section);
+[data-bs-theme="dark"] .section-default-posts {
+    background-color: #0f1011;
 }
 
 .section-default-posts h2 {
-    padding-bottom: 20px;
     text-align: center;
+    padding-bottom: 20px;
 }
 
+/* Сітка з автоматичним перенесенням */
 .container-default {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
     width: 100%;
-    gap: 31.5px;
 }
 
+.child,
+.child-infilm {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 195px;
+    justify-self: center;
+    min-width: 0;
+}
 
-/* =========================================================
-   11. CATEGORY
-   ========================================================= */
+.child img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 194 / 293;
+    object-fit: cover;
+    vertical-align: bottom;
+    border-radius: var(--radius-sm);
+}
+
+.child p {
+    font-size: 13px;
+    font-weight: 200;
+    max-width: 195px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color-text-muted);
+}
+
+.child-infilm {
+    width: 180px;
+}
+
+.child-infilm p {
+    font-size: 11px;
+    width: 150px;
+    overflow: hidden;
+}
+
+.child h3 {
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+.film-poster img,
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.first-col-film {
+    width: 200px;
+    height: 30px;
+}
 
 .section-home-category {
+    background-color: var(--color-bg-section);
     margin-bottom: 100px;
     padding: 20px;
-
-    background-color: var(--color-bg-section);
+    border-radius: var(--radius-md);
 }
 
 .container-cat {
     display: flex;
+    justify-content: flex-start;
     flex-wrap: nowrap;
-
     width: 100%;
 }
 
 .title-cat {
-    margin-bottom: 15px;
-
-    font-size: 36px;
     text-decoration: underline;
+    margin-bottom: 15px;
+    font-size: 36px;
 }
-
-
-/* =========================================================
-   12. SINGLE PAGE
-   ========================================================= */
 
 .section-single {
     display: block;
-
+    background-color: var(--color-bg-film);
     margin-bottom: 100px;
     padding: 20px;
-
-    background-color: var(--color-bg-soft);
-    border-radius: var(--radius-lg);
-
     font-size: 15px;
+    border-radius: var(--radius-lg);
+}
+
+.date,
+.card-title {
+    text-align: center;
 }
 
 .date {
     margin-bottom: 15px;
-    text-align: center;
-}
-
-.card-title {
-    text-align: center;
+    color: var(--color-text-muted);
 }
 
 .nnn {
@@ -688,56 +703,142 @@ footer {
 }
 
 .nnn img {
-    width: 150px;
     height: 200px;
+    width: 150px;
 }
 
-.film-description {
-    margin-top: 5px;
+/* Utility / Truncation Classes */
+.blog-title-area {
+    margin-top: 7px;
 }
 
+.sidetitle h3,
+.watchmore h3 {
+    text-align: left;
+}
+
+.sidetitle h3 {
+    font-weight: 600;
+}
+
+.film-gallery-grid {
+    margin-top: 8px;
+    margin-bottom: 0 !important;
+}
+
+.archive-area .first-col-film span {
+    display: inline-block;
+    font-size: 19px !important;
+    line-height: 1.2 !important;
+    font-weight: 500;
+}
+
+.film-detail-label {
+    display: inline-block;
+    font-size: 15px;
+    line-height: 1.3 !important;
+    font-weight: 500;
+    position: relative;
+    bottom: 1.5px;
+}
+
+.span-show {
+    font-size: 13px !important;
+}
+
+.span-index {
+    font-size: 14.6px !important;
+}
+
+.film-title-text,
+.related-film-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.related-category-title {
+    display: inline-block;
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+}
+
+/* Pagination */
+.pagination-new {
+    width: 100%;
+    margin-top: 40px;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.pagination {
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    margin: auto;
+    gap: 4px;
+}
+
+.pagination .page-link {
+    color: var(--color-primary) !important;
+    background-color: var(--color-card-bg);
+    border: 1px solid var(--color-border-dark);
+    transition: var(--transition-normal);
+}
+
+.pagination .page-link:hover,
+.pagination .page-item.active .page-link {
+    color: var(--color-white) !important;
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.pagination .page-item.disabled .page-link {
+    color: var(--color-text-muted) !important;
+    background: var(--color-bg-soft);
+    border-color: var(--color-border-light);
+}
+
+.pagination .page-link:focus {
+    box-shadow: none;
+}
 
 /* =========================================================
-   13. FILM SHOW PAGE
+   6. FILM SHOW PAGE STYLES
    ========================================================= */
-
 .film-page {
     display: flex;
     align-items: flex-start;
-
     gap: 30px;
-
     margin-bottom: 100px;
 }
 
 .film-sidebar-desktop {
     width: 27%;
     flex: 0 0 27%;
-
     min-width: 0;
 }
 
 .film-main {
-    display: block;
     flex: 1;
-
     min-width: 0;
+    display: block;
+    background-color: var(--color-bg-film);
     padding: 20px;
-
-    background-color: var(--color-bg-soft);
-    border-radius: var(--radius-lg);
-
     font-size: 15px;
+    border-radius: var(--radius-lg);
 }
 
 .film-header {
+    text-align: left;
+    background: transparent;
     margin: 0 0 20px;
     padding: 0 0 6px;
-
-    text-align: left;
-
-    background: transparent;
-
     border-bottom: 2px solid var(--color-border);
 }
 
@@ -748,9 +849,9 @@ footer {
 
 .film-origin-title {
     margin-top: 8px;
-
-    font-size: 1.1rem;
     text-align: left;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
 }
 
 .film-mobile-block {
@@ -759,11 +860,9 @@ footer {
 
 .film-poster {
     display: block;
-
     width: 100%;
     height: auto;
-
-    border-radius: 12px;
+    border-radius: var(--radius-md);
 }
 
 .film-release-date {
@@ -777,7 +876,6 @@ footer {
 .film-mobile-info h2,
 .film-mobile-sidebar h2 {
     margin: 0 0 15px;
-
     font-size: 22px;
 }
 
@@ -790,9 +888,7 @@ footer {
 .film-info-row {
     display: flex;
     align-items: flex-start;
-
     gap: 8px;
-
     line-height: 1.5;
 }
 
@@ -808,8 +904,7 @@ footer {
 .film-info-note {
     margin-top: 10px;
     padding-top: 10px;
-
-    border-top: 1px solid #d7d7d7;
+    border-top: 1px solid var(--color-border-dark);
 }
 
 .film-info-note strong {
@@ -824,11 +919,8 @@ footer {
 .film-detail-row {
     display: flex;
     align-items: flex-start;
-
     gap: 10px;
-
     padding: 7px 0;
-
     line-height: 1.5;
 }
 
@@ -840,70 +932,36 @@ footer {
     min-width: 0;
 }
 
-.film-detail-label {
-    position: relative;
-
-    display: inline-block;
-
-    font-size: 15px;
-    line-height: 1.3 !important;
-    font-weight: 500;
-
-    bottom: 1.5px;
-}
-
-.span-show {
-    font-size: 13px !important;
-}
-
-.span-index {
-    font-size: 14.6px !important;
-}
-
-
-/* =========================================================
-   14. FILM SECTIONS
-   ========================================================= */
-
 .film-section {
     margin-top: 40px;
 }
 
 .film-section h2 {
     margin: 0 0 15px;
-
     font-size: 24px;
     line-height: 1.3;
 }
 
 .film-empty-block {
     padding: 15px 18px;
-
-    color: #666;
-    background: var(--color-white);
-
+    background: var(--color-card-bg);
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
 }
 
 .film-description {
     line-height: 1.7;
+    margin-top: 5px;
 }
 
 .film-description p:last-child {
     margin-bottom: 0;
 }
 
-
-/* =========================================================
-   15. RELATED FILMS
-   ========================================================= */
-
 .related-films {
     display: grid;
-
     grid-template-columns: repeat(6, 1fr);
-
     gap: 14px;
 }
 
@@ -913,43 +971,16 @@ footer {
 
 .related-film img {
     display: block;
-
     width: 100%;
     height: auto;
 }
 
 .related-film a {
     display: block;
-
     margin-top: 8px;
-
-    color: var(--color-text);
-
     font-weight: 500;
     line-height: 1.4;
 }
-
-.related-film a:hover {
-    color: var(--color-primary);
-}
-
-.related-category-title {
-    display: inline-block;
-
-    max-width: 70%;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    vertical-align: bottom;
-}
-
-
-/* =========================================================
-   16. MOBILE SIDEBAR
-   ========================================================= */
 
 .film-mobile-sidebar {
     margin-top: 40px;
@@ -958,167 +989,82 @@ footer {
 .sidebar-list {
     margin: 0 0 30px;
     padding: 0;
-
     list-style: none;
 }
 
 .sidebar-list li {
     padding: 8px 0;
-
-    border-bottom: 1px solid #d7d7d7;
+    border-bottom: 1px solid var(--color-border-dark);
 }
 
 .sidebar-list li:first-child {
-    border-top: 1px solid #d7d7d7;
+    border-top: 1px solid var(--color-border-dark);
 }
-
-.sidebar-list a {
-    color: var(--color-text);
-    text-decoration: none;
-}
-
-.sidebar-list a:hover {
-    color: var(--color-primary);
-}
-
-
-/* =========================================================
-   17. UPCOMING MOVIES
-   ========================================================= */
 
 .upcoming-movie {
     padding: 10px 0;
-
-    border-bottom: 1px solid #d7d7d7;
+    border-bottom: 1px solid var(--color-border-dark);
 }
 
 .upcoming-movie a {
     display: block;
-
-    color: var(--color-text);
     font-weight: 600;
-}
-
-.upcoming-movie a:hover {
-    color: var(--color-primary);
 }
 
 .upcoming-movie small {
     display: block;
-
     margin-top: 4px;
-
     color: var(--color-text-muted);
 }
-
-
-/* =========================================================
-   18. COMMENTS
-   ========================================================= */
 
 .film-comments {
     margin-top: 40px;
 }
 
+/* Специфічний колір лічильника переглядів у темній темі */
+[data-bs-theme="dark"] .film-views,
+[data-bs-theme="dark"] .views-count {
+    color: var(--bs-body-color-subtle, #adb5bd) !important;
+}
 
 /* =========================================================
-   19. PAGINATION
+   7. FORM CONTROLS (DARK THEME)
    ========================================================= */
-
-.pagination-new {
-    width: 100%;
-    margin-top: 40px;
-
-    overflow-x: auto;
-
-    text-align: center;
-    white-space: nowrap;
+[data-bs-theme="dark"] input,
+[data-bs-theme="dark"] textarea,
+[data-bs-theme="dark"] select,
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select {
+    background-color: var(--color-bg-soft) !important;
+    color: var(--color-text) !important;
+    border-color: var(--color-border) !important;
 }
 
-.pagination {
-    display: flex;
-
-    flex-wrap: nowrap;
-    width: max-content;
-
-    gap: 4px;
-
-    margin: auto;
+[data-bs-theme="dark"] input::placeholder,
+[data-bs-theme="dark"] .form-control::placeholder {
+    color: var(--color-text-muted) !important;
+    opacity: 0.8;
 }
 
-.pagination .page-link {
-    color: var(--color-primary);
-    background-color: var(--color-white);
-    border: 1px solid var(--color-border-pagination);
-
-    transition: var(--transition);
+[data-bs-theme="dark"] input:focus,
+[data-bs-theme="dark"] .form-control:focus {
+    background-color: var(--color-bg-section) !important;
+    color: var(--color-heading) !important;
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 0 0 0.25rem rgba(142, 160, 255, 0.25) !important;
 }
 
-.pagination .page-link:hover {
-    color: #fff;
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
+[data-bs-theme="dark"] input:-webkit-autofill,
+[data-bs-theme="dark"] input:-webkit-autofill:hover,
+[data-bs-theme="dark"] input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--color-text) !important;
+    -webkit-box-shadow: 0 0 0px 1000px var(--color-bg-soft) inset !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
-
-.pagination .page-item.active .page-link {
-    color: #fff;
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
-}
-
-.pagination .page-item.disabled .page-link {
-    color: #b7b7b7;
-    background-color: #f7f7f7;
-    border-color: #ececec;
-}
-
-.pagination .page-link:focus {
-    box-shadow: none;
-}
-
 
 /* =========================================================
-   20. DEFAULT POSTS — RESPONSIVE GRID
+   8. MEDIA QUERIES
    ========================================================= */
-
-@media (min-width: 769px) {
-    .section-default-posts {
-        display: block;
-        width: 100%;
-    }
-
-    .container-default {
-        display: grid;
-
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-
-        gap: 20px;
-
-        width: 100%;
-    }
-
-    .child {
-        width: auto;
-        min-width: 0;
-    }
-
-    .child img {
-        width: 100%;
-        max-width: 195px;
-        height: auto;
-    }
-
-    .child p {
-        max-width: 195px;
-        text-align: center;
-    }
-}
-
-
-/* =========================================================
-   21. TABLET
-   ========================================================= */
-
 @media (max-width: 1139px) {
     .container-arch {
         margin: 0 20px;
@@ -1129,21 +1075,13 @@ footer {
     }
 
     .container-default {
-        margin-right: auto;
         margin-left: auto;
-    }
-
-    .child {
-        width: 31%;
-    }
-
-    .section-single {
-        padding: 20px;
+        margin-right: auto;
     }
 
     .container-footer {
-        padding-right: 25px;
         padding-left: 25px;
+        padding-right: 25px;
     }
 }
 
@@ -1158,32 +1096,8 @@ footer {
         width: 100%;
     }
 
-    .section-single {
-        padding-top: 20px;
-        padding-right: 50px;
-        padding-left: 50px;
-    }
-
-    .logo1 {
-        display: block;
-
-        width: 100%;
-        height: auto;
-
-        padding-top: 30px;
-        padding-bottom: 25px;
-
-        text-align: center;
-
-        font-size: 36px;
-    }
-
-    .logo {
-        display: none;
-    }
-
-    .container-karuselowl {
-        margin-top: 50px;
+    .archive-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .film-page {
@@ -1200,16 +1114,36 @@ footer {
     }
 
     .film-header h1 {
-        font-size: 28px;
+        font-size: 30px;
     }
 
     .related-films {
         grid-template-columns: repeat(3, 1fr);
     }
 
-    .archive-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .section-single {
+        padding-top: 20px;
+        padding-left: 50px;
+        padding-right: 50px;
     }
+
+    .logo1 {
+        display: block;
+        padding-top: 30px;
+        padding-bottom: 25px;
+        text-align: center;
+        width: 100%;
+        height: auto;
+        font-size: 36px;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    /*.container-karuselowl {
+        margin-top: 50px;
+    }*/
 }
 
 @media (max-width: 960px) {
@@ -1222,94 +1156,21 @@ footer {
         display: block;
     }
 
-    h1 {
-        text-align: center;
-    }
-
+    h1,
     .breadcrumbs {
         text-align: center;
-    }
-
-    .child {
-        width: 47%;
+        font-size: 30px;
     }
 }
 
-
-/* =========================================================
-   22. MOBILE
-   ========================================================= */
-
 @media (max-width: 768px) {
-    .section-default-posts {
-        display: block;
-        width: 100%;
-    }
-
     .container-default {
-        display: grid;
-
         grid-template-columns: repeat(2, minmax(0, 1fr));
-
         gap: 20px;
-
-        width: 100%;
     }
-
-    .child {
-        width: auto;
-        min-width: 0;
-    }
-
-    .child img {
-        width: 100%;
-        max-width: 195px;
-        height: auto;
-    }
-
-    .child p {
-        max-width: 195px;
-        text-align: center;
-    }
-
-
-    /* Header */
-
-    .infoheader {
-        font-size: 9px;
-    }
-
-    .logo {
-        padding-top: 7px;
-        padding-bottom: 5px;
-    }
-
-    .container-header {
-        position: absolute;
-    }
-
-
-    /* General */
-
-    .flex-featured-home,
-    .page-navigation ul {
-        display: block;
-    }
-
-    .row-sidebar {
-        display: none;
-    }
-
-    .page-navigation li {
-        margin-bottom: 20px;
-    }
-
-
-    /* Film page */
 
     .film-page {
         display: block;
-
         margin-bottom: 50px;
     }
 
@@ -1319,11 +1180,8 @@ footer {
 
     .film-main {
         width: 100%;
-
         padding: 15px;
-
-        border-radius: var(--radius-md);
-
+        border-radius: 15px;
         font-size: 15px;
     }
 
@@ -1348,43 +1206,16 @@ footer {
         margin-top: 20px;
     }
 
-    .film-poster {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-    }
-
-    .film-mobile-info {
-        margin-top: 25px;
-    }
-
     .film-info-row {
-        display: flex;
-
-        gap: 8px;
-
         padding: 2px 0;
-
-        line-height: 1.5;
     }
 
     .film-info-row > span:first-child {
         flex: 0 0 150px;
-
-        font-weight: 600;
-    }
-
-    .film-info-row > div {
-        min-width: 0;
     }
 
     .film-details {
         margin-top: 30px;
-    }
-
-    .film-detail-row {
-        display: flex;
-        padding: 7px 0;
     }
 
     .film-detail-row > span:first-child {
@@ -1405,19 +1236,13 @@ footer {
         gap: 12px;
     }
 
-    .film-mobile-sidebar {
-        margin-top: 40px;
-    }
-
     .film-comments {
         margin-top: 35px;
     }
 
     .film-info-note {
         display: flex;
-
         align-items: flex-start;
-
         gap: 8px;
     }
 
@@ -1429,12 +1254,41 @@ footer {
         flex: 1;
         min-width: 0;
     }
+
+    .flex-featured-home,
+    .page-navigation ul {
+        display: block;
+    }
+
+    .row-sidebar {
+        display: none;
+    }
+
+    .page-navigation li {
+        margin-bottom: 20px;
+    }
+
+    .logo {
+        padding-top: 7px;
+        padding-bottom: 5px;
+    }
+
+    .container-header {
+        position: absolute;
+    }
 }
 
+@media (min-width: 768px) and (max-width: 991px) {
+    header {
+        margin-bottom: 48px;
+    }
+}
 
-/* =========================================================
-   23. SMALL MOBILE
-   ========================================================= */
+@media (max-width: 620px) {
+    .infoheader {
+        font-size: 9px;
+    }
+}
 
 @media (max-width: 580px) {
     .archive-grid {
@@ -1446,31 +1300,13 @@ footer {
         height: 55px;
     }
 
-    .child {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
     .section-single {
         padding: 20px;
     }
 
-    .nnn {
-        display: flex;
-        justify-content: space-between;
-    }
-
     .nnn img {
-        width: 100px;
         height: 130px;
-    }
-}
-
-@media (max-width: 481px) {
-    .logo img {
-        width: auto;
-        height: 45px;
+        width: 100px;
     }
 }
 
@@ -1481,7 +1317,7 @@ footer {
     }
 
     .film-header h1 {
-        font-size: 23px;
+        font-size: 28px;
     }
 
     .film-origin-title {
@@ -1498,4 +1334,42 @@ footer {
         grid-template-columns: 1fr 1fr;
         gap: 10px;
     }
+
+    .logo img {
+        width: auto;
+        height: 45px;
+    }
+}
+
+
+
+
+
+/* Колір посилання у заголовку h2 для світлої теми */
+.section-default-posts h1 a,
+.section-default-posts h1 a:visited {
+    color: var(--color-accent) !important;
+    font-weight: bold;
+    font-size: 36px;
+}
+
+/* Колір при наведенні */
+.section-default-posts h1 a:hover,
+.section-default-posts h1 a:focus {
+    color: #1d62d8 !important;
+}
+
+/* Якщо для темної теми потрібен інший колір */
+[data-bs-theme="dark"] .section-default-posts h1 a,
+[data-bs-theme="dark"] .section-default-posts h1 a:visited {
+    color: #1d78ff !important;
+}
+
+
+/* Усі h1 та посилання всередині h1 у темній темі */
+[data-bs-theme="dark"] h1,
+[data-bs-theme="dark"] h1 a,
+[data-bs-theme="dark"] h1 a:visited {
+    color: #1d78ff !important;
+    text-align: left;
 }

@@ -1,371 +1,214 @@
 <header>
-
-    {{-- Верхня інформаційна панель --}}
-    <div class="bg-dark text-light small">
-
+    {{-- Верхня інформаційна панель (ВИДАЛЕНО border-bottom) --}}
+    <div class="bg-black text-white small">
         <div class="container">
-
             <div class="d-flex justify-content-between align-items-center py-2">
-
+                {{-- Ліва частина: Дата та Курси валют --}}
                 <div class="d-flex align-items-center gap-3 flex-wrap">
-
                     @if($currentDate)
-                        <span>
-                            <i class="bi bi-calendar3 me-1"></i>
+                        <span class="text-white-50">
+                            <i class="bi bi-calendar3 me-1 text-white"></i>
                             {{ $currentDate->format('d.m.Y') }}
                         </span>
                     @endif
 
                     @if($currency)
-                        <span>
-                            USD
-                            <strong>{{ $currency['USD'] }}</strong>
+                        <span class="text-white-50 d-none d-sm-inline">
+                            USD <strong class="text-white">{{ $currency['USD'] }}</strong>
                         </span>
-
-                        <span>
-                            EUR
-                            <strong>{{ $currency['EUR'] }}</strong>
+                        <span class="text-white-50 d-none d-sm-inline">
+                            EUR <strong class="text-white">{{ $currency['EUR'] }}</strong>
                         </span>
                     @endif
-
                 </div>
 
-                <div>
-
+                {{-- Права частина верхньої смуги --}}
+                <div class="d-flex align-items-center gap-2 gap-md-3">
                     @guest
-
                         <div class="d-none d-lg-flex gap-3">
-
-                            <a
-                                class="text-light text-decoration-none"
-                                href="{{ route('login') }}">
-
-                                Login
-
+                            <a class="text-white text-decoration-none" href="{{ route('login') }}">
+                                <i class="bi bi-box-arrow-in-right me-1"></i> Login
                             </a>
-
-                            <a
-                                class="text-light text-decoration-none"
-                                href="{{ route('register') }}">
-
-                                Register
-
+                            <a class="text-white text-decoration-none" href="{{ route('register') }}">
+                                <i class="bi bi-person-plus me-1"></i> Register
                             </a>
-
                         </div>
-
                     @else
-
                         <div class="dropdown d-none d-lg-block">
-
-                            <a
-                                href="#"
-                                class="dropdown-toggle text-light text-decoration-none"
-                                data-bs-toggle="dropdown">
-
+                            <a href="#" class="dropdown-toggle text-white text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-person-circle me-1"></i>
-
                                 {{ Auth::user()->name }}
-
                             </a>
-
-                            <ul class="dropdown-menu dropdown-menu-end">
-
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
                                 @can('viewAny', \App\Models\Film::class)
-
                                     <li>
-
-                                        <a
-                                            class="dropdown-item"
-                                            href="{{ route('admin.dashboard') }}">
-
-                                            <i class="bi bi-speedometer2 me-2"></i>
-
-                                            Адмінка
-
+                                        <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                                            <i class="bi bi-speedometer2 me-2"></i>Адмінка
                                         </a>
-
                                     </li>
-
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-
+                                    <li><hr class="dropdown-divider"></li>
                                 @endcan
 
                                 <li>
-
-                                    <a
-                                        class="dropdown-item"
-                                        href="{{ route('profile') }}">
-
-                                        <i class="bi bi-person me-2"></i>
-
-                                        Профіль
-
+                                    <a class="dropdown-item" href="{{ route('profile') }}">
+                                        <i class="bi bi-person me-2"></i>Профіль
                                     </a>
-
                                 </li>
-
+                                <li><hr class="dropdown-divider"></li>
                                 <li>
-                                    <hr class="dropdown-divider">
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                        </button>
+                                    </form>
                                 </li>
-
-                                    <li>
-
-                                        <form action="{{ route('logout') }}" method="POST">
-
-                                            @csrf
-
-                                            <button type="submit" class="dropdown-item">
-
-                                                <i class="bi bi-box-arrow-right me-2"></i>
-
-                                                Logout
-
-                                            </button>
-
-                                        </form>
-
-                                    </li>
-
                             </ul>
-
                         </div>
-
                     @endguest
 
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    {{-- Логотип --}}
-    <div class="bg-white shadow-sm">
-
-        <div class="container py-3">
-
-            <nav class="navbar navbar-light p-0">
-
-                <a
-                    href="{{ route('home') }}"
-                    class="navbar-brand m-0">
-
-                    <img
-                        src="{{ app(\App\Media\SettingsImageResolver::class)->logo($settings) }}"
-                        alt="{{ $settings->title ?? 'Kino' }}"
-                        style="height:58px;width:auto;">
-
-                </a>
-
-                <button
-                    class="navbar-toggler d-lg-none ms-auto"
-                    type="button"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#mainMenu">
-
-                    <span class="navbar-toggler-icon"></span>
-
-                </button>
-
-            </nav>
-
-        </div>
-
-    </div>
-
-    {{-- Пошук --}}
-    <div class="bg-light border-top border-bottom py-3">
-
-        <div class="container">
-
-            <div
-                id="search-app"
-                class="mx-auto"
-                style="max-width:700px;width:100%;">
-
-                <search-component></search-component>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    {{-- Меню (тільки Desktop) --}}
-    <nav class="navbar navbar-expand-lg bg-white border-bottom d-none d-lg-flex">
-
-        <div class="container justify-content-center">
-
-            <ul class="navbar-nav">
-
-                @foreach($menuItems as $item)
-
-                    <li class="nav-item">
-
-                        <a
-                            class="nav-link px-3 {{ request()->is(...$item['is_patterns']) ? 'active fw-semibold' : '' }}"
-                            href="{{ $item['url'] }}">
-
-                            {{ $item['name'] }}
-
-                        </a>
-
-                    </li>
-
-                @endforeach
-
-            </ul>
-
-        </div>
-
-    </nav>
-
-
-    {{-- Mobile menu --}}
-    <div class="offcanvas offcanvas-start"
-         tabindex="-1"
-         id="mainMenu">
-
-        <div class="offcanvas-header">
-
-            <h5 class="offcanvas-title">
-
-                {{ $settings->title ?? 'Kino' }}
-
-            </h5>
-
-            <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="offcanvas">
-            </button>
-
-        </div>
-
-
-        <div class="offcanvas-body">
-
-            {{-- Навігація --}}
-            <ul class="navbar-nav mb-4">
-
-                @foreach($menuItems as $item)
-
-                    <li class="nav-item">
-
-                        <a
-                            class="nav-link py-2 {{ request()->is(...$item['is_patterns']) ? 'active fw-semibold' : '' }}"
-                            href="{{ $item['url'] }}"
-                            data-bs-dismiss="offcanvas">
-
-                            {{ $item['name'] }}
-
-                        </a>
-
-                    </li>
-
-                @endforeach
-
-            </ul>
-
-            <hr>
-
-            {{-- Авторизація --}}
-            @guest
-
-                <div class="d-grid gap-2">
-
-                    <a class="btn btn-dark"
-                       href="{{ route('login') }}">
-
-                        <i class="bi bi-box-arrow-in-right me-2"></i>
-
-                        Login
-
-                    </a>
-
-                    <a class="btn btn-outline-dark"
-                       href="{{ route('register') }}">
-
-                        <i class="bi bi-person-plus me-2"></i>
-
-                        Register
-
-                    </a>
-
-                </div>
-
-            @else
-
-                <div class="mb-3 fw-semibold">
-
-                    <i class="bi bi-person-circle me-2"></i>
-
-                    {{ Auth::user()->name }}
-
-                </div>
-
-                <div class="d-grid gap-2">
-
-                    @can('viewAny', \App\Models\Film::class)
-
-                        <a class="btn btn-outline-dark"
-                           href="{{ route('admin.dashboard') }}">
-
-                            <i class="bi bi-speedometer2 me-2"></i>
-
-                            Адмінка
-
-                        </a>
-
-                    @endcan
-
-                    <a class="btn btn-dark"
-                       href="{{ route('profile') }}">
-
-                        <i class="bi bi-person me-2"></i>
-
-                        Профіль
-
-                    </a>
-
-                    <form action="{{ route('logout') }}"
-                          method="POST">
-
-                        @csrf
-
-                        <button class="btn btn-outline-danger w-100"
-                                type="submit">
-
-                            <i class="bi bi-box-arrow-right me-2"></i>
-
-                            Logout
-
+                    {{-- Елементи керування для Mobile (ВИДАЛЕНО border-start) --}}
+                    <div class="d-flex align-items-center gap-1 d-lg-none ps-2 ms-1">
+                        <button type="button"
+                                class="btn btn-sm btn-outline-light border-0 theme-toggle d-flex align-items-center justify-content-center p-1"
+                                aria-label="Перемкнути тему"
+                                title="Перемкнути тему"
+                                style="width: 32px; height: 32px; border-radius: 50%;">
+                            <i class="bi bi-moon-fill fs-6"></i>
                         </button>
 
-                    </form>
+                        <button class="navbar-toggler p-1 text-white border-0"
+                                type="button"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#mainMenu"
+                                aria-controls="mainMenu"
+                                aria-label="Меню">
+                            <i class="bi bi-list fs-3"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    {{-- Основна шапка: ЕДИНА ЛІНІЯ ТУТ (border-bottom) --}}
+    <div class="bg-body border-bottom-customm shadow-sm">
+        <div class="container py-2 py-lg-3">
+            <div class="row align-items-center gy-2">
+
+                <div class="col-12 col-lg-2 text-center text-lg-start">
+                    <a href="{{ route('home') }}" class="navbar-brand d-inline-block">
+                        <img src="{{ app(\App\Media\SettingsImageResolver::class)->logo($settings) }}"
+                             alt="{{ $settings->title ?? 'Kino' }}"
+                             style="height: 48px; width: auto; max-width: 100%;">
+                    </a>
                 </div>
 
-            @endguest
+                <div class="col-12 col-lg-7">
+                    <div id="search-app" class="mx-auto" style="max-width: 650px;">
+                        <search-component></search-component>
+                    </div>
+                </div>
 
+                <div class="col-lg-3 d-none d-lg-flex justify-content-end align-items-center">
+
+                    <button type="button"
+                            class="btn btn-outline-secondary border-0 theme-toggle d-flex align-items-center justify-content-center"
+                            aria-label="Перемкнути тему"
+                            title="Перемкнути тему"
+                            style="width: 40px; height: 40px; border-radius: 50%;">
+                        <i class="bi bi-moon-fill fs-5"></i>
+                    </button>
+                </div>
+
+            </div>
         </div>
-
     </div>
 
 
-    {{-- Карусель --}}
-    <section class="py-3 bg-light">
-
+    <nav class="navbar navbar-expand-lg header-nav-bg-customm d-none d-lg-block py-1 pt-3 pb-3">
         <div class="container">
+            <ul class="navbar-nav mx-auto gap-2 align-items-center">
+                @foreach($menuItems as $item)
+                    <li class="nav-item">
+                        <a class="nav-link px-3 {{ request()->is(...$item['is_patterns']) ? 'active fw-bold text-primary' : '' }}"
+                           href="{{ $item['url'] }}">
+                            {{ $item['name'] }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </nav>
 
-            @include('layouts.inc.carouselfilms')
-
+    {{-- Mobile Offcanvas Menu --}}
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mainMenu" aria-labelledby="mainMenuLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title" id="mainMenuLabel">
+                {{ $settings->title ?? 'Kino' }}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
 
-    </section>
+        <div class="offcanvas-body d-flex flex-column justify-content-between">
+            <ul class="navbar-nav mb-4">
+                @foreach($menuItems as $item)
+                    <li class="nav-item mt-3">
+                        <a class="nav-link py-2 fs-6 {{ request()->is(...$item['is_patterns']) ? 'active fw-bold text-primary' : '' }}"
+                           href="{{ $item['url'] }}">
+                            {{ $item['name'] }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+
+            <div class="pt-3 mt-auto">
+                @guest
+                    <div class="d-grid gap-2">
+                        <a class="btn btn-primary" href="{{ route('login') }}">
+                            <i class="bi bi-box-arrow-in-right me-2"></i> Login
+                        </a>
+                        <a class="btn btn-outline-secondary" href="{{ route('register') }}">
+                            <i class="bi bi-person-plus me-2"></i> Register
+                        </a>
+                    </div>
+                @else
+                    <div class="mb-3 fw-semibold">
+                        <i class="bi bi-person-circle me-2"></i>
+                        {{ Auth::user()->name }}
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        @can('viewAny', \App\Models\Film::class)
+                            <a class="btn btn-outline-secondary text-start" href="{{ route('admin.dashboard') }}">
+                                <i class="bi bi-speedometer2 me-2"></i> Адмінка
+                            </a>
+                        @endcan
+
+                        <a class="btn btn-outline-secondary text-start" href="{{ route('profile') }}">
+                            <i class="bi bi-person me-2"></i> Профіль
+                        </a>
+
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button class="btn btn-outline-danger w-100 text-start" type="submit">
+                                <i class="bi bi-box-arrow-right me-2"></i> Logout
+                            </button>
+                        </form>
+                    </div>
+                @endguest
+            </div>
+        </div>
+    </div>
+
+
+    @if(View::exists('layouts.inc.carouselfilms'))
+        <section class="pt-3 pb-1 bg-body-tertiary">
+            <div class="container">
+                @include('layouts.inc.carouselfilms')
+            </div>
+        </section>
+    @endif
+
 
 </header>

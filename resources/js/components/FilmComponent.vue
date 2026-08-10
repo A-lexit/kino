@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-12 pt-5">
-            <div class="">
+            <div class="d-flex align-items-center gap-3 text-body">
                 <views-component></views-component>
                 <likes-component></likes-component>
             </div>
@@ -33,8 +33,6 @@ export default {
         let url = window.location.pathname;
         let slug = url.substring(url.lastIndexOf('/') + 1);
 
-        console.log(url);
-        console.log(slug);
         this.$store.commit('SET_SLUG', slug);
         this.$store.dispatch("getFilmData", slug);
         this.$store.dispatch("viewsIncrement", slug);
@@ -43,5 +41,6 @@ export default {
 </script>
 
 <style scoped>
-/* Додати стилі, якщо потрібно */
+
 </style>
+

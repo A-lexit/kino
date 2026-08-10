@@ -6,7 +6,7 @@
 <div class="container">
 
     <div class="section-default-posts">
-        <h2> <a href="{{ route('categories.show', ['slug' => 'filmi']) }}">Фільми</a></h2>
+        <h1> <a href="{{ route('categories.show', ['slug' => 'filmi']) }}">Фільми</a></h1>
         <div class="container-default">
 
             @foreach($films as $film)
@@ -26,7 +26,7 @@
     </div>
 
     <div class="section-default-posts">
-        <h2> <a href="{{ route('categories.show', ['slug' => 'seriali']) }}">Серіали</a></h2>
+        <h1> <a href="{{ route('categories.show', ['slug' => 'seriali']) }}">Серіали</a></h1>
         <div class="container-default">
 
             @foreach($serials as $serial)
@@ -45,7 +45,7 @@
 
 
     <div class="section-default-posts">
-        <h2> <a href="{{ route('categories.show', ['slug' => 'multiki']) }}">Мультики</a></h2>
+        <h1> <a href="{{ route('categories.show', ['slug' => 'multiki']) }}">Мультики</a></h1>
         <div class="container-default">
             @foreach($mults as $mult)
                 <div class="child">
@@ -63,7 +63,7 @@
 
 
     <div class="section-default-posts">
-    <h2> <a href="{{ route('categories.show', ['slug' => 'multseriali']) }}">Мультеріали</a></h2>
+    <h1> <a href="{{ route('categories.show', ['slug' => 'multseriali']) }}">Мультеріали</a></h1>
     <div class="container-default">
         @foreach($multserials as $multserial)
             <div class="child">
