@@ -15,7 +15,7 @@ class CategoriesTableSeeder extends Seeder
             'Не вказано',
             'Фільми',
             'Серіали',
-            'Мультики',
+            'Мультфільми',
             'Мультсеріали',
         ];
 
