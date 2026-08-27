@@ -10,23 +10,12 @@ return new class extends Migration
     {
         Schema::create('film_related_film', function (Blueprint $table) {
             $table->id();
-
-            $table->unsignedInteger('film_id');
-            $table->unsignedInteger('related_film_id');
-
+            $table->unsignedBigInteger('film_id');
+            $table->unsignedBigInteger('related_film_id');
             $table->timestamps();
 
-            $table->foreign('film_id')
-                ->references('id')
-                ->on('films')
-                ->cascadeOnDelete();
-
-            $table->foreign('related_film_id')
-                ->references('id')
-                ->on('films')
-                ->cascadeOnDelete();
-
-            $table->unique(['film_id', 'related_film_id']);
+            $table->foreign('film_id')->references('id')->on('films')->cascadeOnDelete();
+            $table->foreign('related_film_id')->references('id')->on('films')->cascadeOnDelete();
         });
     }
 
