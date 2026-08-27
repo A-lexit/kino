@@ -42,9 +42,6 @@
     {{-- Основні стилі --}}
     <link rel="stylesheet" href="{{ asset('assets/front/css/style.css') }}">
 
-
-
-
         <script>
             (function() {
                 const savedTheme = localStorage.getItem('theme');
@@ -55,61 +52,6 @@
                 }
             })();
         </script>
-
-
-
-
-    {{--<style>
-        /* Перемикач теми */
-        .theme-toggle {
-            transition: transform 0.2s ease, color 0.2s ease;
-            cursor: pointer;
-        }
-
-        .theme-toggle:hover {
-            transform: rotate(15deg);
-        }
-
-        /* Зображення постерів */
-        .film-poster img,
-        .carousel-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
-
-        /* Оптимізація темної теми для кастомних елементів */
-        [data-bs-theme="dark"] .film-views,
-        [data-bs-theme="dark"] .views-count {
-            color: var(--bs-body-color-subtle) !important;
-        }
-
-        /* Сітка з автоматичним перенесенням на всіх екранах */
-        .container-default {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 20px;
-            width: 100%;
-        }
-
-        /* Контейнер картки */
-        .child {
-            width: 100%;
-            max-width: 195px;
-            justify-self: center; /* Центрує картку у своїй комірці grid */
-        }
-
-        /* Картинка всередині */
-        .child img {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 194 / 293; /* Зберігає пропорції постера без стискання */
-            object-fit: cover;
-            vertical-align: bottom;
-            border-radius: var(--radius-sm);
-        }
-    </style>--}}
 
     {{-- Vite --}}
     @vite('resources/js/app.js')

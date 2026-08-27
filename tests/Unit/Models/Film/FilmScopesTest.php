@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Unit\Models\Film;
 
 use App\Enums\FilmStatus;
@@ -28,31 +29,22 @@ class FilmScopesTest extends TestCase
         $this->assertTrue($films->contains($published));
     }
 
-
-    public function test_for_user_scope_returns_only_authors_films_for_regular_user(): void
+    public function test_for_user_scope_returns_no_films_for_regular_user(): void
     {
-        $author = User::factory()->create([
+        $user = User::factory()->create([
             'role' => UserRole::User,
-        ]);
-
-        $anotherAuthor = User::factory()->create([
-            'role' => UserRole::User,
-        ]);
-
-        $ownFilm = Film::factory()->create([
-            'author_id' => $author->id,
         ]);
 
         Film::factory()->create([
-            'author_id' => $anotherAuthor->id,
+            'author_id' => $user->id,
         ]);
 
-        $films = Film::forUser($author)->get();
+        Film::factory()->create();
 
-        $this->assertCount(1, $films);
-        $this->assertTrue($films->contains($ownFilm));
+        $films = Film::forUser($user)->get();
+
+        $this->assertCount(0, $films);
     }
-
 
     public function test_for_user_scope_returns_all_films_for_admin(): void
     {
@@ -67,6 +59,18 @@ class FilmScopesTest extends TestCase
         $this->assertCount(3, $films);
     }
 
+    public function test_for_user_scope_returns_all_films_for_editor(): void
+    {
+        $editor = User::factory()->create([
+            'role' => UserRole::Editor,
+        ]);
+
+        Film::factory()->count(3)->create();
+
+        $films = Film::forUser($editor)->get();
+
+        $this->assertCount(3, $films);
+    }
 
     public function test_for_user_scope_returns_all_films_for_viewer(): void
     {
@@ -81,7 +85,6 @@ class FilmScopesTest extends TestCase
         $this->assertCount(4, $films);
     }
 
-
     public function test_for_user_scope_with_null_user_returns_no_films(): void
     {
         Film::factory()->count(3)->create();
@@ -90,5 +93,4 @@ class FilmScopesTest extends TestCase
 
         $this->assertCount(0, $films);
     }
-
 }

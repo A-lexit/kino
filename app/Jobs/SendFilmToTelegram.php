@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Jobs;
 
 use App\APIs\TelegramService;
@@ -31,4 +30,5 @@ class SendFilmToTelegram implements ShouldQueue
 
         $telegram->sendFilm($film);
     }
+
 }

@@ -10,26 +10,46 @@ use Illuminate\Support\Facades\Cache;
 
 class MenuController extends Controller
 {
-    public function create()
+    public function edit()
     {
+        $this->authorize('viewAny', Menu::class);
+
         $allCategories = Category::all();
-        $allMenus = Menu::with('items.category')->get();
         $staticPages = MenuItem::STATIC_PAGES;
 
-        return view('admin.menu.create', compact('allCategories', 'allMenus', 'staticPages'));
+        $menu = Menu::with('items.category')->first();
+
+        if (!$menu) {
+            $this->authorize('create', Menu::class);
+
+            $menu = Menu::create([
+                'title' => 'Головне меню',
+                'is_active' => true,
+            ]);
+        }
+
+        return view(
+            'admin.menu.edit',
+            compact('allCategories', 'staticPages', 'menu')
+        );
     }
 
-    public function store(Request $request)
+    public function update(Request $request)
     {
+        $menu = Menu::first()
+            ?? Menu::create([
+                'title' => 'Головне меню',
+                'is_active' => true,
+            ]);
+
+        $this->authorize('update', $menu);
+
         $request->validate([
-            'title' => 'required|string|max:255',
             'items' => 'required|array|min:1',
         ]);
 
-        $menu = Menu::create(['title' => $request->input('title'), 'is_active' => false]);
+        $menu->items()->delete();
 
-        // $request->items — масив рядків типу "category:5" або "static:actors",
-        // порядок у масиві = порядок вибору в select2 = порядок у меню
         foreach ($request->input('items') as $position => $value) {
             [$type, $key] = explode(':', $value, 2);
 
@@ -41,22 +61,16 @@ class MenuController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.menu.create')->with('success', 'Меню створено');
-    }
-
-    public function activateMenu(Request $request)
-    {
-        $menuId = $request->input('menu_id');
-
-        Menu::where('is_active', true)->update(['is_active' => false]);
-
-        $menu = Menu::findOrFail($menuId);
-        $menu->is_active = true;
-        $menu->save();
+        if (!$menu->is_active) {
+            $menu->update([
+                'is_active' => true,
+            ]);
+        }
 
         Cache::forget('active_menu');
 
-        return redirect()->route('admin.menu.create')->with('success', 'Меню активовано');
+        return redirect()
+            ->route('admin.menu.edit')
+            ->with('success', 'Меню оновлено');
     }
-
 }

@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('films', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('title', 255)->unique();
             $table->string('slug')->unique();
             $table->string('origin_title')->nullable();
-            $table->string('duration')->nullable();
+            /*$table->string('duration')->nullable();*/
             $table->text('other_actor')->nullable();
             $table->text('note')->nullable();
             $table->longText('description')->nullable();
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->integer('quality_id')->unsigned()->nullable();
             $table->integer('duration_id')->unsigned()->nullable();
 
-            $table->integer('view')->unsigned()->default(0);
+            /*$table->integer('view')->unsigned()->default(0);*/
 
             $table->string('thumbnail')->nullable();
             $table->string('tmdb_poster')->nullable();
@@ -51,9 +51,6 @@ return new class extends Migration
             $table->string('gal_image4')->nullable();
             $table->string('gal_image5')->nullable();
 
-
-
-
             $table->date('datepicker')->nullable();
 
             $table->string('publish_status')->default('draft');    //Чернетка
@@ -65,11 +62,13 @@ return new class extends Migration
             $table->string('imdb_id')->nullable();
             $table->decimal('imdb_rating', 3, 1)->nullable();
 
-
             $table->timestamps();
             $table->index('created_at');
 
             $table->softDeletes();
+
+
+            $table->unsignedInteger('sort_order')->default(0)->index();
         });
     }
 

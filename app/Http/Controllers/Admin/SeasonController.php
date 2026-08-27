@@ -10,38 +10,60 @@ class SeasonController extends Controller
 {
     public function index()
     {
-        $seasons = Season::paginate(20);
+        $this->authorize('viewAny', Season::class);
+
+        $seasons = Season::latest('id')->paginate(20);
+
         return view('admin.seasons.index', compact('seasons'));
     }
 
     public function create()
     {
+        $this->authorize('create', Season::class);
+
         return view('admin.seasons.create');
     }
 
     public function store(TitleRequest $request)
     {
-        Season::create($request->all());
-        return redirect()->route('admin.seasons.index')->with('success', 'Сезон додано');
+        $this->authorize('create', Season::class);
+
+        Season::create($request->validated());
+
+        return redirect()
+            ->route('admin.seasons.index')
+            ->with('success', 'Сезон додано');
     }
 
     public function edit($id)
     {
         $season = Season::findOrFail($id);
+
+        $this->authorize('view', $season);
+
         return view('admin.seasons.edit', compact('season'));
     }
 
     public function update(TitleRequest $request, $id)
     {
         $season = Season::findOrFail($id);
-        $season->update($request->all());
-        return redirect()->route('admin.seasons.index')->with('success', 'Зміни збережені');
+
+        $this->authorize('update', $season);
+
+        $season->update($request->validated());
+
+        return redirect()
+            ->route('admin.seasons.index')
+            ->with('success', 'Зміни збережені');
     }
 
-
-    // Одиночне видалення через AJAX
+    /**
+     * Одиночне видалення через AJAX.
+     */
     public function destroy(Season $season)
     {
+        $this->authorize('delete', $season);
+
         if ($season->films()->exists()) {
             return response()->json([
                 'success' => false,
@@ -57,19 +79,24 @@ class SeasonController extends Controller
         ]);
     }
 
-    // Масове видалення через AJAX
+    /**
+     * Масове видалення через AJAX.
+     */
     public function bulkAction(Request $request)
     {
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
         $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'exists:seasons,id',
-            'action' => 'required|string|in:delete'
+            'action' => 'required|string|in:delete',
         ]);
 
         $ids = $request->input('ids');
 
         foreach ($ids as $id) {
             $season = Season::find($id);
+
             if ($season && $season->films()->exists()) {
                 return response()->json([
                     'success' => false,
@@ -85,5 +112,4 @@ class SeasonController extends Controller
             'message' => 'Вибрані сезони успішно видалено.'
         ]);
     }
-
 }

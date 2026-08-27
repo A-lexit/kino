@@ -18,7 +18,7 @@ class StateResourceTest extends TestCase
         $state = State::create([
             'film_id' => $film->id,
             'likes' => 42,
-            'vviews' => 777,
+            'views' => 777,
         ]);
 
         $resource = new StateResource($state);

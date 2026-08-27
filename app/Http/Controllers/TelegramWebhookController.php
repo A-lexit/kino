@@ -125,4 +125,5 @@ class TelegramWebhookController extends Controller
             'text' => $text,
         ]);
     }
+
 }

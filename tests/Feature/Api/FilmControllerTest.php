@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Feature\Api;
 
 use App\Models\Film;
@@ -39,7 +40,7 @@ class FilmControllerTest extends TestCase
 
         $this->assertNull($film->state);
 
-        $response = $this->putJson('/api/film-views-increment', [
+        $response = $this->postJson('/api/film-views-increment', [
             'slug' => 'inception'
         ]);
 
@@ -47,7 +48,7 @@ class FilmControllerTest extends TestCase
 
         $film->refresh();
         $this->assertNotNull($film->state);
-        $this->assertEquals(1, $film->state->vviews);
+        $this->assertEquals(1, $film->state->views);
     }
 
     public function test_it_increments_existing_views()
@@ -55,24 +56,24 @@ class FilmControllerTest extends TestCase
         $film = Film::factory()->create(['slug' => 'interstellar']);
 
         if (!$film->state) {
-            $film->state()->create(['vviews' => 10]);
+            $film->state()->create(['views' => 10]);
         } else {
-            $film->state->update(['vviews' => 10]);
+            $film->state->update(['views' => 10]);
         }
 
-        $response = $this->putJson('/api/film-views-increment', [
+        $response = $this->postJson('/api/film-views-increment', [
             'slug' => 'interstellar'
         ]);
 
         $response->assertStatus(200);
 
         $film->refresh();
-        $this->assertEquals(11, $film->state->vviews);
+        $this->assertEquals(11, $film->state->views);
     }
 
     public function test_it_returns_404_on_views_increment_if_film_not_found()
     {
-        $response = $this->putJson('/api/film-views-increment', [
+        $response = $this->postJson('/api/film-views-increment', [
             'slug' => 'ghost-film'
         ]);
 
@@ -90,7 +91,7 @@ class FilmControllerTest extends TestCase
             $film->state->update(['likes' => 5]);
         }
 
-        $response = $this->putJson('/api/film-likes-increment', [
+        $response = $this->postJson('/api/film-likes-increment', [
             'slug' => 'avatar',
             'increment' => true
         ]);
@@ -111,7 +112,7 @@ class FilmControllerTest extends TestCase
             $film->state->update(['likes' => 5]);
         }
 
-        $response = $this->putJson('/api/film-likes-increment', [
+        $response = $this->postJson('/api/film-likes-increment', [
             'slug' => 'avatar-2',
             'increment' => false
         ]);
@@ -119,12 +120,13 @@ class FilmControllerTest extends TestCase
         $response->assertStatus(200);
 
         $film->refresh();
+
         $this->assertEquals(4, $film->state->likes);
     }
 
     public function test_it_returns_404_on_likes_increment_if_film_not_found()
     {
-        $response = $this->putJson('/api/film-likes-increment', [
+        $response = $this->postJson('/api/film-likes-increment', [
             'slug' => 'ghost-film',
             'increment' => true
         ]);
@@ -132,5 +134,4 @@ class FilmControllerTest extends TestCase
         $response->assertStatus(404);
         $response->assertJson(['error' => 'Фільм не знайдено']);
     }
-
 }

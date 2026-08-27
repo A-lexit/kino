@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -10,39 +11,59 @@ class AgeController extends Controller
 {
     public function index()
     {
-        $ages = Age::paginate(20);
+        $this->authorize('viewAny', Age::class);
+
+        $ages = Age::latest('id')->paginate(20);
+
         return view('admin.ages.index', compact('ages'));
     }
 
     public function create()
     {
+        $this->authorize('create', Age::class);
+
         return view('admin.ages.create');
     }
 
     public function store(TitleRequest $request)
     {
-        Age::create($request->all());
-        return redirect()->route('admin.ages.index')->with('success', 'Вікову категорію додано');
+        $this->authorize('create', Age::class);
+
+        Age::create($request->validated());
+
+        return redirect()
+            ->route('admin.ages.index')
+            ->with('success', 'Вікову категорію додано');
     }
 
     public function edit($id)
     {
         $age = Age::findOrFail($id);
+
+        // Viewer може зайти в edit для перегляду.
+        $this->authorize('view', $age);
+
         return view('admin.ages.edit', compact('age'));
     }
 
     public function update(TitleRequest $request, $id)
     {
         $age = Age::findOrFail($id);
-        $age->update($request->all());
-        return redirect()->route('admin.ages.index')->with('success', 'Зміни збережені');
+
+        // Viewer сюди вже не пройде.
+        $this->authorize('update', $age);
+
+        $age->update($request->validated());
+
+        return redirect()
+            ->route('admin.ages.index')
+            ->with('success', 'Зміни збережені');
     }
 
-
-    // Одиночне видалення через AJAX
     public function destroy(Age $age)
     {
-        // Перевірка зв'язків (якщо до вікового обмеження прив'язані фільми)
+        $this->authorize('delete', $age);
+
         if ($age->films()->exists()) {
             return response()->json([
                 'success' => false,
@@ -58,9 +79,10 @@ class AgeController extends Controller
         ]);
     }
 
-    // Масове видалення через AJAX
     public function bulkAction(Request $request)
     {
+        $this->authorize('delete', Age::class);
+
         $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'exists:ages,id',
@@ -69,9 +91,9 @@ class AgeController extends Controller
 
         $ids = $request->input('ids');
 
-        // Перевіряємо кожен ID перед видаленням скопом
         foreach ($ids as $id) {
             $age = Age::find($id);
+
             if ($age && $age->films()->exists()) {
                 return response()->json([
                     'success' => false,

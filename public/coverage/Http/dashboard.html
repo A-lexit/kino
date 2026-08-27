@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /var/www/app/Http</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../_css/bootstrap.min.css?v=12.5.7" rel="stylesheet" type="text/css">
+  <link href="../_css/billboard.min.css?v=12.5.7" rel="stylesheet" type="text/css">
+  <link href="../_css/style.css?v=12.5.7" rel="stylesheet" type="text/css">
+  <link href="../_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="../index.html">/var/www/app</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Http</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classesCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3 style="margin-top: 2rem;">Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Controllers/Admin/TelegramSubscriberController.php.html#8">App\Http\Controllers\Admin\TelegramSubscriberController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Auth/ConfirmPasswordController.php.html#8">App\Http\Controllers\Auth\ConfirmPasswordController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Auth/LoginController.php.html#9">App\Http\Controllers\Auth\LoginController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Auth/RegisterController.php.html#11">App\Http\Controllers\Auth\RegisterController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Auth/VerificationController.php.html#8">App\Http\Controllers\Auth\VerificationController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Middleware/Authenticate.php.html#8">App\Http\Middleware\Authenticate</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Middleware/RedirectIfAuthenticated.php.html#11">App\Http\Middleware\RedirectIfAuthenticated</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Middleware/TrustHosts.php.html#7">App\Http\Middleware\TrustHosts</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/ActorController.php.html#9">App\Http\Controllers\Admin\ActorController</a></td><td class="text-right">44%</td></tr>
+       <tr><td><a href="Controllers/Admin/CaptionController.php.html#9">App\Http\Controllers\Admin\CaptionController</a></td><td class="text-right">44%</td></tr>
+       <tr><td><a href="Controllers/Admin/CategoryController.php.html#9">App\Http\Controllers\Admin\CategoryController</a></td><td class="text-right">44%</td></tr>
+       <tr><td><a href="Controllers/Admin/CompanyController.php.html#9">App\Http\Controllers\Admin\CompanyController</a></td><td class="text-right">44%</td></tr>
+       <tr><td><a href="Controllers/Admin/ComposerController.php.html#9">App\Http\Controllers\Admin\ComposerController</a></td><td class="text-right">44%</td></tr>
+       <tr><td><a href="Controllers/Admin/CountryController.php.html#9">App\Http\Controllers\Admin\CountryController</a></td><td class="text-right">44%</td></tr>
+       <tr><td><a href="Controllers/Admin/DirectorController.php.html#9">App\Http\Controllers\Admin\DirectorController</a></td><td class="text-right">44%</td></tr>
+       <tr><td><a href="Controllers/Admin/DurationController.php.html#9">App\Http\Controllers\Admin\DurationController</a></td><td class="text-right">44%</td></tr>
+       <tr><td><a href="Controllers/Admin/CommentController.php.html#8">App\Http\Controllers\Admin\CommentController</a></td><td class="text-right">44%</td></tr>
+       <tr><td><a href="Controllers/Admin/AgeController.php.html#9">App\Http\Controllers\Admin\AgeController</a></td><td class="text-right">52%</td></tr>
+       <tr><td><a href="Controllers/Admin/GenreController.php.html#9">App\Http\Controllers\Admin\GenreController</a></td><td class="text-right">52%</td></tr>
+       <tr><td><a href="Controllers/Admin/LanguageController.php.html#9">App\Http\Controllers\Admin\LanguageController</a></td><td class="text-right">52%</td></tr>
+       <tr><td><a href="Controllers/Admin/ProducerController.php.html#9">App\Http\Controllers\Admin\ProducerController</a></td><td class="text-right">52%</td></tr>
+       <tr><td><a href="Controllers/Admin/QualityController.php.html#9">App\Http\Controllers\Admin\QualityController</a></td><td class="text-right">52%</td></tr>
+       <tr><td><a href="Controllers/Admin/RatingController.php.html#9">App\Http\Controllers\Admin\RatingController</a></td><td class="text-right">52%</td></tr>
+       <tr><td><a href="Controllers/Admin/SeasonController.php.html#9">App\Http\Controllers\Admin\SeasonController</a></td><td class="text-right">52%</td></tr>
+       <tr><td><a href="Controllers/Admin/SelectionController.php.html#9">App\Http\Controllers\Admin\SelectionController</a></td><td class="text-right">52%</td></tr>
+       <tr><td><a href="Controllers/Admin/StatusController.php.html#9">App\Http\Controllers\Admin\StatusController</a></td><td class="text-right">52%</td></tr>
+       <tr><td><a href="Controllers/Admin/YearController.php.html#9">App\Http\Controllers\Admin\YearController</a></td><td class="text-right">52%</td></tr>
+       <tr><td><a href="Controllers/Admin/UserController.php.html#11">App\Http\Controllers\Admin\UserController</a></td><td class="text-right">53%</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmController.php.html#11">App\Http\Controllers\Admin\FilmController</a></td><td class="text-right">59%</td></tr>
+       <tr><td><a href="Controllers/Admin/SubscriberController.php.html#8">App\Http\Controllers\Admin\SubscriberController</a></td><td class="text-right">60%</td></tr>
+       <tr><td><a href="Controllers/Admin/SettingsController.php.html#10">App\Http\Controllers\Admin\SettingsController</a></td><td class="text-right">67%</td></tr>
+       <tr><td><a href="Controllers/TelegramWebhookController.php.html#11">App\Http\Controllers\TelegramWebhookController</a></td><td class="text-right">68%</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmImportController.php.html#10">App\Http\Controllers\Admin\FilmImportController</a></td><td class="text-right">70%</td></tr>
+       <tr><td><a href="Controllers/Api/FilmController.php.html#13">App\Http\Controllers\Api\FilmController</a></td><td class="text-right">70%</td></tr>
+       <tr><td><a href="Controllers/Api/CommentController.php.html#14">App\Http\Controllers\Api\CommentController</a></td><td class="text-right">73%</td></tr>
+       <tr><td><a href="Requests/Comment/CreateRequest.php.html#8">App\Http\Requests\Comment\CreateRequest</a></td><td class="text-right">83%</td></tr>
+       <tr><td><a href="Middleware/CheckBan.php.html#10">App\Http\Middleware\CheckBan</a></td><td class="text-right">85%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3 style="margin-top: 2rem;">Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+         <th class="text-right">Complexity</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Controllers/Admin/UserController.php.html#11">App\Http\Controllers\Admin\UserController</a></td><td class="text-right">53.3%</td><td class="text-right">22</td><td class="text-right">71</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmController.php.html#11">App\Http\Controllers\Admin\FilmController</a></td><td class="text-right">59.5%</td><td class="text-right">24</td><td class="text-right">62</td></tr>
+       <tr><td><a href="Controllers/TelegramWebhookController.php.html#11">App\Http\Controllers\TelegramWebhookController</a></td><td class="text-right">68.0%</td><td class="text-right">21</td><td class="text-right">35</td></tr>
+       <tr><td><a href="Controllers/Admin/ActorController.php.html#9">App\Http\Controllers\Admin\ActorController</a></td><td class="text-right">44.7%</td><td class="text-right">11</td><td class="text-right">31</td></tr>
+       <tr><td><a href="Controllers/Admin/CaptionController.php.html#9">App\Http\Controllers\Admin\CaptionController</a></td><td class="text-right">44.7%</td><td class="text-right">11</td><td class="text-right">31</td></tr>
+       <tr><td><a href="Controllers/Admin/CategoryController.php.html#9">App\Http\Controllers\Admin\CategoryController</a></td><td class="text-right">44.7%</td><td class="text-right">11</td><td class="text-right">31</td></tr>
+       <tr><td><a href="Controllers/Admin/CompanyController.php.html#9">App\Http\Controllers\Admin\CompanyController</a></td><td class="text-right">44.7%</td><td class="text-right">11</td><td class="text-right">31</td></tr>
+       <tr><td><a href="Controllers/Admin/ComposerController.php.html#9">App\Http\Controllers\Admin\ComposerController</a></td><td class="text-right">44.7%</td><td class="text-right">11</td><td class="text-right">31</td></tr>
+       <tr><td><a href="Controllers/Admin/CountryController.php.html#9">App\Http\Controllers\Admin\CountryController</a></td><td class="text-right">44.7%</td><td class="text-right">11</td><td class="text-right">31</td></tr>
+       <tr><td><a href="Controllers/Admin/DirectorController.php.html#9">App\Http\Controllers\Admin\DirectorController</a></td><td class="text-right">44.7%</td><td class="text-right">11</td><td class="text-right">31</td></tr>
+       <tr><td><a href="Controllers/Admin/DurationController.php.html#9">App\Http\Controllers\Admin\DurationController</a></td><td class="text-right">44.7%</td><td class="text-right">11</td><td class="text-right">31</td></tr>
+       <tr><td><a href="Controllers/Admin/TelegramSubscriberController.php.html#8">App\Http\Controllers\Admin\TelegramSubscriberController</a></td><td class="text-right">0.0%</td><td class="text-right">5</td><td class="text-right">30</td></tr>
+       <tr><td><a href="Controllers/Admin/AgeController.php.html#9">App\Http\Controllers\Admin\AgeController</a></td><td class="text-right">52.6%</td><td class="text-right">11</td><td class="text-right">23</td></tr>
+       <tr><td><a href="Controllers/Admin/GenreController.php.html#9">App\Http\Controllers\Admin\GenreController</a></td><td class="text-right">52.6%</td><td class="text-right">11</td><td class="text-right">23</td></tr>
+       <tr><td><a href="Controllers/Admin/LanguageController.php.html#9">App\Http\Controllers\Admin\LanguageController</a></td><td class="text-right">52.6%</td><td class="text-right">11</td><td class="text-right">23</td></tr>
+       <tr><td><a href="Controllers/Admin/ProducerController.php.html#9">App\Http\Controllers\Admin\ProducerController</a></td><td class="text-right">52.6%</td><td class="text-right">11</td><td class="text-right">23</td></tr>
+       <tr><td><a href="Controllers/Admin/QualityController.php.html#9">App\Http\Controllers\Admin\QualityController</a></td><td class="text-right">52.6%</td><td class="text-right">11</td><td class="text-right">23</td></tr>
+       <tr><td><a href="Controllers/Admin/RatingController.php.html#9">App\Http\Controllers\Admin\RatingController</a></td><td class="text-right">52.6%</td><td class="text-right">11</td><td class="text-right">23</td></tr>
+       <tr><td><a href="Controllers/Admin/SeasonController.php.html#9">App\Http\Controllers\Admin\SeasonController</a></td><td class="text-right">52.6%</td><td class="text-right">11</td><td class="text-right">23</td></tr>
+       <tr><td><a href="Controllers/Admin/SelectionController.php.html#9">App\Http\Controllers\Admin\SelectionController</a></td><td class="text-right">52.6%</td><td class="text-right">11</td><td class="text-right">23</td></tr>
+       <tr><td><a href="Controllers/Admin/StatusController.php.html#9">App\Http\Controllers\Admin\StatusController</a></td><td class="text-right">52.6%</td><td class="text-right">11</td><td class="text-right">23</td></tr>
+       <tr><td><a href="Controllers/Admin/YearController.php.html#9">App\Http\Controllers\Admin\YearController</a></td><td class="text-right">52.6%</td><td class="text-right">11</td><td class="text-right">23</td></tr>
+       <tr><td><a href="Middleware/RedirectIfAuthenticated.php.html#11">App\Http\Middleware\RedirectIfAuthenticated</a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/CommentController.php.html#8">App\Http\Controllers\Admin\CommentController</a></td><td class="text-right">44.8%</td><td class="text-right">7</td><td class="text-right">15</td></tr>
+       <tr><td><a href="Controllers/Api/FilmController.php.html#13">App\Http\Controllers\Api\FilmController</a></td><td class="text-right">70.4%</td><td class="text-right">10</td><td class="text-right">12</td></tr>
+       <tr><td><a href="Controllers/Auth/LoginController.php.html#9">App\Http\Controllers\Auth\LoginController</a></td><td class="text-right">0.0%</td><td class="text-right">3</td><td class="text-right">12</td></tr>
+       <tr><td><a href="Controllers/Admin/SettingsController.php.html#10">App\Http\Controllers\Admin\SettingsController</a></td><td class="text-right">67.9%</td><td class="text-right">8</td><td class="text-right">10</td></tr>
+       <tr><td><a href="Middleware/Authenticate.php.html#8">App\Http\Middleware\Authenticate</a></td><td class="text-right">0.0%</td><td class="text-right">2</td><td class="text-right">6</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmImportController.php.html#10">App\Http\Controllers\Admin\FilmImportController</a></td><td class="text-right">70.0%</td><td class="text-right">5</td><td class="text-right">5</td></tr>
+       <tr><td><a href="Middleware/CheckBan.php.html#10">App\Http\Middleware\CheckBan</a></td><td class="text-right">85.7%</td><td class="text-right">4</td><td class="text-right">4</td></tr>
+       <tr><td><a href="Controllers/Api/CommentController.php.html#14">App\Http\Controllers\Api\CommentController</a></td><td class="text-right">73.3%</td><td class="text-right">3</td><td class="text-right">3</td></tr>
+       <tr><td><a href="Requests/Comment/CreateRequest.php.html#8">App\Http\Requests\Comment\CreateRequest</a></td><td class="text-right">83.3%</td><td class="text-right">3</td><td class="text-right">3</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2 style="margin-top: 3rem;">Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodsCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3 style="margin-top: 2rem;">Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Controllers/Admin/ActorController.php.html#17"><abbr title="App\Http\Controllers\Admin\ActorController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/ActorController.php.html#28"><abbr title="App\Http\Controllers\Admin\ActorController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/ActorController.php.html#65"><abbr title="App\Http\Controllers\Admin\ActorController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/AgeController.php.html#62"><abbr title="App\Http\Controllers\Admin\AgeController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/CaptionController.php.html#17"><abbr title="App\Http\Controllers\Admin\CaptionController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/CaptionController.php.html#28"><abbr title="App\Http\Controllers\Admin\CaptionController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/CaptionController.php.html#60"><abbr title="App\Http\Controllers\Admin\CaptionController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/CategoryController.php.html#17"><abbr title="App\Http\Controllers\Admin\CategoryController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/CategoryController.php.html#28"><abbr title="App\Http\Controllers\Admin\CategoryController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/CategoryController.php.html#59"><abbr title="App\Http\Controllers\Admin\CategoryController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/CommentController.php.html#47"><abbr title="App\Http\Controllers\Admin\CommentController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/CompanyController.php.html#17"><abbr title="App\Http\Controllers\Admin\CompanyController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/CompanyController.php.html#28"><abbr title="App\Http\Controllers\Admin\CompanyController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/CompanyController.php.html#60"><abbr title="App\Http\Controllers\Admin\CompanyController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/ComposerController.php.html#17"><abbr title="App\Http\Controllers\Admin\ComposerController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/ComposerController.php.html#28"><abbr title="App\Http\Controllers\Admin\ComposerController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/ComposerController.php.html#60"><abbr title="App\Http\Controllers\Admin\ComposerController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/CountryController.php.html#17"><abbr title="App\Http\Controllers\Admin\CountryController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/CountryController.php.html#28"><abbr title="App\Http\Controllers\Admin\CountryController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/CountryController.php.html#61"><abbr title="App\Http\Controllers\Admin\CountryController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/DirectorController.php.html#18"><abbr title="App\Http\Controllers\Admin\DirectorController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/DirectorController.php.html#32"><abbr title="App\Http\Controllers\Admin\DirectorController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/DirectorController.php.html#68"><abbr title="App\Http\Controllers\Admin\DirectorController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/DurationController.php.html#17"><abbr title="App\Http\Controllers\Admin\DurationController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/DurationController.php.html#28"><abbr title="App\Http\Controllers\Admin\DurationController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/DurationController.php.html#61"><abbr title="App\Http\Controllers\Admin\DurationController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmController.php.html#38"><abbr title="App\Http\Controllers\Admin\FilmController::store">store</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmController.php.html#133"><abbr title="App\Http\Controllers\Admin\FilmController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmController.php.html#184"><abbr title="App\Http\Controllers\Admin\FilmController::fetchImdbRating">fetchImdbRating</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmImportController.php.html#47"><abbr title="App\Http\Controllers\Admin\FilmImportController::telegramPublish">telegramPublish</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/GenreController.php.html#61"><abbr title="App\Http\Controllers\Admin\GenreController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/LanguageController.php.html#61"><abbr title="App\Http\Controllers\Admin\LanguageController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/ProducerController.php.html#61"><abbr title="App\Http\Controllers\Admin\ProducerController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/QualityController.php.html#61"><abbr title="App\Http\Controllers\Admin\QualityController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/RatingController.php.html#61"><abbr title="App\Http\Controllers\Admin\RatingController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/SeasonController.php.html#61"><abbr title="App\Http\Controllers\Admin\SeasonController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/SelectionController.php.html#61"><abbr title="App\Http\Controllers\Admin\SelectionController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/StatusController.php.html#61"><abbr title="App\Http\Controllers\Admin\StatusController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/SubscriberController.php.html#47"><abbr title="App\Http\Controllers\Admin\SubscriberController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/TelegramSubscriberController.php.html#10"><abbr title="App\Http\Controllers\Admin\TelegramSubscriberController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/TelegramSubscriberController.php.html#17"><abbr title="App\Http\Controllers\Admin\TelegramSubscriberController::toggleBan">toggleBan</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/TelegramSubscriberController.php.html#34"><abbr title="App\Http\Controllers\Admin\TelegramSubscriberController::destroy">destroy</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/UserController.php.html#139"><abbr title="App\Http\Controllers\Admin\UserController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/YearController.php.html#61"><abbr title="App\Http\Controllers\Admin\YearController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Auth/ConfirmPasswordController.php.html#35"><abbr title="App\Http\Controllers\Auth\ConfirmPasswordController::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Auth/GoogleController.php.html#13"><abbr title="App\Http\Controllers\Auth\GoogleController::redirect">redirect</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Auth/LoginController.php.html#39"><abbr title="App\Http\Controllers\Auth\LoginController::redirectTo">redirectTo</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Auth/LoginController.php.html#57"><abbr title="App\Http\Controllers\Auth\LoginController::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Auth/RegisterController.php.html#39"><abbr title="App\Http\Controllers\Auth\RegisterController::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Auth/RegisterController.php.html#50"><abbr title="App\Http\Controllers\Auth\RegisterController::validator">validator</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Auth/RegisterController.php.html#65"><abbr title="App\Http\Controllers\Auth\RegisterController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Auth/VerificationController.php.html#35"><abbr title="App\Http\Controllers\Auth\VerificationController::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/TelegramWebhookController.php.html#121"><abbr title="App\Http\Controllers\TelegramWebhookController::sendTelegramMessage">sendTelegramMessage</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Middleware/Authenticate.php.html#13"><abbr title="App\Http\Middleware\Authenticate::redirectTo">redirectTo</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Middleware/RedirectIfAuthenticated.php.html#18"><abbr title="App\Http\Middleware\RedirectIfAuthenticated::handle">handle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Middleware/TrustHosts.php.html#14"><abbr title="App\Http\Middleware\TrustHosts::hosts">hosts</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Requests/Comment/CreateRequest.php.html#15"><abbr title="App\Http\Requests\Comment\CreateRequest::authorize">authorize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Controllers/Admin/CommentController.php.html#28"><abbr title="App\Http\Controllers\Admin\CommentController::destroy">destroy</abbr></a></td><td class="text-right">50%</td></tr>
+       <tr><td><a href="Controllers/Admin/SettingsController.php.html#41"><abbr title="App\Http\Controllers\Admin\SettingsController::handleUpload">handleUpload</abbr></a></td><td class="text-right">50%</td></tr>
+       <tr><td><a href="Controllers/Admin/UserController.php.html#112"><abbr title="App\Http\Controllers\Admin\UserController::destroy">destroy</abbr></a></td><td class="text-right">52%</td></tr>
+       <tr><td><a href="Controllers/Api/FilmController.php.html#45"><abbr title="App\Http\Controllers\Api\FilmController::likesIncrement">likesIncrement</abbr></a></td><td class="text-right">58%</td></tr>
+       <tr><td><a href="Controllers/Admin/UserController.php.html#26"><abbr title="App\Http\Controllers\Admin\UserController::toggle">toggle</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="Controllers/TelegramWebhookController.php.html#13"><abbr title="App\Http\Controllers\TelegramWebhookController::handle">handle</abbr></a></td><td class="text-right">71%</td></tr>
+       <tr><td><a href="Controllers/Api/CommentController.php.html#16"><abbr title="App\Http\Controllers\Api\CommentController::store">store</abbr></a></td><td class="text-right">73%</td></tr>
+       <tr><td><a href="Controllers/Api/FilmController.php.html#23"><abbr title="App\Http\Controllers\Api\FilmController::viewsIncrement">viewsIncrement</abbr></a></td><td class="text-right">75%</td></tr>
+       <tr><td><a href="Controllers/Admin/UserController.php.html#74"><abbr title="App\Http\Controllers\Admin\UserController::update">update</abbr></a></td><td class="text-right">80%</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmController.php.html#57"><abbr title="App\Http\Controllers\Admin\FilmController::update">update</abbr></a></td><td class="text-right">83%</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmController.php.html#71"><abbr title="App\Http\Controllers\Admin\FilmController::destroy">destroy</abbr></a></td><td class="text-right">83%</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmController.php.html#85"><abbr title="App\Http\Controllers\Admin\FilmController::restore">restore</abbr></a></td><td class="text-right">83%</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmController.php.html#99"><abbr title="App\Http\Controllers\Admin\FilmController::forceDelete">forceDelete</abbr></a></td><td class="text-right">83%</td></tr>
+       <tr><td><a href="Middleware/CheckBan.php.html#12"><abbr title="App\Http\Middleware\CheckBan::handle">handle</abbr></a></td><td class="text-right">85%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3 style="margin-top: 2rem;">Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+         <th class="text-right">Complexity</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Controllers/Admin/FilmController.php.html#133"><abbr title="App\Http\Controllers\Admin\FilmController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">6</td><td class="text-right">42</td></tr>
+       <tr><td><a href="Controllers/Admin/UserController.php.html#139"><abbr title="App\Http\Controllers\Admin\UserController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">5</td><td class="text-right">30</td></tr>
+       <tr><td><a href="Controllers/TelegramWebhookController.php.html#13"><abbr title="App\Http\Controllers\TelegramWebhookController::handle">handle</abbr></a></td><td class="text-right">71.8%</td><td class="text-right">20</td><td class="text-right">28</td></tr>
+       <tr><td><a href="Controllers/Admin/ActorController.php.html#65"><abbr title="App\Http\Controllers\Admin\ActorController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/AgeController.php.html#62"><abbr title="App\Http\Controllers\Admin\AgeController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/CaptionController.php.html#60"><abbr title="App\Http\Controllers\Admin\CaptionController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/CategoryController.php.html#59"><abbr title="App\Http\Controllers\Admin\CategoryController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/CompanyController.php.html#60"><abbr title="App\Http\Controllers\Admin\CompanyController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/ComposerController.php.html#60"><abbr title="App\Http\Controllers\Admin\ComposerController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/CountryController.php.html#61"><abbr title="App\Http\Controllers\Admin\CountryController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/DirectorController.php.html#68"><abbr title="App\Http\Controllers\Admin\DirectorController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/DurationController.php.html#61"><abbr title="App\Http\Controllers\Admin\DurationController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/GenreController.php.html#61"><abbr title="App\Http\Controllers\Admin\GenreController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/LanguageController.php.html#61"><abbr title="App\Http\Controllers\Admin\LanguageController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/ProducerController.php.html#61"><abbr title="App\Http\Controllers\Admin\ProducerController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/QualityController.php.html#61"><abbr title="App\Http\Controllers\Admin\QualityController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/RatingController.php.html#61"><abbr title="App\Http\Controllers\Admin\RatingController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/SeasonController.php.html#61"><abbr title="App\Http\Controllers\Admin\SeasonController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/SelectionController.php.html#61"><abbr title="App\Http\Controllers\Admin\SelectionController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/StatusController.php.html#61"><abbr title="App\Http\Controllers\Admin\StatusController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/YearController.php.html#61"><abbr title="App\Http\Controllers\Admin\YearController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Middleware/RedirectIfAuthenticated.php.html#18"><abbr title="App\Http\Middleware\RedirectIfAuthenticated::handle">handle</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">4</td><td class="text-right">20</td></tr>
+       <tr><td><a href="Controllers/Admin/CommentController.php.html#47"><abbr title="App\Http\Controllers\Admin\CommentController::bulkAction">bulkAction</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">3</td><td class="text-right">12</td></tr>
+       <tr><td><a href="Controllers/Admin/SettingsController.php.html#41"><abbr title="App\Http\Controllers\Admin\SettingsController::handleUpload">handleUpload</abbr></a></td><td class="text-right">50.0%</td><td class="text-right">5</td><td class="text-right">8</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmController.php.html#184"><abbr title="App\Http\Controllers\Admin\FilmController::fetchImdbRating">fetchImdbRating</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">2</td><td class="text-right">6</td></tr>
+       <tr><td><a href="Controllers/Admin/TelegramSubscriberController.php.html#17"><abbr title="App\Http\Controllers\Admin\TelegramSubscriberController::toggleBan">toggleBan</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">2</td><td class="text-right">6</td></tr>
+       <tr><td><a href="Controllers/Admin/TelegramSubscriberController.php.html#34"><abbr title="App\Http\Controllers\Admin\TelegramSubscriberController::destroy">destroy</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">2</td><td class="text-right">6</td></tr>
+       <tr><td><a href="Controllers/Admin/UserController.php.html#74"><abbr title="App\Http\Controllers\Admin\UserController::update">update</abbr></a></td><td class="text-right">80.0%</td><td class="text-right">6</td><td class="text-right">6</td></tr>
+       <tr><td><a href="Controllers/Api/FilmController.php.html#45"><abbr title="App\Http\Controllers\Api\FilmController::likesIncrement">likesIncrement</abbr></a></td><td class="text-right">58.3%</td><td class="text-right">5</td><td class="text-right">6</td></tr>
+       <tr><td><a href="Controllers/Auth/LoginController.php.html#39"><abbr title="App\Http\Controllers\Auth\LoginController::redirectTo">redirectTo</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">2</td><td class="text-right">6</td></tr>
+       <tr><td><a href="Middleware/Authenticate.php.html#13"><abbr title="App\Http\Middleware\Authenticate::redirectTo">redirectTo</abbr></a></td><td class="text-right">0.0%</td><td class="text-right">2</td><td class="text-right">6</td></tr>
+       <tr><td><a href="Controllers/Api/FilmController.php.html#23"><abbr title="App\Http\Controllers\Api\FilmController::viewsIncrement">viewsIncrement</abbr></a></td><td class="text-right">75.0%</td><td class="text-right">4</td><td class="text-right">4</td></tr>
+       <tr><td><a href="Middleware/CheckBan.php.html#12"><abbr title="App\Http\Middleware\CheckBan::handle">handle</abbr></a></td><td class="text-right">85.7%</td><td class="text-right">4</td><td class="text-right">4</td></tr>
+       <tr><td><a href="Controllers/Admin/UserController.php.html#112"><abbr title="App\Http\Controllers\Admin\UserController::destroy">destroy</abbr></a></td><td class="text-right">52.9%</td><td class="text-right">3</td><td class="text-right">3</td></tr>
+       <tr><td><a href="Controllers/Api/CommentController.php.html#16"><abbr title="App\Http\Controllers\Api\CommentController::store">store</abbr></a></td><td class="text-right">73.3%</td><td class="text-right">3</td><td class="text-right">3</td></tr>
+       <tr><td><a href="Controllers/Admin/CommentController.php.html#28"><abbr title="App\Http\Controllers\Admin\CommentController::destroy">destroy</abbr></a></td><td class="text-right">50.0%</td><td class="text-right">2</td><td class="text-right">2</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmController.php.html#57"><abbr title="App\Http\Controllers\Admin\FilmController::update">update</abbr></a></td><td class="text-right">83.3%</td><td class="text-right">2</td><td class="text-right">2</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmController.php.html#71"><abbr title="App\Http\Controllers\Admin\FilmController::destroy">destroy</abbr></a></td><td class="text-right">83.3%</td><td class="text-right">2</td><td class="text-right">2</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmController.php.html#85"><abbr title="App\Http\Controllers\Admin\FilmController::restore">restore</abbr></a></td><td class="text-right">83.3%</td><td class="text-right">2</td><td class="text-right">2</td></tr>
+       <tr><td><a href="Controllers/Admin/FilmController.php.html#99"><abbr title="App\Http\Controllers\Admin\FilmController::forceDelete">forceDelete</abbr></a></td><td class="text-right">83.3%</td><td class="text-right">2</td><td class="text-right">2</td></tr>
+       <tr><td><a href="Controllers/Admin/UserController.php.html#26"><abbr title="App\Http\Controllers\Admin\UserController::toggle">toggle</abbr></a></td><td class="text-right">66.7%</td><td class="text-right">2</td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 12.5.7</a> using <a href="https://www.php.net/" target="_top">PHP 8.4.22</a> and <a href="https://phpunit.de/">PHPUnit 12.5.30</a> at Mon Aug 17 1:55:07 UTC 2026.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="../_js/billboard.pkgd.min.js?v=12.5.7" type="text/javascript"></script>
+  <script type="application/json" id="complexity_class">[[0,5,"Controllers\/Admin\/TelegramSubscriberController.php.html#8","App\\Http\\Controllers\\Admin\\TelegramSubscriberController","30"],[0,1,"Controllers\/Auth\/ConfirmPasswordController.php.html#8","App\\Http\\Controllers\\Auth\\ConfirmPasswordController","2"],[0,3,"Controllers\/Auth\/LoginController.php.html#9","App\\Http\\Controllers\\Auth\\LoginController","12"],[0,3,"Controllers\/Auth\/RegisterController.php.html#11","App\\Http\\Controllers\\Auth\\RegisterController","12"],[0,1,"Controllers\/Auth\/VerificationController.php.html#8","App\\Http\\Controllers\\Auth\\VerificationController","2"],[0,2,"Middleware\/Authenticate.php.html#8","App\\Http\\Middleware\\Authenticate","6"],[0,4,"Middleware\/RedirectIfAuthenticated.php.html#11","App\\Http\\Middleware\\RedirectIfAuthenticated","20"],[0,1,"Middleware\/TrustHosts.php.html#7","App\\Http\\Middleware\\TrustHosts","2"],[44.73684210526316,11,"Controllers\/Admin\/ActorController.php.html#9","App\\Http\\Controllers\\Admin\\ActorController","31.42"],[44.73684210526316,11,"Controllers\/Admin\/CaptionController.php.html#9","App\\Http\\Controllers\\Admin\\CaptionController","31.42"],[44.73684210526316,11,"Controllers\/Admin\/CategoryController.php.html#9","App\\Http\\Controllers\\Admin\\CategoryController","31.42"],[44.73684210526316,11,"Controllers\/Admin\/CompanyController.php.html#9","App\\Http\\Controllers\\Admin\\CompanyController","31.42"],[44.73684210526316,11,"Controllers\/Admin\/ComposerController.php.html#9","App\\Http\\Controllers\\Admin\\ComposerController","31.42"],[44.73684210526316,11,"Controllers\/Admin\/CountryController.php.html#9","App\\Http\\Controllers\\Admin\\CountryController","31.42"],[44.73684210526316,11,"Controllers\/Admin\/DirectorController.php.html#9","App\\Http\\Controllers\\Admin\\DirectorController","31.42"],[44.73684210526316,11,"Controllers\/Admin\/DurationController.php.html#9","App\\Http\\Controllers\\Admin\\DurationController","31.42"],[44.827586206896555,7,"Controllers\/Admin\/CommentController.php.html#8","App\\Http\\Controllers\\Admin\\CommentController","15.23"],[52.63157894736842,11,"Controllers\/Admin\/AgeController.php.html#9","App\\Http\\Controllers\\Admin\\AgeController","23.86"],[52.63157894736842,11,"Controllers\/Admin\/GenreController.php.html#9","App\\Http\\Controllers\\Admin\\GenreController","23.86"],[52.63157894736842,11,"Controllers\/Admin\/LanguageController.php.html#9","App\\Http\\Controllers\\Admin\\LanguageController","23.86"],[52.63157894736842,11,"Controllers\/Admin\/ProducerController.php.html#9","App\\Http\\Controllers\\Admin\\ProducerController","23.86"],[52.63157894736842,11,"Controllers\/Admin\/QualityController.php.html#9","App\\Http\\Controllers\\Admin\\QualityController","23.86"],[52.63157894736842,11,"Controllers\/Admin\/RatingController.php.html#9","App\\Http\\Controllers\\Admin\\RatingController","23.86"],[52.63157894736842,11,"Controllers\/Admin\/SeasonController.php.html#9","App\\Http\\Controllers\\Admin\\SeasonController","23.86"],[52.63157894736842,11,"Controllers\/Admin\/SelectionController.php.html#9","App\\Http\\Controllers\\Admin\\SelectionController","23.86"],[52.63157894736842,11,"Controllers\/Admin\/StatusController.php.html#9","App\\Http\\Controllers\\Admin\\StatusController","23.86"],[52.63157894736842,11,"Controllers\/Admin\/YearController.php.html#9","App\\Http\\Controllers\\Admin\\YearController","23.86"],[53.333333333333336,22,"Controllers\/Admin\/UserController.php.html#11","App\\Http\\Controllers\\Admin\\UserController","71.19"],[59.49367088607595,24,"Controllers\/Admin\/FilmController.php.html#11","App\\Http\\Controllers\\Admin\\FilmController","62.28"],[60,5,"Controllers\/Admin\/SubscriberController.php.html#8","App\\Http\\Controllers\\Admin\\SubscriberController","6.60"],[67.85714285714286,8,"Controllers\/Admin\/SettingsController.php.html#10","App\\Http\\Controllers\\Admin\\SettingsController","10.13"],[68,21,"Controllers\/TelegramWebhookController.php.html#11","App\\Http\\Controllers\\TelegramWebhookController","35.45"],[70,5,"Controllers\/Admin\/FilmImportController.php.html#10","App\\Http\\Controllers\\Admin\\FilmImportController","5.68"],[70.37037037037037,10,"Controllers\/Api\/FilmController.php.html#13","App\\Http\\Controllers\\Api\\FilmController","12.60"],[73.33333333333333,3,"Controllers\/Api\/CommentController.php.html#14","App\\Http\\Controllers\\Api\\CommentController","3.17"],[83.33333333333334,3,"Requests\/Comment\/CreateRequest.php.html#8","App\\Http\\Requests\\Comment\\CreateRequest","3.04"],[85.71428571428571,4,"Middleware\/CheckBan.php.html#10","App\\Http\\Middleware\\CheckBan","4.05"],[95.83333333333334,5,"Controllers\/Auth\/GoogleController.php.html#11","App\\Http\\Controllers\\Auth\\GoogleController","5"],[100,2,"Controllers\/ActorController.php.html#7","App\\Http\\Controllers\\ActorController","2"],[100,1,"Controllers\/Admin\/CacheController.php.html#8","App\\Http\\Controllers\\Admin\\CacheController","1"],[100,1,"Controllers\/Admin\/MainController.php.html#7","App\\Http\\Controllers\\Admin\\MainController","1"],[100,6,"Controllers\/Admin\/MenuController.php.html#12","App\\Http\\Controllers\\Admin\\MenuController","6"],[100,2,"Controllers\/AgeController.php.html#7","App\\Http\\Controllers\\AgeController","2"],[100,2,"Controllers\/Api\/SearchSuggestController.php.html#9","App\\Http\\Controllers\\Api\\SearchSuggestController","2"],[100,0,"Controllers\/Auth\/ForgotPasswordController.php.html#8","App\\Http\\Controllers\\Auth\\ForgotPasswordController","0"],[100,0,"Controllers\/Auth\/ResetPasswordController.php.html#8","App\\Http\\Controllers\\Auth\\ResetPasswordController","0"],[100,2,"Controllers\/CaptionController.php.html#7","App\\Http\\Controllers\\CaptionController","2"],[100,1,"Controllers\/CategoryController.php.html#7","App\\Http\\Controllers\\CategoryController","1"],[100,2,"Controllers\/CompanyController.php.html#7","App\\Http\\Controllers\\CompanyController","2"],[100,2,"Controllers\/ComposerController.php.html#7","App\\Http\\Controllers\\ComposerController","2"],[100,1,"Controllers\/ContactController.php.html#8","App\\Http\\Controllers\\ContactController","1"],[100,0,"Controllers\/Controller.php.html#9","App\\Http\\Controllers\\Controller","0"],[100,2,"Controllers\/CountryController.php.html#7","App\\Http\\Controllers\\CountryController","2"],[100,2,"Controllers\/DirectorController.php.html#7","App\\Http\\Controllers\\DirectorController","2"],[100,1,"Controllers\/FilmController.php.html#8","App\\Http\\Controllers\\FilmController","1"],[100,2,"Controllers\/GenreController.php.html#7","App\\Http\\Controllers\\GenreController","2"],[100,3,"Controllers\/HomeController.php.html#10","App\\Http\\Controllers\\HomeController","3"],[100,2,"Controllers\/LanguageController.php.html#7","App\\Http\\Controllers\\LanguageController","2"],[100,2,"Controllers\/ProducerController.php.html#7","App\\Http\\Controllers\\ProducerController","2"],[100,5,"Controllers\/ProfileController.php.html#8","App\\Http\\Controllers\\ProfileController","5"],[100,2,"Controllers\/QualityController.php.html#7","App\\Http\\Controllers\\QualityController","2"],[100,2,"Controllers\/RatingController.php.html#7","App\\Http\\Controllers\\RatingController","2"],[100,1,"Controllers\/SearchController.php.html#8","App\\Http\\Controllers\\SearchController","1"],[100,2,"Controllers\/SelectionController.php.html#7","App\\Http\\Controllers\\SelectionController","2"],[100,2,"Controllers\/SubsController.php.html#9","App\\Http\\Controllers\\SubsController","2"],[100,2,"Controllers\/YearController.php.html#7","App\\Http\\Controllers\\YearController","2"],[100,3,"Middleware\/AdminMiddleware.php.html#10","App\\Http\\Middleware\\AdminMiddleware","3"],[100,0,"Middleware\/EncryptCookies.php.html#7","App\\Http\\Middleware\\EncryptCookies","0"],[100,3,"Middleware\/EnsureStaffRole.php.html#16","App\\Http\\Middleware\\EnsureStaffRole","3"],[100,0,"Middleware\/PreventRequestsDuringMaintenance.php.html#7","App\\Http\\Middleware\\PreventRequestsDuringMaintenance","0"],[100,0,"Middleware\/TrimStrings.php.html#7","App\\Http\\Middleware\\TrimStrings","0"],[100,0,"Middleware\/TrustProxies.php.html#8","App\\Http\\Middleware\\TrustProxies","0"],[100,0,"Middleware\/ValidateSignature.php.html#7","App\\Http\\Middleware\\ValidateSignature","0"],[100,0,"Middleware\/VerifyCsrfToken.php.html#7","App\\Http\\Middleware\\VerifyCsrfToken","0"],[100,4,"Requests\/FilmRequest.php.html#7","App\\Http\\Requests\\FilmRequest","4"],[100,2,"Requests\/NameRequest.php.html#6","App\\Http\\Requests\\NameRequest","2"],[100,2,"Requests\/TitleRequest.php.html#7","App\\Http\\Requests\\TitleRequest","2"],[100,1,"Resources\/CommentResource.php.html#7","App\\Http\\Resources\\CommentResource","1"],[100,1,"Resources\/FilmResource.php.html#7","App\\Http\\Resources\\FilmResource","1"],[100,1,"Resources\/StateResource.php.html#7","App\\Http\\Resources\\StateResource","1"],[100,1,"View\/Composers\/CarouselComposer.php.html#9","App\\Http\\View\\Composers\\CarouselComposer","1"],[100,2,"View\/Composers\/CurrencyComposer.php.html#8","App\\Http\\View\\Composers\\CurrencyComposer","2"],[100,2,"View\/Composers\/MenuComposer.php.html#9","App\\Http\\View\\Composers\\MenuComposer","2"],[100,1,"View\/Composers\/SettingsComposer.php.html#9","App\\Http\\View\\Composers\\SettingsComposer","1"],[100,2,"View\/Composers\/UpcomingMoviesComposer.php.html#8","App\\Http\\View\\Composers\\UpcomingMoviesComposer","2"]]</script>
+  <script type="application/json" id="complexity_method">[[0,1,"Controllers\/Admin\/ActorController.php.html#17","App\\Http\\Controllers\\Admin\\ActorController::create","2"],[0,1,"Controllers\/Admin\/ActorController.php.html#28","App\\Http\\Controllers\\Admin\\ActorController::edit","2"],[0,4,"Controllers\/Admin\/ActorController.php.html#65","App\\Http\\Controllers\\Admin\\ActorController::bulkAction","20"],[0,4,"Controllers\/Admin\/AgeController.php.html#62","App\\Http\\Controllers\\Admin\\AgeController::bulkAction","20"],[0,1,"Controllers\/Admin\/CaptionController.php.html#17","App\\Http\\Controllers\\Admin\\CaptionController::create","2"],[0,1,"Controllers\/Admin\/CaptionController.php.html#28","App\\Http\\Controllers\\Admin\\CaptionController::edit","2"],[0,4,"Controllers\/Admin\/CaptionController.php.html#60","App\\Http\\Controllers\\Admin\\CaptionController::bulkAction","20"],[0,1,"Controllers\/Admin\/CategoryController.php.html#17","App\\Http\\Controllers\\Admin\\CategoryController::create","2"],[0,1,"Controllers\/Admin\/CategoryController.php.html#28","App\\Http\\Controllers\\Admin\\CategoryController::edit","2"],[0,4,"Controllers\/Admin\/CategoryController.php.html#59","App\\Http\\Controllers\\Admin\\CategoryController::bulkAction","20"],[0,3,"Controllers\/Admin\/CommentController.php.html#47","App\\Http\\Controllers\\Admin\\CommentController::bulkAction","12"],[0,1,"Controllers\/Admin\/CompanyController.php.html#17","App\\Http\\Controllers\\Admin\\CompanyController::create","2"],[0,1,"Controllers\/Admin\/CompanyController.php.html#28","App\\Http\\Controllers\\Admin\\CompanyController::edit","2"],[0,4,"Controllers\/Admin\/CompanyController.php.html#60","App\\Http\\Controllers\\Admin\\CompanyController::bulkAction","20"],[0,1,"Controllers\/Admin\/ComposerController.php.html#17","App\\Http\\Controllers\\Admin\\ComposerController::create","2"],[0,1,"Controllers\/Admin\/ComposerController.php.html#28","App\\Http\\Controllers\\Admin\\ComposerController::edit","2"],[0,4,"Controllers\/Admin\/ComposerController.php.html#60","App\\Http\\Controllers\\Admin\\ComposerController::bulkAction","20"],[0,1,"Controllers\/Admin\/CountryController.php.html#17","App\\Http\\Controllers\\Admin\\CountryController::create","2"],[0,1,"Controllers\/Admin\/CountryController.php.html#28","App\\Http\\Controllers\\Admin\\CountryController::edit","2"],[0,4,"Controllers\/Admin\/CountryController.php.html#61","App\\Http\\Controllers\\Admin\\CountryController::bulkAction","20"],[0,1,"Controllers\/Admin\/DirectorController.php.html#18","App\\Http\\Controllers\\Admin\\DirectorController::create","2"],[0,1,"Controllers\/Admin\/DirectorController.php.html#32","App\\Http\\Controllers\\Admin\\DirectorController::edit","2"],[0,4,"Controllers\/Admin\/DirectorController.php.html#68","App\\Http\\Controllers\\Admin\\DirectorController::bulkAction","20"],[0,1,"Controllers\/Admin\/DurationController.php.html#17","App\\Http\\Controllers\\Admin\\DurationController::create","2"],[0,1,"Controllers\/Admin\/DurationController.php.html#28","App\\Http\\Controllers\\Admin\\DurationController::edit","2"],[0,4,"Controllers\/Admin\/DurationController.php.html#61","App\\Http\\Controllers\\Admin\\DurationController::bulkAction","20"],[0,1,"Controllers\/Admin\/FilmController.php.html#38","App\\Http\\Controllers\\Admin\\FilmController::store","2"],[0,6,"Controllers\/Admin\/FilmController.php.html#133","App\\Http\\Controllers\\Admin\\FilmController::bulkAction","42"],[0,2,"Controllers\/Admin\/FilmController.php.html#184","App\\Http\\Controllers\\Admin\\FilmController::fetchImdbRating","6"],[0,1,"Controllers\/Admin\/FilmImportController.php.html#47","App\\Http\\Controllers\\Admin\\FilmImportController::telegramPublish","2"],[0,4,"Controllers\/Admin\/GenreController.php.html#61","App\\Http\\Controllers\\Admin\\GenreController::bulkAction","20"],[0,4,"Controllers\/Admin\/LanguageController.php.html#61","App\\Http\\Controllers\\Admin\\LanguageController::bulkAction","20"],[0,4,"Controllers\/Admin\/ProducerController.php.html#61","App\\Http\\Controllers\\Admin\\ProducerController::bulkAction","20"],[0,4,"Controllers\/Admin\/QualityController.php.html#61","App\\Http\\Controllers\\Admin\\QualityController::bulkAction","20"],[0,4,"Controllers\/Admin\/RatingController.php.html#61","App\\Http\\Controllers\\Admin\\RatingController::bulkAction","20"],[0,4,"Controllers\/Admin\/SeasonController.php.html#61","App\\Http\\Controllers\\Admin\\SeasonController::bulkAction","20"],[0,4,"Controllers\/Admin\/SelectionController.php.html#61","App\\Http\\Controllers\\Admin\\SelectionController::bulkAction","20"],[0,4,"Controllers\/Admin\/StatusController.php.html#61","App\\Http\\Controllers\\Admin\\StatusController::bulkAction","20"],[0,1,"Controllers\/Admin\/SubscriberController.php.html#47","App\\Http\\Controllers\\Admin\\SubscriberController::bulkAction","2"],[0,1,"Controllers\/Admin\/TelegramSubscriberController.php.html#10","App\\Http\\Controllers\\Admin\\TelegramSubscriberController::index","2"],[0,2,"Controllers\/Admin\/TelegramSubscriberController.php.html#17","App\\Http\\Controllers\\Admin\\TelegramSubscriberController::toggleBan","6"],[0,2,"Controllers\/Admin\/TelegramSubscriberController.php.html#34","App\\Http\\Controllers\\Admin\\TelegramSubscriberController::destroy","6"],[0,5,"Controllers\/Admin\/UserController.php.html#139","App\\Http\\Controllers\\Admin\\UserController::bulkAction","30"],[0,4,"Controllers\/Admin\/YearController.php.html#61","App\\Http\\Controllers\\Admin\\YearController::bulkAction","20"],[0,1,"Controllers\/Auth\/ConfirmPasswordController.php.html#35","App\\Http\\Controllers\\Auth\\ConfirmPasswordController::__construct","2"],[0,1,"Controllers\/Auth\/GoogleController.php.html#13","App\\Http\\Controllers\\Auth\\GoogleController::redirect","2"],[0,2,"Controllers\/Auth\/LoginController.php.html#39","App\\Http\\Controllers\\Auth\\LoginController::redirectTo","6"],[0,1,"Controllers\/Auth\/LoginController.php.html#57","App\\Http\\Controllers\\Auth\\LoginController::__construct","2"],[0,1,"Controllers\/Auth\/RegisterController.php.html#39","App\\Http\\Controllers\\Auth\\RegisterController::__construct","2"],[0,1,"Controllers\/Auth\/RegisterController.php.html#50","App\\Http\\Controllers\\Auth\\RegisterController::validator","2"],[0,1,"Controllers\/Auth\/RegisterController.php.html#65","App\\Http\\Controllers\\Auth\\RegisterController::create","2"],[0,1,"Controllers\/Auth\/VerificationController.php.html#35","App\\Http\\Controllers\\Auth\\VerificationController::__construct","2"],[0,1,"Controllers\/TelegramWebhookController.php.html#121","App\\Http\\Controllers\\TelegramWebhookController::sendTelegramMessage","2"],[0,2,"Middleware\/Authenticate.php.html#13","App\\Http\\Middleware\\Authenticate::redirectTo","6"],[0,4,"Middleware\/RedirectIfAuthenticated.php.html#18","App\\Http\\Middleware\\RedirectIfAuthenticated::handle","20"],[0,1,"Middleware\/TrustHosts.php.html#14","App\\Http\\Middleware\\TrustHosts::hosts","2"],[0,1,"Requests\/Comment\/CreateRequest.php.html#15","App\\Http\\Requests\\Comment\\CreateRequest::authorize","2"],[50,2,"Controllers\/Admin\/CommentController.php.html#28","App\\Http\\Controllers\\Admin\\CommentController::destroy","2.50"],[50,5,"Controllers\/Admin\/SettingsController.php.html#41","App\\Http\\Controllers\\Admin\\SettingsController::handleUpload","8.12"],[52.94117647058824,3,"Controllers\/Admin\/UserController.php.html#112","App\\Http\\Controllers\\Admin\\UserController::destroy","3.94"],[58.333333333333336,5,"Controllers\/Api\/FilmController.php.html#45","App\\Http\\Controllers\\Api\\FilmController::likesIncrement","6.81"],[66.66666666666666,2,"Controllers\/Admin\/UserController.php.html#26","App\\Http\\Controllers\\Admin\\UserController::toggle","2.15"],[71.83098591549296,20,"Controllers\/TelegramWebhookController.php.html#13","App\\Http\\Controllers\\TelegramWebhookController::handle","28.94"],[73.33333333333333,3,"Controllers\/Api\/CommentController.php.html#16","App\\Http\\Controllers\\Api\\CommentController::store","3.17"],[75,4,"Controllers\/Api\/FilmController.php.html#23","App\\Http\\Controllers\\Api\\FilmController::viewsIncrement","4.25"],[80,6,"Controllers\/Admin\/UserController.php.html#74","App\\Http\\Controllers\\Admin\\UserController::update","6.29"],[83.33333333333334,2,"Controllers\/Admin\/FilmController.php.html#57","App\\Http\\Controllers\\Admin\\FilmController::update","2.02"],[83.33333333333334,2,"Controllers\/Admin\/FilmController.php.html#71","App\\Http\\Controllers\\Admin\\FilmController::destroy","2.02"],[83.33333333333334,2,"Controllers\/Admin\/FilmController.php.html#85","App\\Http\\Controllers\\Admin\\FilmController::restore","2.02"],[83.33333333333334,2,"Controllers\/Admin\/FilmController.php.html#99","App\\Http\\Controllers\\Admin\\FilmController::forceDelete","2.02"],[85.71428571428571,4,"Middleware\/CheckBan.php.html#12","App\\Http\\Middleware\\CheckBan::handle","4.05"],[100,1,"Controllers\/ActorController.php.html#9","App\\Http\\Controllers\\ActorController::index","1"],[100,1,"Controllers\/ActorController.php.html#16","App\\Http\\Controllers\\ActorController::show","1"],[100,1,"Controllers\/Admin\/ActorController.php.html#11","App\\Http\\Controllers\\Admin\\ActorController::index","1"],[100,1,"Controllers\/Admin\/ActorController.php.html#22","App\\Http\\Controllers\\Admin\\ActorController::store","1"],[100,1,"Controllers\/Admin\/ActorController.php.html#34","App\\Http\\Controllers\\Admin\\ActorController::update","1"],[100,2,"Controllers\/Admin\/ActorController.php.html#44","App\\Http\\Controllers\\Admin\\ActorController::destroy","2"],[100,1,"Controllers\/Admin\/AgeController.php.html#11","App\\Http\\Controllers\\Admin\\AgeController::index","1"],[100,1,"Controllers\/Admin\/AgeController.php.html#17","App\\Http\\Controllers\\Admin\\AgeController::create","1"],[100,1,"Controllers\/Admin\/AgeController.php.html#22","App\\Http\\Controllers\\Admin\\AgeController::store","1"],[100,1,"Controllers\/Admin\/AgeController.php.html#28","App\\Http\\Controllers\\Admin\\AgeController::edit","1"],[100,1,"Controllers\/Admin\/AgeController.php.html#34","App\\Http\\Controllers\\Admin\\AgeController::update","1"],[100,2,"Controllers\/Admin\/AgeController.php.html#43","App\\Http\\Controllers\\Admin\\AgeController::destroy","2"],[100,1,"Controllers\/Admin\/CacheController.php.html#10","App\\Http\\Controllers\\Admin\\CacheController::clear","1"],[100,1,"Controllers\/Admin\/CaptionController.php.html#11","App\\Http\\Controllers\\Admin\\CaptionController::index","1"],[100,1,"Controllers\/Admin\/CaptionController.php.html#22","App\\Http\\Controllers\\Admin\\CaptionController::store","1"],[100,1,"Controllers\/Admin\/CaptionController.php.html#34","App\\Http\\Controllers\\Admin\\CaptionController::update","1"],[100,2,"Controllers\/Admin\/CaptionController.php.html#42","App\\Http\\Controllers\\Admin\\CaptionController::destroy","2"],[100,1,"Controllers\/Admin\/CategoryController.php.html#11","App\\Http\\Controllers\\Admin\\CategoryController::index","1"],[100,1,"Controllers\/Admin\/CategoryController.php.html#22","App\\Http\\Controllers\\Admin\\CategoryController::store","1"],[100,1,"Controllers\/Admin\/CategoryController.php.html#34","App\\Http\\Controllers\\Admin\\CategoryController::update","1"],[100,2,"Controllers\/Admin\/CategoryController.php.html#41","App\\Http\\Controllers\\Admin\\CategoryController::destroy","2"],[100,1,"Controllers\/Admin\/CommentController.php.html#10","App\\Http\\Controllers\\Admin\\CommentController::index","1"],[100,1,"Controllers\/Admin\/CommentController.php.html#16","App\\Http\\Controllers\\Admin\\CommentController::toggle","1"],[100,1,"Controllers\/Admin\/CompanyController.php.html#11","App\\Http\\Controllers\\Admin\\CompanyController::index","1"],[100,1,"Controllers\/Admin\/CompanyController.php.html#22","App\\Http\\Controllers\\Admin\\CompanyController::store","1"],[100,1,"Controllers\/Admin\/CompanyController.php.html#34","App\\Http\\Controllers\\Admin\\CompanyController::update","1"],[100,2,"Controllers\/Admin\/CompanyController.php.html#42","App\\Http\\Controllers\\Admin\\CompanyController::destroy","2"],[100,1,"Controllers\/Admin\/ComposerController.php.html#11","App\\Http\\Controllers\\Admin\\ComposerController::index","1"],[100,1,"Controllers\/Admin\/ComposerController.php.html#22","App\\Http\\Controllers\\Admin\\ComposerController::store","1"],[100,1,"Controllers\/Admin\/ComposerController.php.html#34","App\\Http\\Controllers\\Admin\\ComposerController::update","1"],[100,2,"Controllers\/Admin\/ComposerController.php.html#42","App\\Http\\Controllers\\Admin\\ComposerController::destroy","2"],[100,1,"Controllers\/Admin\/CountryController.php.html#11","App\\Http\\Controllers\\Admin\\CountryController::index","1"],[100,1,"Controllers\/Admin\/CountryController.php.html#22","App\\Http\\Controllers\\Admin\\CountryController::store","1"],[100,1,"Controllers\/Admin\/CountryController.php.html#34","App\\Http\\Controllers\\Admin\\CountryController::update","1"],[100,2,"Controllers\/Admin\/CountryController.php.html#43","App\\Http\\Controllers\\Admin\\CountryController::destroy","2"],[100,1,"Controllers\/Admin\/DirectorController.php.html#11","App\\Http\\Controllers\\Admin\\DirectorController::index","1"],[100,1,"Controllers\/Admin\/DirectorController.php.html#24","App\\Http\\Controllers\\Admin\\DirectorController::store","1"],[100,1,"Controllers\/Admin\/DirectorController.php.html#40","App\\Http\\Controllers\\Admin\\DirectorController::update","1"],[100,2,"Controllers\/Admin\/DirectorController.php.html#50","App\\Http\\Controllers\\Admin\\DirectorController::destroy","2"],[100,1,"Controllers\/Admin\/DurationController.php.html#11","App\\Http\\Controllers\\Admin\\DurationController::index","1"],[100,1,"Controllers\/Admin\/DurationController.php.html#22","App\\Http\\Controllers\\Admin\\DurationController::store","1"],[100,1,"Controllers\/Admin\/DurationController.php.html#34","App\\Http\\Controllers\\Admin\\DurationController::update","1"],[100,2,"Controllers\/Admin\/DurationController.php.html#43","App\\Http\\Controllers\\Admin\\DurationController::destroy","2"],[100,1,"Controllers\/Admin\/FilmController.php.html#13","App\\Http\\Controllers\\Admin\\FilmController::__construct","1"],[100,1,"Controllers\/Admin\/FilmController.php.html#20","App\\Http\\Controllers\\Admin\\FilmController::index","1"],[100,1,"Controllers\/Admin\/FilmController.php.html#30","App\\Http\\Controllers\\Admin\\FilmController::create","1"],[100,1,"Controllers\/Admin\/FilmController.php.html#47","App\\Http\\Controllers\\Admin\\FilmController::edit","1"],[100,1,"Controllers\/Admin\/FilmController.php.html#113","App\\Http\\Controllers\\Admin\\FilmController::restoreAll","1"],[100,1,"Controllers\/Admin\/FilmController.php.html#124","App\\Http\\Controllers\\Admin\\FilmController::forceDeleteAll","1"],[100,1,"Controllers\/Admin\/FilmController.php.html#169","App\\Http\\Controllers\\Admin\\FilmController::respondWithFreshTables","1"],[100,1,"Controllers\/Admin\/FilmImportController.php.html#12","App\\Http\\Controllers\\Admin\\FilmImportController::index","1"],[100,2,"Controllers\/Admin\/FilmImportController.php.html#24","App\\Http\\Controllers\\Admin\\FilmImportController::search","2"],[100,1,"Controllers\/Admin\/FilmImportController.php.html#38","App\\Http\\Controllers\\Admin\\FilmImportController::store","1"],[100,1,"Controllers\/Admin\/GenreController.php.html#11","App\\Http\\Controllers\\Admin\\GenreController::index","1"],[100,1,"Controllers\/Admin\/GenreController.php.html#17","App\\Http\\Controllers\\Admin\\GenreController::create","1"],[100,1,"Controllers\/Admin\/GenreController.php.html#22","App\\Http\\Controllers\\Admin\\GenreController::store","1"],[100,1,"Controllers\/Admin\/GenreController.php.html#28","App\\Http\\Controllers\\Admin\\GenreController::edit","1"],[100,1,"Controllers\/Admin\/GenreController.php.html#34","App\\Http\\Controllers\\Admin\\GenreController::update","1"],[100,2,"Controllers\/Admin\/GenreController.php.html#43","App\\Http\\Controllers\\Admin\\GenreController::destroy","2"],[100,1,"Controllers\/Admin\/LanguageController.php.html#11","App\\Http\\Controllers\\Admin\\LanguageController::index","1"],[100,1,"Controllers\/Admin\/LanguageController.php.html#17","App\\Http\\Controllers\\Admin\\LanguageController::create","1"],[100,1,"Controllers\/Admin\/LanguageController.php.html#22","App\\Http\\Controllers\\Admin\\LanguageController::store","1"],[100,1,"Controllers\/Admin\/LanguageController.php.html#28","App\\Http\\Controllers\\Admin\\LanguageController::edit","1"],[100,1,"Controllers\/Admin\/LanguageController.php.html#34","App\\Http\\Controllers\\Admin\\LanguageController::update","1"],[100,2,"Controllers\/Admin\/LanguageController.php.html#43","App\\Http\\Controllers\\Admin\\LanguageController::destroy","2"],[100,1,"Controllers\/Admin\/MainController.php.html#9","App\\Http\\Controllers\\Admin\\MainController::index","1"],[100,1,"Controllers\/Admin\/MenuController.php.html#14","App\\Http\\Controllers\\Admin\\MenuController::edit","1"],[100,5,"Controllers\/Admin\/MenuController.php.html#25","App\\Http\\Controllers\\Admin\\MenuController::update","5"],[100,1,"Controllers\/Admin\/ProducerController.php.html#11","App\\Http\\Controllers\\Admin\\ProducerController::index","1"],[100,1,"Controllers\/Admin\/ProducerController.php.html#17","App\\Http\\Controllers\\Admin\\ProducerController::create","1"],[100,1,"Controllers\/Admin\/ProducerController.php.html#22","App\\Http\\Controllers\\Admin\\ProducerController::store","1"],[100,1,"Controllers\/Admin\/ProducerController.php.html#28","App\\Http\\Controllers\\Admin\\ProducerController::edit","1"],[100,1,"Controllers\/Admin\/ProducerController.php.html#34","App\\Http\\Controllers\\Admin\\ProducerController::update","1"],[100,2,"Controllers\/Admin\/ProducerController.php.html#43","App\\Http\\Controllers\\Admin\\ProducerController::destroy","2"],[100,1,"Controllers\/Admin\/QualityController.php.html#11","App\\Http\\Controllers\\Admin\\QualityController::index","1"],[100,1,"Controllers\/Admin\/QualityController.php.html#17","App\\Http\\Controllers\\Admin\\QualityController::create","1"],[100,1,"Controllers\/Admin\/QualityController.php.html#22","App\\Http\\Controllers\\Admin\\QualityController::store","1"],[100,1,"Controllers\/Admin\/QualityController.php.html#28","App\\Http\\Controllers\\Admin\\QualityController::edit","1"],[100,1,"Controllers\/Admin\/QualityController.php.html#34","App\\Http\\Controllers\\Admin\\QualityController::update","1"],[100,2,"Controllers\/Admin\/QualityController.php.html#43","App\\Http\\Controllers\\Admin\\QualityController::destroy","2"],[100,1,"Controllers\/Admin\/RatingController.php.html#11","App\\Http\\Controllers\\Admin\\RatingController::index","1"],[100,1,"Controllers\/Admin\/RatingController.php.html#17","App\\Http\\Controllers\\Admin\\RatingController::create","1"],[100,1,"Controllers\/Admin\/RatingController.php.html#22","App\\Http\\Controllers\\Admin\\RatingController::store","1"],[100,1,"Controllers\/Admin\/RatingController.php.html#28","App\\Http\\Controllers\\Admin\\RatingController::edit","1"],[100,1,"Controllers\/Admin\/RatingController.php.html#34","App\\Http\\Controllers\\Admin\\RatingController::update","1"],[100,2,"Controllers\/Admin\/RatingController.php.html#43","App\\Http\\Controllers\\Admin\\RatingController::destroy","2"],[100,1,"Controllers\/Admin\/SeasonController.php.html#11","App\\Http\\Controllers\\Admin\\SeasonController::index","1"],[100,1,"Controllers\/Admin\/SeasonController.php.html#17","App\\Http\\Controllers\\Admin\\SeasonController::create","1"],[100,1,"Controllers\/Admin\/SeasonController.php.html#22","App\\Http\\Controllers\\Admin\\SeasonController::store","1"],[100,1,"Controllers\/Admin\/SeasonController.php.html#28","App\\Http\\Controllers\\Admin\\SeasonController::edit","1"],[100,1,"Controllers\/Admin\/SeasonController.php.html#34","App\\Http\\Controllers\\Admin\\SeasonController::update","1"],[100,2,"Controllers\/Admin\/SeasonController.php.html#43","App\\Http\\Controllers\\Admin\\SeasonController::destroy","2"],[100,1,"Controllers\/Admin\/SelectionController.php.html#11","App\\Http\\Controllers\\Admin\\SelectionController::index","1"],[100,1,"Controllers\/Admin\/SelectionController.php.html#17","App\\Http\\Controllers\\Admin\\SelectionController::create","1"],[100,1,"Controllers\/Admin\/SelectionController.php.html#22","App\\Http\\Controllers\\Admin\\SelectionController::store","1"],[100,1,"Controllers\/Admin\/SelectionController.php.html#28","App\\Http\\Controllers\\Admin\\SelectionController::edit","1"],[100,1,"Controllers\/Admin\/SelectionController.php.html#34","App\\Http\\Controllers\\Admin\\SelectionController::update","1"],[100,2,"Controllers\/Admin\/SelectionController.php.html#43","App\\Http\\Controllers\\Admin\\SelectionController::destroy","2"],[100,1,"Controllers\/Admin\/SettingsController.php.html#14","App\\Http\\Controllers\\Admin\\SettingsController::__construct","1"],[100,1,"Controllers\/Admin\/SettingsController.php.html#19","App\\Http\\Controllers\\Admin\\SettingsController::index","1"],[100,1,"Controllers\/Admin\/SettingsController.php.html#26","App\\Http\\Controllers\\Admin\\SettingsController::update","1"],[100,1,"Controllers\/Admin\/StatusController.php.html#11","App\\Http\\Controllers\\Admin\\StatusController::index","1"],[100,1,"Controllers\/Admin\/StatusController.php.html#17","App\\Http\\Controllers\\Admin\\StatusController::create","1"],[100,1,"Controllers\/Admin\/StatusController.php.html#22","App\\Http\\Controllers\\Admin\\StatusController::store","1"],[100,1,"Controllers\/Admin\/StatusController.php.html#28","App\\Http\\Controllers\\Admin\\StatusController::edit","1"],[100,1,"Controllers\/Admin\/StatusController.php.html#34","App\\Http\\Controllers\\Admin\\StatusController::update","1"],[100,2,"Controllers\/Admin\/StatusController.php.html#43","App\\Http\\Controllers\\Admin\\StatusController::destroy","2"],[100,1,"Controllers\/Admin\/SubscriberController.php.html#10","App\\Http\\Controllers\\Admin\\SubscriberController::index","1"],[100,1,"Controllers\/Admin\/SubscriberController.php.html#16","App\\Http\\Controllers\\Admin\\SubscriberController::create","1"],[100,1,"Controllers\/Admin\/SubscriberController.php.html#21","App\\Http\\Controllers\\Admin\\SubscriberController::store","1"],[100,1,"Controllers\/Admin\/SubscriberController.php.html#34","App\\Http\\Controllers\\Admin\\SubscriberController::destroy","1"],[100,1,"Controllers\/Admin\/UserController.php.html#15","App\\Http\\Controllers\\Admin\\UserController::__construct","1"],[100,1,"Controllers\/Admin\/UserController.php.html#20","App\\Http\\Controllers\\Admin\\UserController::index","1"],[100,1,"Controllers\/Admin\/UserController.php.html#46","App\\Http\\Controllers\\Admin\\UserController::create","1"],[100,2,"Controllers\/Admin\/UserController.php.html#51","App\\Http\\Controllers\\Admin\\UserController::store","2"],[100,1,"Controllers\/Admin\/UserController.php.html#68","App\\Http\\Controllers\\Admin\\UserController::edit","1"],[100,1,"Controllers\/Admin\/YearController.php.html#11","App\\Http\\Controllers\\Admin\\YearController::index","1"],[100,1,"Controllers\/Admin\/YearController.php.html#17","App\\Http\\Controllers\\Admin\\YearController::create","1"],[100,1,"Controllers\/Admin\/YearController.php.html#22","App\\Http\\Controllers\\Admin\\YearController::store","1"],[100,1,"Controllers\/Admin\/YearController.php.html#28","App\\Http\\Controllers\\Admin\\YearController::edit","1"],[100,1,"Controllers\/Admin\/YearController.php.html#34","App\\Http\\Controllers\\Admin\\YearController::update","1"],[100,2,"Controllers\/Admin\/YearController.php.html#43","App\\Http\\Controllers\\Admin\\YearController::destroy","2"],[100,1,"Controllers\/AgeController.php.html#9","App\\Http\\Controllers\\AgeController::index","1"],[100,1,"Controllers\/AgeController.php.html#15","App\\Http\\Controllers\\AgeController::show","1"],[100,1,"Controllers\/Api\/FilmController.php.html#15","App\\Http\\Controllers\\Api\\FilmController::show","1"],[100,2,"Controllers\/Api\/SearchSuggestController.php.html#11","App\\Http\\Controllers\\Api\\SearchSuggestController::__invoke","2"],[100,4,"Controllers\/Auth\/GoogleController.php.html#18","App\\Http\\Controllers\\Auth\\GoogleController::callback","4"],[100,1,"Controllers\/CaptionController.php.html#9","App\\Http\\Controllers\\CaptionController::index","1"],[100,1,"Controllers\/CaptionController.php.html#15","App\\Http\\Controllers\\CaptionController::show","1"],[100,1,"Controllers\/CategoryController.php.html#9","App\\Http\\Controllers\\CategoryController::show","1"],[100,1,"Controllers\/CompanyController.php.html#9","App\\Http\\Controllers\\CompanyController::index","1"],[100,1,"Controllers\/CompanyController.php.html#15","App\\Http\\Controllers\\CompanyController::show","1"],[100,1,"Controllers\/ComposerController.php.html#9","App\\Http\\Controllers\\ComposerController::index","1"],[100,1,"Controllers\/ComposerController.php.html#15","App\\Http\\Controllers\\ComposerController::show","1"],[100,1,"Controllers\/ContactController.php.html#10","App\\Http\\Controllers\\ContactController::send","1"],[100,1,"Controllers\/CountryController.php.html#9","App\\Http\\Controllers\\CountryController::index","1"],[100,1,"Controllers\/CountryController.php.html#15","App\\Http\\Controllers\\CountryController::show","1"],[100,1,"Controllers\/DirectorController.php.html#9","App\\Http\\Controllers\\DirectorController::index","1"],[100,1,"Controllers\/DirectorController.php.html#15","App\\Http\\Controllers\\DirectorController::show","1"],[100,1,"Controllers\/FilmController.php.html#10","App\\Http\\Controllers\\FilmController::show","1"],[100,1,"Controllers\/GenreController.php.html#9","App\\Http\\Controllers\\GenreController::index","1"],[100,1,"Controllers\/GenreController.php.html#15","App\\Http\\Controllers\\GenreController::show","1"],[100,3,"Controllers\/HomeController.php.html#12","App\\Http\\Controllers\\HomeController::index","3"],[100,1,"Controllers\/LanguageController.php.html#9","App\\Http\\Controllers\\LanguageController::index","1"],[100,1,"Controllers\/LanguageController.php.html#15","App\\Http\\Controllers\\LanguageController::show","1"],[100,1,"Controllers\/ProducerController.php.html#9","App\\Http\\Controllers\\ProducerController::index","1"],[100,1,"Controllers\/ProducerController.php.html#15","App\\Http\\Controllers\\ProducerController::show","1"],[100,1,"Controllers\/ProfileController.php.html#13","App\\Http\\Controllers\\ProfileController::__construct","1"],[100,1,"Controllers\/ProfileController.php.html#18","App\\Http\\Controllers\\ProfileController::edit","1"],[100,3,"Controllers\/ProfileController.php.html#24","App\\Http\\Controllers\\ProfileController::update","3"],[100,1,"Controllers\/QualityController.php.html#9","App\\Http\\Controllers\\QualityController::index","1"],[100,1,"Controllers\/QualityController.php.html#15","App\\Http\\Controllers\\QualityController::show","1"],[100,1,"Controllers\/RatingController.php.html#9","App\\Http\\Controllers\\RatingController::index","1"],[100,1,"Controllers\/RatingController.php.html#15","App\\Http\\Controllers\\RatingController::show","1"],[100,1,"Controllers\/SearchController.php.html#10","App\\Http\\Controllers\\SearchController::index","1"],[100,1,"Controllers\/SelectionController.php.html#9","App\\Http\\Controllers\\SelectionController::index","1"],[100,1,"Controllers\/SelectionController.php.html#15","App\\Http\\Controllers\\SelectionController::show","1"],[100,1,"Controllers\/SubsController.php.html#11","App\\Http\\Controllers\\SubsController::subscribe","1"],[100,1,"Controllers\/SubsController.php.html#24","App\\Http\\Controllers\\SubsController::verify","1"],[100,1,"Controllers\/YearController.php.html#9","App\\Http\\Controllers\\YearController::index","1"],[100,1,"Controllers\/YearController.php.html#15","App\\Http\\Controllers\\YearController::show","1"],[100,3,"Middleware\/AdminMiddleware.php.html#12","App\\Http\\Middleware\\AdminMiddleware::handle","3"],[100,3,"Middleware\/EnsureStaffRole.php.html#18","App\\Http\\Middleware\\EnsureStaffRole::handle","3"],[100,2,"Requests\/Comment\/CreateRequest.php.html#25","App\\Http\\Requests\\Comment\\CreateRequest::rules","2"],[100,1,"Requests\/FilmRequest.php.html#12","App\\Http\\Requests\\FilmRequest::authorize","1"],[100,2,"Requests\/FilmRequest.php.html#17","App\\Http\\Requests\\FilmRequest::prepareForValidation","2"],[100,1,"Requests\/FilmRequest.php.html#30","App\\Http\\Requests\\FilmRequest::rules","1"],[100,1,"Requests\/NameRequest.php.html#11","App\\Http\\Requests\\NameRequest::authorize","1"],[100,1,"Requests\/NameRequest.php.html#21","App\\Http\\Requests\\NameRequest::rules","1"],[100,1,"Requests\/TitleRequest.php.html#12","App\\Http\\Requests\\TitleRequest::authorize","1"],[100,1,"Requests\/TitleRequest.php.html#22","App\\Http\\Requests\\TitleRequest::rules","1"],[100,1,"Resources\/CommentResource.php.html#15","App\\Http\\Resources\\CommentResource::toArray","1"],[100,1,"Resources\/FilmResource.php.html#15","App\\Http\\Resources\\FilmResource::toArray","1"],[100,1,"Resources\/StateResource.php.html#15","App\\Http\\Resources\\StateResource::toArray","1"],[100,1,"View\/Composers\/CarouselComposer.php.html#11","App\\Http\\View\\Composers\\CarouselComposer::compose","1"],[100,1,"View\/Composers\/CurrencyComposer.php.html#12","App\\Http\\View\\Composers\\CurrencyComposer::__construct","1"],[100,1,"View\/Composers\/CurrencyComposer.php.html#18","App\\Http\\View\\Composers\\CurrencyComposer::compose","1"],[100,2,"View\/Composers\/MenuComposer.php.html#11","App\\Http\\View\\Composers\\MenuComposer::compose","2"],[100,1,"View\/Composers\/SettingsComposer.php.html#12","App\\Http\\View\\Composers\\SettingsComposer::compose","1"],[100,1,"View\/Composers\/UpcomingMoviesComposer.php.html#12","App\\Http\\View\\Composers\\UpcomingMoviesComposer::__construct","1"],[100,1,"View\/Composers\/UpcomingMoviesComposer.php.html#17","App\\Http\\View\\Composers\\UpcomingMoviesComposer::compose","1"]]</script>
+  <script type="text/javascript" defer>
+  const barLabels = [
+    '0%',
+    '0-10%',
+    '10-20%',
+    '20-30%',
+    '30-40%',
+    '40-50%',
+    '50-60%',
+    '60-70%',
+    '70-80%',
+    '80-90%',
+    '90-100%',
+    '100%'
+  ];
+  const barConfig = (name, fullName, values) => ({
+    axis: {
+      x: {
+        type: "category",
+        categories: barLabels,
+      },
+      y: {
+        label: {
+          text: `#${name}`,
+          position: 'outer-top',
+        },
+      },
+    },
+    bindto: `#${name}CoverageDistribution`,
+    data: {
+      columns: [
+        [fullName].concat(values),
+      ],
+      colors: {
+        [fullName]: "rgba(69, 114, 167, 0.75)",
+      },
+      type: "bar",
+    },
+    bar: {
+      width: {
+        ratio: 0.9,
+      },
+    },
+    grid: {
+      focus: {
+        show: false,
+      },
+      x: {
+        show: true,
+      },
+      y: {
+        show: true,
+      },
+    },
+    legend: {
+      show: false,
+    },
+    tooltip: {
+      contents: function (data) {
+        return `<table class="bb-tooltip"><tbody>
+            <tr><th colspan="2">Coverage ${barLabels[data[0].x]}</th></tr>
+            <tr><td class="value">${data[0].value} ${name}</td></tr>
+          </tbody></table>`;
+      },
+      grouped: false,
+    },
+  });
+  bb.generate(
+    barConfig('classes', "Class Coverage", [8,0,0,0,0,9,12,3,3,2,1,47])
+  );
+  bb.generate(
+    barConfig('methods', "Method Coverage", [57,0,0,0,0,0,4,1,3,6,0,181])
+  );
+
+  const scatterConfig = (name, complexityData) => ({
+    axis: {
+      x: {
+        label: {
+          text: 'Code Coverage (in percent)',
+          position: 'outer-right',
+        },
+        tick: {
+          values: [0, 20, 40, 60, 80, 100],
+        },
+      },
+      y: {
+        label: {
+          text: 'Cyclomatic Complexity',
+          position: 'outer-top',
+        },
+        min: 0,
+        padding: {
+          bottom: 0,
+          top: 5,
+        },
+      },
+    },
+    bindto: `#${name}Complexity`,
+    data: {
+      columns: [
+        ["complexity_x"].concat(complexityData.map(d => d[0])),
+        ["complexity"].concat(complexityData.map(d => d[1])),
+      ],
+      onclick: function(data, element) {
+        window.location = complexityData[data.index][2];
+      },
+      type: "scatter",
+      xs: {
+        "complexity": "complexity_x",
+      },
+    },
+    grid: {
+      focus: {
+        show: true,
+        y: true,
+      },
+      x: {
+        show: true,
+      },
+      y: {
+        show: true,
+      },
+    },
+    legend: {
+      show: false,
+    },
+    tooltip: {
+      contents: function (data) {
+        const coverage = Math.round(data[0].x);
+        const complexity = data[0].value;
+        const targetName = complexityData[data[0].index][3];
+        const crap = complexityData[data[0].index][4];
+        return `<table class="bb-tooltip"><tbody>
+            <tr><th colspan="2">${targetName}</th></tr>
+            <tr class="bb-tooltip-name-complexity"><td>Coverage</td><td class="name">${coverage}%</td></tr>
+            <tr class="bb-tooltip-name-complexity"><td>Complexity</td><td class="value">${complexity}</td></tr>
+            <tr class="bb-tooltip-name-complexity"><td>Crap</td><td class="value">${crap}</td></tr>
+          </tbody></table>`;
+      },
+      grouped: false,
+    },
+  });
+  const classComplexityData = JSON.parse(document.getElementById('complexity_class').textContent);
+  bb.generate(
+    scatterConfig("class", classComplexityData)
+  );
+  const methodComplexityData = JSON.parse(document.getElementById('complexity_method').textContent);
+  bb.generate(
+    scatterConfig("method", methodComplexityData),
+  );
+  </script>
+ </body>
+</html>

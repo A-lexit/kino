@@ -1,5 +1,4 @@
 <?php
-// app/Http/Controllers/Admin/TelegramSubscriberController.php
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;

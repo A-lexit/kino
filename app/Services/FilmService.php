@@ -1,10 +1,12 @@
 <?php
 namespace App\Services;
 
-use App\Media\FilmImageMedia;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use App\Models\Film;
-use App\Http\Requests\FilmRequest;
 use Illuminate\Http\Request;
+use App\Http\Requests\FilmRequest;
+use App\Media\FilmImageMedia;
 use App\Media\FilmVideoResolver;
 
 class FilmService
@@ -16,185 +18,291 @@ class FilmService
         protected FilmRelationService $relationService
     ) {}
 
-    public function getFilmsForUser($user): array
+    public function getFilmsForUser(): array
     {
-        $with = ['category:id,title,slug', 'actors:id,name'];
+        $with = [
+            'category:id,title,slug',
+            'actors:id,name',
+        ];
 
-        $films = Film::with($with)->forUser($user)->latest('id')->paginate(50);
-        $sdelfilms = Film::onlyTrashed()->forUser($user)->latest('id')->paginate(30);
+        $films = Film::with($with)
+            ->latest('id')
+            ->get();
+
+        $sdelfilms = Film::onlyTrashed()
+            ->latest('id')
+            ->get();
 
         return compact('films', 'sdelfilms');
     }
 
     public function createFilm(FilmRequest $request): Film
     {
-        // Беремо вже очищені та підготовлені FormRequest-ом дані
-        $data = $request->validated();
+        return DB::transaction(function () use ($request) {
 
-        // Передаємо slug для генерації красивої назви файлу
-        $this->filmImageMedia->uploadFilmImages($request, $data, null, $data['slug'] ?? null);
+            $data = $request->validated();
 
-        $this->filmVideoMedia->uploadTrailer($request, $data);
-        $this->handleTrailerYoutubeUrl($data);
+            $likes = $data['likes'] ?? 0;
+            $views = $data['views'] ?? 0;
 
-        $film = Film::create($data);
+            unset(
+                $data['likes'],
+                $data['views'],
+                $data['related_films']
+            );
 
-        $this->afterSaveActions($film, $request);
+            if (is_null($data['sort_order'] ?? null)) {
+                unset($data['sort_order']);
+            }
 
-        return $film;
+            $this->filmImageMedia->uploadFilmImages(
+                $request,
+                $data,
+                null,
+                $data['slug'] ?? null
+            );
+
+            $this->filmVideoMedia->uploadTrailer(
+                $request,
+                $data
+            );
+
+            $this->handleTrailerYoutubeUrl($data);
+
+            $film = Film::create($data);
+
+            $this->syncFilmState(
+                $film,
+                $likes,
+                $views
+            );
+
+            $this->afterSaveActions(
+                $film,
+                $request
+            );
+
+            return $film;
+        });
     }
 
+    public function updateFilm(
+        Film $film,
+        FilmRequest $request
+    ): Film {
+        return DB::transaction(function () use ($film, $request) {
 
-    public function updateFilm($id, FilmRequest $request): ?Film
-    {
-        $film = Film::find($id);
-        if (!$film) {
-            return null;
-        }
+            $data = $request->validated();
 
-        $data = $request->validated();
+            /*
+             * Slug може змінювати тільки Admin.
+             *
+             * Editor може редагувати фільм,
+             * але slug залишається під контролем Admin.
+             */
+            if (auth()->user()?->isAdmin()) {
 
-        // Передаємо slug при оновленні (беремо новий з даних або старий з моделі)
-        $this->filmImageMedia->uploadFilmImages($request, $data, $film, $data['slug'] ?? $film->slug);
+                if (empty($data['slug'])) {
+                    $data['slug'] = $film->slug;
+                } else {
+                    $data['slug'] = Str::slug($data['slug']);
+                }
 
-        $this->filmVideoMedia->uploadTrailer($request, $data, $film);
-        $this->handleTrailerYoutubeUrl($data);
+            } else {
+                unset($data['slug']);
+            }
 
-        $film->fill($data);
-        $film->save();
+            $likes = array_key_exists('likes', $data)
+                ? ($data['likes'] ?? 0)
+                : ($film->state?->likes ?? 0);
 
-        $this->afterSaveActions($film, $request);
+            $views = array_key_exists('views', $data)
+                ? ($data['views'] ?? 0)
+                : ($film->state?->views ?? 0);
 
-        return $film;
+            unset(
+                $data['likes'],
+                $data['views'],
+                $data['related_films']
+            );
+
+
+            $this->filmImageMedia->uploadFilmImages(
+                $request,
+                $data,
+                $film,
+                $data['slug'] ?? $film->slug
+            );
+
+            foreach ([
+                         'thumbnail',
+                         'gal_image1',
+                         'gal_image2',
+                         'gal_image3',
+                         'gal_image4',
+                         'gal_image5',
+                     ] as $field) {
+                if (
+                    $request->boolean("delete_{$field}")
+                    && !$request->hasFile($field)
+                ) {
+                    $this->filmImageMedia->deleteFilmImage(
+                        $film,
+                        $field
+                    );
+
+                    $data[$field] = null;
+                }
+            }
+
+
+            $this->filmVideoMedia->uploadTrailer(
+                $request,
+                $data,
+                $film
+            );
+
+            $this->handleTrailerYoutubeUrl($data);
+
+            $film->fill($data);
+            $film->save();
+
+            $this->syncFilmState(
+                $film,
+                $likes,
+                $views
+            );
+
+            $this->afterSaveActions(
+                $film,
+                $request
+            );
+
+            return $film;
+        });
     }
 
-    public function deleteFilm($id): ?Film
+    public function deleteFilm(Film $film): void
     {
-        $film = Film::withTrashed()->find($id);
-        if (!$film) return null;
-
         $film->delete();
-
-        return $film;
     }
 
-    public function restoreFilm($id): ?Film
+    public function restoreFilm(Film $film): void
     {
-        $film = Film::withTrashed()->find($id);
-        if (!$film?->trashed()) {
-            return null;
+        if ($film->trashed()) {
+            $this->ensureTitleExists($film);
+            $film->restore();
         }
-
-        $this->ensureTitleExists($film);
-        $film->restore();
-
-        return $film;
     }
 
     public function restoreAllFilms(): int
     {
         $count = 0;
 
-        // Обробка порціями по 100 штук для економії оперативної пам'яті
-        Film::onlyTrashed()->chunk(100, function ($films) use (&$count) {
-            Film::withoutEvents(function () use ($films, &$count) {
-                foreach ($films as $film) {
-                    $this->ensureTitleExists($film);
-                    $film->restore();
-                    $count++;
-                }
+        Film::onlyTrashed()
+            ->chunkById(100, function ($films) use (&$count) {
+
+                Film::withoutEvents(function () use (
+                    $films,
+                    &$count
+                ) {
+                    foreach ($films as $film) {
+                        $this->ensureTitleExists($film);
+                        $film->restore();
+                        $count++;
+                    }
+                });
             });
-        });
 
         return $count;
     }
 
-    public function forceDeleteFilm($id): ?Film
+    public function forceDeleteFilm(Film $film): void
     {
-        $film = Film::withTrashed()->find($id);
-        if (!$film) return null;
-
-        /*$this->filmImageMedia->deleteAll($film);*/
         $this->filmImageMedia->deleteFilmImages($film);
+        $this->filmVideoMedia->deleteTrailer($film);
 
         $film->forceDelete();
-
-        return $film;
     }
 
     public function forceDeleteAllFilms(): int
     {
         $count = 0;
 
-        // Безпечне масове видалення без перевантаження RAM
-        Film::onlyTrashed()->chunk(100, function ($films) use (&$count) {
-            Film::withoutEvents(function () use ($films, &$count) {
-                foreach ($films as $film) {
-                    /*$this->filmImageMedia->deleteAll($film);*/
-                    $this->filmImageMedia->deleteFilmImages($film);
-                    $film->forceDelete();
-                    $count++;
-                }
+        Film::onlyTrashed()
+            ->chunkById(100, function ($films) use (&$count) {
+
+                Film::withoutEvents(function () use (
+                    $films,
+                    &$count
+                ) {
+                    foreach ($films as $film) {
+
+                        $this->filmImageMedia
+                            ->deleteFilmImages($film);
+
+                        $this->filmVideoMedia
+                            ->deleteTrailer($film);
+
+                        $film->forceDelete();
+
+                        $count++;
+                    }
+                });
             });
-        });
 
         return $count;
     }
-
-    public function findFilm($id): Film
-    {
-        return Film::findOrFail($id);
-    }
-
-    // ====================== Приватні методи ======================
 
     protected function ensureTitleExists(Film $film): void
     {
         if (empty($film->title)) {
             $film->title = 'Невідомий фільм ' . uniqid();
-            $film->save();
         }
     }
 
-    protected function afterSaveActions(Film $film, Request $request): void
-    {
-        // Якщо категорія не вибрана — фільм примусово залишається чернеткою,
-        // незалежно від того, чи позначено "Опублікувати"
-        if (empty($film->category_id) || $film->category_id === $this->uncategorizedCategoryId()) {
-            $film->togglePublishStatus(null); // null !== 'published' → завжди Draft
+    protected function afterSaveActions(
+        Film $film,
+        Request $request
+    ): void {
+        if (is_null($film->category_id)) {
+            $film->togglePublishStatus(null);
         } else {
-            $film->togglePublishStatus($request->get('publish_status'));
+            $film->togglePublishStatus(
+                $request->get('publish_status')
+            );
         }
 
-        $film->toggleFeatured($request->get('is_featured'));
-        $this->relationService->sync($film, $request->all());
+        $film->toggleFeatured(
+            $request->get('is_featured')
+        );
+
+        $this->relationService->sync(
+            $film,
+            $request->all()
+        );
     }
 
-    protected function uncategorizedCategoryId(): ?int
-    {
-        return \App\Models\Category::where('slug', 'uncategorized')->value('id');
-    }
 
-
-    private function handleTrailerYoutubeUrl(array &$data): void
-    {
-        // trailer_youtube_url — тимчасове поле з форми (не колонка в БД),
-        // конвертуємо в trailer_youtube_id перед збереженням
+    private function handleTrailerYoutubeUrl(
+        array &$data
+    ): void {
         if (empty($data['trailer_youtube_url'])) {
             unset($data['trailer_youtube_url']);
             return;
         }
 
-        $id = FilmVideoResolver::extractYoutubeId($data['trailer_youtube_url']);
+        $id = FilmVideoResolver::extractYoutubeId(
+            $data['trailer_youtube_url']
+        );
+
         if ($id) {
             $data['trailer_youtube_id'] = $id;
-            // якщо вказали YouTube — власний файл більше не актуальний
             $data['trailer_file'] = null;
         }
 
         unset($data['trailer_youtube_url']);
     }
-
 
     public function fetchImdbRating(Film $film): ?Film
     {
@@ -210,6 +318,64 @@ class FilmService
         ]);
 
         return $film;
+    }
+
+    public function bulkDelete($films): int
+    {
+        $count = 0;
+
+        foreach ($films as $film) {
+            if ($film->trashed()) {
+                continue;
+            }
+
+            $this->deleteFilm($film);
+            $count++;
+        }
+
+        return $count;
+    }
+
+    public function bulkRestore($films): int
+    {
+        $count = 0;
+
+        foreach ($films as $film) {
+            if (!$film->trashed()) {
+                continue;
+            }
+
+            $this->restoreFilm($film);
+            $count++;
+        }
+
+        return $count;
+    }
+
+    public function bulkForceDelete($films): int
+    {
+        $count = 0;
+
+        foreach ($films as $film) {
+            $this->forceDeleteFilm($film);
+            $count++;
+        }
+
+        return $count;
+    }
+
+    protected function syncFilmState(
+        Film $film,
+        int $likes,
+        int $views
+    ): void {
+        $film->state()->updateOrCreate(
+            ['film_id' => $film->id],
+            [
+                'likes' => $likes,
+                'views' => $views,
+            ]
+        );
     }
 
 }

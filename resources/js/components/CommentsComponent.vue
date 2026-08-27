@@ -1,13 +1,6 @@
 <template>
     <div class="row">
         <form @submit.prevent="submit_form()" v-if="!commentSuccess">
-            <!--            <div class="mb-3">
-                            <label for="commentSubject" class="form-label">Ваше ім'я</label>
-                            <input type="text" class="form-control" id="commentSubject" v-model="subject">
-                            <div class="alert alert-warning" role="alert" v-if="errorsMessage.subject">
-                                {{errorsMessage.subject[0]}}
-                            </div>
-                        </div>-->
 
             <div class="mb-3 mt-4">
                 <h5>
@@ -39,19 +32,7 @@
             Коментар успішно надіслано!
         </div>
 
-<!--        <div class="pb-2 mt-5 mx-auto" style="min-width: 100%;" v-for="comment in comments" :key="comment.id">
-            <div class="comment-card rounded border overflow-hidden" style="min-width: 100%;">
-                <div class="toast-header" v-if="comment.status=='1'">
-                    <img src="https://placehold.co/50/5F113B/FFFFFF?text=User" class="rounded me-2" alt="...">
-                    <strong class="me-auto">{{comment.subject}}</strong>
-                    <small class="text-muted">{{comment.created_at}}</small>
-                </div>
-                <div class="toast-body" v-if="comment.status=='1'">
-                    {{comment.body}}
-                </div>
-            </div>
-        </div>-->
-        <div class="pb-2 mt-5 mx-auto" style="min-width: 100%;" v-for="comment in comments" :key="comment.id">
+        <div class="pb-2 mt-4 mx-auto" style="min-width: 100%;" v-for="comment in comments" :key="comment.id">
             <!-- v-if перенесено сюди -->
             <div class="comment-card rounded overflow-hidden" style="min-width: 100%;" v-if="comment.status == '1'">
                 <div class="toast-header">
@@ -105,21 +86,33 @@ export default {
 
 <style scoped>
 /* 1. ОСНОВНІ СТИЛІ ПОЛЯ ВВОДУ */
+/* Поле коментаря */
+/* Поле коментаря */
 textarea#commentBody.form-control {
     border-width: 3px !important;
     border-style: solid !important;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+    transition: border-color 0.2s ease !important;
 }
 
-/* 2. ТЕМНА ТЕМА (БАЗОВИЙ СТАН ТА HOVER) */
+/* Темна тема */
 :global([data-bs-theme="dark"]) textarea#commentBody.form-control {
     background-color: var(--color-bg-soft, #1a1d24) !important;
     color: var(--color-text, #e1e3e8) !important;
     border-color: #3a4150 !important;
+
+    --bs-focus-ring-color: transparent !important;
 }
 
 :global([data-bs-theme="dark"]) textarea#commentBody.form-control:hover {
     border-color: #454c5a !important;
+}
+
+:global([data-bs-theme="dark"]) textarea#commentBody.form-control:focus,
+:global([data-bs-theme="dark"]) textarea#commentBody.form-control:focus-visible {
+    border-color: #daff00 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    --bs-focus-ring-color: transparent !important;
 }
 
 /* 3. КАРТКИ КОМЕНТАРІВ */

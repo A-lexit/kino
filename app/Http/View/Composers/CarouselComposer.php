@@ -19,7 +19,7 @@ class CarouselComposer
                 ->limit(15)
                 ->get();
 
-            return view('layouts.inc.partials.carousels', compact('films'))->render();
+            return view('layouts.inc.header.carouselfilms.carousels', compact('films'))->render();
         });
 
         $view->with('filmsHtml', $html);

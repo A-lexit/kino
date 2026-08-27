@@ -4,12 +4,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
 class Comment extends Model
 {
     use HasFactory;
     protected $fillable = ['subject', 'body', 'film_id', 'user_id', 'status'];
-
 
     public function film()
     {
@@ -18,14 +16,17 @@ class Comment extends Model
         ]);
     }
 
+
     public function user() {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
 
     public function createdAtForHumans()
     {
         return $this->created_at->diffForHumans();
     }
+
 
     public function allow()
     {
@@ -33,11 +34,13 @@ class Comment extends Model
         $this->save();
     }
 
+
     public function disAllow()
     {
         $this->status = 0;
         $this->save();
     }
+
 
     public function toggleStatus()
     {

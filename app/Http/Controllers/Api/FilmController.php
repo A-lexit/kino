@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Models\Film;
 use App\Http\Resources\FilmResource;
-
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Log;
 
 class FilmController extends Controller
@@ -31,7 +29,7 @@ class FilmController extends Controller
                 $film->refresh();       // Оновлюємо модель
             }
 
-            $film->state->increment('vviews');
+            $film->state->increment('views');
             return new FilmResource($film);
 
         } catch (ModelNotFoundException $e) { // Ловимо помилку "not found" окремо

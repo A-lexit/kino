@@ -1,5 +1,4 @@
 @extends('layouts/layout')
-
 @include('layouts.inc.seo', [
     'title' => $film->title,
     'description' => $film->seoDescription()
@@ -9,14 +8,15 @@
 
     {{-- Breadcrumbs --}}
     <div class="container-arch">
-        @include('layouts.inc.breadcrumbs', ['breadcrumbs' => [
+
+        <x-breadcrumbs :items="[
             ['title' => 'Головна', 'url' => route('home')],
             [
                 'title' => $film->category->title,
                 'url' => route('categories.show', ['slug' => $film->category->slug])
             ],
             ['title' => $film->title, 'url' => null],
-        ]])
+        ]" />
     </div>
 
 
@@ -59,20 +59,16 @@
                  ========================= --}}
             <section class="film-mobile-block film-mobile-poster">
 
-                <img
-                    src="{{ app(\App\Media\FilmImageResolver::class)->image($film) }}"
-                    class="film-poster"
-                    alt="{{ $film->title }}"
-                    fetchpriority="high"
-                >
+                <x-film-image :film="$film" variant="image" fetchpriority="high"/>
 
                 @include('films.inc.partials-sidebar.gallery', [
-                    'images' => app(\App\Media\FilmImageResolver::class)->gallery($film)
-                ])
+    'images' => app(\App\Media\FilmImageResolver::class)->gallery($film),
+    'fancyboxGroup' => 'gallery-mobile',
+])
 
-                <p class="film-release-date">
+                {{--<p class="film-release-date">
                     Дата виходу: {{ $film->display_date }}
-                </p>
+                </p>--}}
 
             </section>
 
@@ -82,154 +78,28 @@
                  ========================= --}}
 
             <section class="film-mobile-block film-mobile-info">
-
                 <h2>Інформація</h2>
-
                 <div class="film-info-list">
+                    <x-film-detail-row :item="$film->age" label="Вік" index-route="ages.index" show-route="ages.show" />
+                    <x-film-detail-row :item="$film->quality" label="Якість відео" index-route="qualities.index" show-route="qualities.show" class="span-show" />
+                    <x-film-detail-row :item="$film->rating" label="Рейтинг" index-route="ratings.index" show-route="ratings.show" class="span-show" />
 
-                    {{-- Вік --}}
-                    @if($film->age)
-                        <div class="film-info-row">
-        <span class="film-detail-label">
-            <a href="{{ route('ages.index') }}">
-                Вік:
-            </a>
-        </span>
+                    <x-film-detail-list :items="$film->selections" label="Добірки" index-route="selections.index" show-route="selections.show" />
+                    <x-film-detail-list :items="$film->languages" label="Озвучка" index-route="languages.index" show-route="languages.show" />
+                    <x-film-detail-list :items="$film->captions" label="Субтитри" index-route="captions.index" show-route="captions.show" />
 
-                            <div>
-                                <a href="{{ route('ages.show', ['slug' => $film->age->slug]) }}">
-                                    {{ $film->age->title }}
-                                </a>
-                            </div>
-                        </div>
-                    @endif
+                    <x-film-plain-row
+                        :value="$film->imdb_rating ? '⭐ ' . $film->imdb_rating . ' / 10' : null"
+                        label="Рейтинг IMDB:"
+                        class="film-info-row"
+                    />
 
-
-                    {{-- Якість відео --}}
-                    @if($film->quality)
-                        <div class="film-info-row">
-        <span class="film-detail-label">
-            <a href="{{ route('qualities.index') }}">
-                Якість відео:
-            </a>
-        </span>
-
-                            <div class="span-show">
-                                <a href="{{ route('qualities.show', ['slug' => $film->quality->slug]) }}">
-                                    {{ $film->quality->title }}
-                                </a>
-                            </div>
-                        </div>
-                    @endif
-
-
-                    {{-- Рейтинг --}}
-                    @if($film->rating)
-                        <div class="film-info-row">
-        <span class="film-detail-label">
-            <a href="{{ route('ratings.index') }}">
-                Рейтинг:
-            </a>
-        </span>
-
-                            <div class="span-show">
-                                <a href="{{ route('ratings.show', ['slug' => $film->rating->slug]) }}">
-                                    {{ $film->rating->title }}
-                                </a>
-                            </div>
-                        </div>
-                    @endif
-
-
-                    {{-- Добірки --}}
-                    @if($film->selections->count())
-                        <div class="film-info-row">
-                <span class="film-detail-label">
-                    <a href="{{ route('selections.index') }}">
-                        Добірки:
-                    </a>
-                </span>
-
-                            <div class="span-show">
-                                @foreach($film->selections as $selection)
-                                    <a href="{{ route('selections.show', ['slug' => $selection->slug]) }}">
-                                        {{ $selection->title }}
-                                    </a>@if(!$loop->last), @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
-
-                    {{-- Озвучка --}}
-                    @if($film->languages->count())
-                        <div class="film-info-row">
-                <span class="film-detail-label">
-                    <a href="{{ route('languages.index') }}">
-                        Озвучка:
-                    </a>
-                </span>
-
-                            <div class="span-show">
-                                @foreach($film->languages as $language)
-                                    <a href="{{ route('languages.show', ['slug' => $language->slug]) }}">
-                                        {{ $language->title }}
-                                    </a>@if(!$loop->last), @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
-
-                    {{-- Субтитри --}}
-                    @if($film->captions->count())
-                        <div class="film-info-row">
-        <span class="film-detail-label">
-            <a href="{{ route('captions.index') }}">
-                Субтитри:
-            </a>
-        </span>
-
-                            <div class="span-show">
-                                @foreach($film->captions as $caption)
-                                    <a href="{{ route('captions.show', ['slug' => $caption->slug]) }}">
-                                        {{ $caption->title }}
-                                    </a>@if(!$loop->last), @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
-
-
-
-
-                    {{-- IMDB --}}
-                    @if($film->imdb_rating)
-                        <div class="film-info-row">
-                <span class="film-detail-label">
-                    IMDB:
-                </span>
-
-                            <div>
-                                ⭐ {{ $film->imdb_rating }} / 10
-                            </div>
-                        </div>
-                    @endif
-
-
-                    {{-- Примітка --}}
-                    @isset($film->note)
-                        <div class="film-info-note">
-                            <span>Примітка:</span>
-                            <div>
-                                {{ $film->note }}
-                            </div>
-                        </div>
-                    @endisset
-
+                    <x-film-plain-row
+                        :value="$film->note"
+                        label="Примітка:"
+                        class="film-info-note"
+                    />
                 </div>
-
             </section>
 
 
@@ -239,215 +109,33 @@
                  ========================= --}}
             <section class="film-details">
 
-                @if($film->genres->count())
-                    <div class="film-detail-row">
-        <span class="film-detail-label">
-            <a href="{{ route('genres.index') }}">Жанр:</a>
-        </span>
+                <x-film-detail-list :items="$film->genres" label="Жанр" index-route="genres.index" show-route="genres.show" />
 
-                        <div class="span-show">
-                            @foreach($film->genres as $genre)
-                                <a href="{{ route('genres.show', ['slug' => $genre->slug]) }}">
-                                    {{ $genre->title }}
-                                </a>@if(!$loop->last), @endif
-                            @endforeach
-                        </div>
-                    </div>
+                <x-film-detail-row :item="$film->year" label="Рік випуску" index-route="years.index" show-route="years.show" class="span-show" />
+
+            @if($film->category->isSeries())
+                    <x-film-detail-row :item="$film->season" label="Сезони" />
+                    <x-film-detail-row :item="$film->status" label="Статус" />
                 @endif
 
+                <x-film-plain-row
+                    :value="$film->duration ? $film->formatted_duration : null"
+                    label="Тривалість:"
+                    value-class="span-show"
+                />
 
+                <x-film-detail-list :items="$film->countries" label="Країна" index-route="countries.index" show-route="countries.show" />
+                <x-film-detail-list :items="$film->companies" label="Кінокомпанія" index-route="companies.index" show-route="companies.show" />
+                <x-film-detail-list :items="$film->producers" label="Продюсер" index-route="producers.index" show-route="producers.show" name-field="name" />
+                <x-film-detail-list :items="$film->directors" label="Режисер" index-route="directors.index" show-route="directors.show" name-field="name" />
+                <x-film-detail-list :items="$film->composers" label="Композитор" index-route="composers.index" show-route="composers.show" name-field="name" />
+                <x-film-detail-list :items="$film->actors" label="Топ-актори" index-route="actors.index" show-route="actors.show" name-field="name" />
 
-
-
-
-                    @if($film->year)
-                        <div class="film-detail-row">
-        <span class="film-detail-label">
-            <a href="{{ route('years.index') }}">
-                Рік випуску:
-            </a>
-        </span>
-
-                            <div class="span-show">
-                                <a href="{{ route('years.show', ['slug' => $film->year->slug]) }}">
-                                    {{ $film->year->title }}
-                                </a>
-                            </div>
-                        </div>
-                    @endif
-
-
-
-
-
-
-
-                    @if($film->category->isSeries())
-
-                        @if($film->category->isSeries())
-
-                            @if($film->season)
-                                <div class="film-detail-row">
-                                    <span class="film-detail-label">Сезони:</span>
-
-                                    <div>
-                                        {{ $film->season->title }}
-                                    </div>
-                                </div>
-                            @endif
-
-                            @if($film->status)
-                                <div class="film-detail-row">
-                                    <span class="film-detail-label">Статус:</span>
-
-                                    <div>
-                                        {{ $film->status->title }}
-                                    </div>
-                                </div>
-                            @endif
-
-                        @endif
-
-                    @endif
-
-
-
-
-                    @if($film->duration_id)
-                        <div class="film-detail-row">
-                            <span class="film-detail-label span-index">Тривалість:</span>
-
-                            <div class="span-show">
-                                @if($film->duration_id->totalMinutes < 60)
-                                    {{ $film->duration_id->getMinutes() }} хв
-                                @else
-                                    {{ $film->duration_id->getHours() }} год
-                                    {{ $film->duration_id->getMinutes() }} хв
-                                @endif
-                            </div>
-                        </div>
-                    @endif
-
-
-                    @if($film->countries->count())
-                        <div class="film-detail-row">
-        <span class="film-detail-label">
-            <a href="{{ route('countries.index') }}">Країна:</a>
-        </span>
-
-                            <div class="span-show">
-                                @foreach($film->countries as $country)
-                                    <a href="{{ route('countries.show', ['slug' => $country->slug]) }}">
-                                        {{ $country->title }}
-                                    </a>@if(!$loop->last), @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
-
-                    @if($film->companies->count())
-                        <div class="film-detail-row">
-        <span class="film-detail-label">
-            <a href="{{ route('companies.index') }}">Кінокомпанія:</a>
-        </span>
-
-                            <div class="span-show">
-                                @foreach($film->companies as $company)
-                                    <a href="{{ route('companies.show', ['slug' => $company->slug]) }}">
-                                        {{ $company->title }}
-                                    </a>@if(!$loop->last), @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
-
-                    @if($film->producers->count())
-                        <div class="film-detail-row">
-        <span class="film-detail-label">
-            <a href="{{ route('producers.index') }}">Продюсер:</a>
-        </span>
-
-                            <div class="span-show">
-                                @foreach($film->producers as $producer)
-                                    <a href="{{ route('producers.show', ['slug' => $producer->slug]) }}">
-                                        {{ $producer->name }}
-                                    </a>@if(!$loop->last), @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
-
-
-                    @if($film->directors->count())
-                        <div class="film-detail-row">
-        <span class="film-detail-label">
-            <a href="{{ route('directors.index') }}">Режисер:</a>
-        </span>
-
-                            <div class="span-show">
-                                @foreach($film->directors as $director)
-                                    <a href="{{ route('directors.show', ['slug' => $director->slug]) }}">
-                                        {{ $director->name }}
-                                    </a>@if(!$loop->last), @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
-
-                    @if($film->composers->count())
-                        <div class="film-detail-row">
-        <span class="film-detail-label">
-            <a href="{{ route('composers.index') }}">
-                Композитор:
-            </a>
-        </span>
-
-                            <div class="span-show">
-                                @foreach($film->composers as $composer)
-                                    <a href="{{ route('composers.show', ['slug' => $composer->slug]) }}">
-                                        {{ $composer->name }}
-                                    </a>@if(!$loop->last), @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
-
-
-
-
-                    @if($film->actors->count())
-                        <div class="film-detail-row">
-        <span class="film-detail-label">
-            <a href="{{ route('actors.index') }}">
-                Топ-актори:
-            </a>
-        </span>
-
-                            <div class="span-show">
-                                @foreach($film->actors as $actor)
-                                    <a href="{{ route('actors.show', ['slug' => $actor->slug]) }}">
-                                        {{ $actor->name }}
-                                    </a>@if(!$loop->last), @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
-
-                    @if($film->other_actor)
-                        <div class="film-detail-row">
-                            <span class="film-detail-label">Інші актори:</span>
-
-                            <div class="span-show">
-                                {{ $film->other_actor }}
-                            </div>
-                        </div>
-                    @endif
+                <x-film-plain-row
+                    :value="$film->other_actor"
+                    label="Інші актори:"
+                    value-class="span-show"
+                />
 
             </section>
 
@@ -493,51 +181,16 @@
             {{-- =========================
                  RELATED FILMS
                  ========================= --}}
-            <section class="film-section">
+            <x-film-section :films="$film->relatedFilms">
+                <x-slot:title>Інші частини франшизи</x-slot:title>
+            </x-film-section>
 
-                <h2 class="related-films-title">
+            <x-film-section :films="$moreFilms">
+                <x-slot:title>
                     Дивитись ще
-                    <span class="related-category-title">
-        {{ $film->category->title }}
-    </span>
-                </h2>
-
-                <div class="related-films">
-
-                    @foreach($relatedFilms as $filmm)
-
-                        <div class="related-film">
-
-                            <img
-                                src="{{ app(\App\Media\FilmImageResolver::class)->thumb($filmm) }}"
-                                alt="{{ $filmm->title }}"
-                                loading="lazy"
-                                decoding="async"
-                            >
-
-                            <a href="{{ route('single', [
-                'category' => $filmm->category->slug,
-                'slug' => $filmm->slug
-            ]) }}">
-                <span class="related-film-title">
-                    {{ $filmm->title }}
-                </span>
-                            </a>
-
-                        </div>
-
-                    @endforeach
-
-                </div>
-
-
-
-            </section>
-
-
-
-
-
+                    <span class="related-category-title">{{ $film->category->title }}</span>
+                </x-slot:title>
+            </x-film-section>
 
 
             {{-- =========================
@@ -545,78 +198,15 @@
                  ========================= --}}
             <section class="film-mobile-block film-mobile-sidebar">
 
-                <h2>Кращі {{ $film->category->title }} (likes)</h2>
+                <x-film-sidebar-list :films="$bestFilms" :title="'Кращі ' . $film->category->title . ' (likes)'"
+                                     wrapper-class="sidetitle bestfilmss mt-5" />
 
-                <ul class="sidebar-list">
-                    @foreach($bestFilms as $sidefilm)
-                        <li>
-                            <a href="{{ route('single', [
-                                'category' => $film->category->slug,
-                                'slug' => $sidefilm->slug
-                            ]) }}">
-                                {{ $sidefilm->title }}
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
+                <x-film-sidebar-list :films="$featuredFilms" title="Обрані Фільми"
+                                     wrapper-class="sidetitle text-start mt-5" />
 
+                <x-subscribe-form wrapper-class="sidetitle text-start mt-5" />
 
-                <h2>Обрані фільми</h2>
-
-                <ul class="sidebar-list">
-                    @foreach($featuredFilms as $featuredFilm)
-                        <li>
-                            <a href="{{ route('single', [
-                                'category' => $film->category->slug,
-                                'slug' => $featuredFilm->slug
-                            ]) }}">
-                                {{ $featuredFilm->title }}
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-
-
-                <h2>Підписатися</h2>
-
-                @include('admin.layouts.alerts')
-
-                <form action="{{ route('subscribe') }}" method="POST">
-                    @csrf
-
-                    <div class="input-group">
-                        <input
-                            type="email"
-                            name="email"
-                            class="form-control"
-                            placeholder="Ваш Email"
-                        >
-
-                        <button class="btn btn-dark" type="submit">
-                            <i class="bi bi-send"></i>
-                        </button>
-                    </div>
-                </form>
-
-
-                <h2>Скоро в кіно (API)</h2>
-
-                @foreach($upcomingMovies as $movie)
-
-                    <div class="upcoming-movie">
-
-                        <a href="#">
-                            {{ $movie['title'] }}
-                        </a>
-
-                        <small>
-                            <i class="bi bi-calendar-event me-1"></i>
-                            {{ $movie['release_date'] }}
-                        </small>
-
-                    </div>
-
-                @endforeach
+                <x-upcoming-movies :movies="$upcomingMovies" wrapper-class="sidetitle text-start mt-5" />
 
             </section>
 

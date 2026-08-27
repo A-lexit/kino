@@ -1,8 +1,9 @@
 <?php
-
 namespace App\Media;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use App\Constants\ImageSizes;
 
 class ImageMedia
 {
@@ -18,7 +19,12 @@ class ImageMedia
         ?int $height = null,
         ?string $titleSlug = null
     ): string {
-        $tempPath = $this->converter->convertToWebp($file, $width, $height, $titleSlug);
+        $tempPath = $this->converter->convertToWebp(
+            $file,
+            $width,
+            $height,
+            $titleSlug
+        );
 
         return $this->storage->store($tempPath, $folder);
     }
@@ -32,10 +38,13 @@ class ImageMedia
         int $thumbHeight,
         ?int $searchWidth = null,
         ?int $searchHeight = null,
+        ?int $largeThumbWidth = null,
+        ?int $largeThumbHeight = null,
         ?string $titleSlug = null,
         string $posterSuffix = 'poster',
         string $thumbSuffix = 'thumb',
         string $searchSuffix = 'search',
+        string $largeThumbSuffix = 'large-thumb',
     ): array {
         $paths = $this->converter->convertWithThumbnail(
             $file,
@@ -45,25 +54,168 @@ class ImageMedia
             $thumbHeight,
             $searchWidth,
             $searchHeight,
+            $largeThumbWidth,
+            $largeThumbHeight,
             $titleSlug,
             $posterSuffix,
             $thumbSuffix,
             $searchSuffix,
+            $largeThumbSuffix,
         );
 
         $result = [
-            'original' => $this->storage->store($paths['original'], $folder),
-            'poster'   => $this->storage->store($paths['poster'], $folder),
-            'thumb'    => $this->storage->store($paths['thumb'], $folder),
+            'original' => $this->storage->store(
+                $paths['original'],
+                $folder
+            ),
+            'poster' => $this->storage->store(
+                $paths['poster'],
+                $folder
+            ),
+            'thumb' => $this->storage->store(
+                $paths['thumb'],
+                $folder
+            ),
         ];
 
         if (isset($paths['search'])) {
-            $result['search'] = $this->storage->store($paths['search'], $folder);
+            $result['search'] = $this->storage->store(
+                $paths['search'],
+                $folder
+            );
+        }
+
+        if (isset($paths['largeThumb'])) {
+            $result['largeThumb'] = $this->storage->store(
+                $paths['largeThumb'],
+                $folder
+            );
         }
 
         return $result;
     }
 
+    /**
+     * Завантажує favicon під фіксованими іменами.
+     */
+    public function uploadFavicon(
+        UploadedFile $file,
+        string $folder = 'settings'
+    ): array {
+        $paths = $this->converter->convertFavicon($file);
+
+        $disk = Storage::disk('public');
+
+        $files = [
+            'original' => "{$folder}/favicon.webp",
+            '16'       => "{$folder}/favicon-16.webp",
+            '32'       => "{$folder}/favicon-32.webp",
+            '180'      => "{$folder}/favicon-180.webp",
+        ];
+
+        foreach ($files as $path) {
+            if ($disk->exists($path)) {
+                $disk->delete($path);
+            }
+        }
+
+        $result = [];
+
+        foreach ($files as $key => $destination) {
+            $result[$key] = $destination;
+
+            $disk->put(
+                $destination,
+                file_get_contents($paths[$key])
+            );
+        }
+
+        $this->deleteTempDirectory(
+            $paths['directory'] ?? null
+        );
+
+        return $result;
+    }
+
+    /**
+     * Завантажує logo під фіксованим ім'ям.
+     */
+    public function uploadLogo(
+        UploadedFile $file,
+        string $folder = 'settings'
+    ): string {
+        $tempPath = $this->converter->convertToWebp(
+            $file,
+            ImageSizes::LOGO_WIDTH,
+            ImageSizes::LOGO_HEIGHT,
+            'logo'
+        );
+
+        $destination = "{$folder}/logo.webp";
+
+        $disk = Storage::disk('public');
+
+        if ($disk->exists($destination)) {
+            $disk->delete($destination);
+        }
+
+        /*
+         * Видаляємо старі logo-* файли,
+         * які могли залишитися від старої схеми.
+         */
+        foreach ($disk->files($folder) as $path) {
+            $filename = basename($path);
+
+            if (
+                str_starts_with($filename, 'logo-')
+                && $filename !== 'logo.webp'
+            ) {
+                $disk->delete($path);
+            }
+        }
+
+        $disk->put(
+            $destination,
+            file_get_contents($tempPath)
+        );
+
+        @unlink($tempPath);
+
+        return $destination;
+    }
+
+    /**
+     * Видаляє logo, яке зараз використовується.
+     */
+    public function deleteLogo(?string $path): void
+    {
+        if (!$path) {
+            return;
+        }
+
+        $this->storage->delete($path);
+    }
+
+    public function deleteFavicon(?string $path): void
+    {
+        if (!$path) {
+            return;
+        }
+
+        $this->storage->delete($path);
+
+        $this->storage->delete(
+            preg_replace('/\.webp$/i', '-16.webp', $path)
+        );
+
+        $this->storage->delete(
+            preg_replace('/\.webp$/i', '-32.webp', $path)
+        );
+
+        $this->storage->delete(
+            preg_replace('/\.webp$/i', '-180.webp', $path)
+        );
+    }
 
     public function delete(?string $path): void
     {
@@ -75,29 +227,24 @@ class ImageMedia
         return $this->storage->url($path);
     }
 
-
     public function exists(string $path): bool
     {
         return $this->storage->exists($path);
     }
 
+    protected function deleteTempDirectory(?string $directory): void
+    {
+        if (!$directory || !is_dir($directory)) {
+            return;
+        }
 
-    public function uploadFavicon(
-        UploadedFile $file,
-        string $folder,
-        ?string $titleSlug = 'favicon'
-    ): array {
-        $paths = $this->converter->convertFavicon(
-            $file,
-            $titleSlug
-        );
+        foreach (glob($directory . '/*') ?: [] as $file) {
+            if (is_file($file)) {
+                @unlink($file);
+            }
+        }
 
-        return [
-            'original' => $this->storage->store($paths['original'], $folder),
-            '16'       => $this->storage->store($paths['16'], $folder),
-            '32'       => $this->storage->store($paths['32'], $folder),
-            '180'      => $this->storage->store($paths['180'], $folder),
-        ];
+        @rmdir($directory);
     }
 
 }

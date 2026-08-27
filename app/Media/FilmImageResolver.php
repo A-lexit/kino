@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Media;
 
 use App\Models\Film;
@@ -59,6 +58,20 @@ class FilmImageResolver
         return $this->resolve(
             $this->variant($film->thumbnail, 'original'),
             $film->thumbnail
+        );
+    }
+
+
+    public function largeThumb(Film $film): string
+    {
+        if (empty($film->thumbnail)) {
+            return $this->defaultImage('large-thumb');
+        }
+
+        return $this->resolve(
+            $this->variant($film->thumbnail, 'large-thumb'),
+            $film->thumbnail,
+            'large-thumb'
         );
     }
 

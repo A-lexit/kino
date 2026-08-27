@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Media;
 
 use App\Models\Film;
@@ -56,6 +55,11 @@ class FilmVideoMedia
         if (Storage::disk($this->disk)->exists($path)) {
             Storage::disk($this->disk)->delete($path);
         }
+    }
+
+    public function deleteTrailer(Film $film): void
+    {
+        $this->delete($film->trailer_file);
     }
 
 }

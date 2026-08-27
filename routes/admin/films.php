@@ -23,12 +23,13 @@ Route::prefix('admin/films')->name('admin.films.')->middleware(['auth', 'is.staf
     Route::delete('/{id}/forceDelete', [FilmController::class, 'forceDelete'])->name('forceDelete');
 
     // 4. Стандартний CRUD (Ресурс)
-    Route::post('/films/bulk-action', [FilmController::class, 'bulkAction'])->name('films.bulk-action');
-
-    /*Route::resource('/', FilmController::class)->except(['show'])->parameters(['' => 'film']);*/
     Route::resource('', FilmController::class)
         ->except(['show'])
         ->parameters(['' => 'film']);
+
+
+    Route::get('/export', [FilmController::class, 'export'])->name('export');
+    Route::post('/import', [FilmController::class, 'importStore'])->name('excel.import');
 });
 
 

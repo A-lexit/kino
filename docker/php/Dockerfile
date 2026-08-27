@@ -3,8 +3,9 @@ FROM php:8.4-fpm
 RUN apt-get update && apt-get install -y \
     git unzip curl zip \
     libpng-dev libonig-dev libxml2-dev \
+    libzip-dev \
     && docker-php-ext-install \
-    pdo_mysql mbstring exif pcntl bcmath
+    pdo_mysql mbstring exif pcntl bcmath zip
 
 # Redis
 RUN pecl install redis && docker-php-ext-enable redis
@@ -39,3 +40,6 @@ RUN chmod -R 775 storage bootstrap/cache
 RUN apt-get update && apt-get install -y libicu-dev \
 && docker-php-ext-configure intl \
 && docker-php-ext-install intl
+
+
+RUN pecl install pcov && docker-php-ext-enable pcov

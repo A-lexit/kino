@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Media;
 
 use App\Models\Setting;
@@ -18,7 +17,7 @@ class SettingsImageResolver
     public function favicon(?Setting $settings): string
     {
         if (!$settings || empty($settings->favicon)) {
-            return asset('default_favicon.ico');
+            return asset('defaults/favicon.webp');
         }
 
         return app(ImageMedia::class)->url($settings->favicon);
@@ -26,22 +25,37 @@ class SettingsImageResolver
 
     public function favicon16(?Setting $settings): string
     {
-        return $this->replaceSuffix($this->favicon($settings), '_16');
+        return $this->replaceFilename(
+            $this->favicon($settings),
+            'favicon-16.webp'
+        );
     }
 
     public function favicon32(?Setting $settings): string
     {
-        return $this->replaceSuffix($this->favicon($settings), '_32');
+        return $this->replaceFilename(
+            $this->favicon($settings),
+            'favicon-32.webp'
+        );
     }
 
     public function appleTouchIcon(?Setting $settings): string
     {
-        return $this->replaceSuffix($this->favicon($settings), '_180');
+        return $this->replaceFilename(
+            $this->favicon($settings),
+            'favicon-180.webp'
+        );
     }
 
-    protected function replaceSuffix(string $url, string $suffix): string
-    {
-        return preg_replace('/\.webp$/i', $suffix . '.webp', $url);
+    protected function replaceFilename(
+        string $url,
+        string $filename
+    ): string {
+        return preg_replace(
+            '/[^\/]+$/',
+            $filename,
+            $url
+        );
     }
 
 }

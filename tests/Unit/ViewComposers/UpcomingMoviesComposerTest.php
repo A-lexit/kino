@@ -1,57 +1,39 @@
 <?php
-namespace Tests\Unit\View\Composers;
+
+namespace Tests\Unit\ViewComposers;
 
 use App\APIs\ComingSoonCinemaService;
 use App\Http\View\Composers\UpcomingMoviesComposer;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
-use Mockery;
+use Mockery\MockInterface;
 use Tests\TestCase;
 
 class UpcomingMoviesComposerTest extends TestCase
 {
     public function test_compose_passes_upcoming_movies_to_view(): void
     {
-        Cache::flush();
+        $movies = [
+            ['id' => 1, 'title' => 'Film 1'],
+            ['id' => 2, 'title' => 'Film 2'],
+        ];
 
-        $movies = collect([
-            [
-                'id' => 1,
-                'title' => 'Avatar 3',
-            ],
-            [
-                'id' => 2,
-                'title' => 'Dune: Messiah',
-            ],
-        ]);
+        $cinemaService = $this->mock(
+            ComingSoonCinemaService::class,
+            function (MockInterface $mock) use ($movies) {
+                $mock->shouldReceive('upcoming')
+                    ->once()
+                    ->andReturn($movies);
+            }
+        );
 
-        $service = Mockery::mock(ComingSoonCinemaService::class);
-
-        $service->shouldReceive('upcoming')
-            ->once()
-            ->andReturn($movies);
-
-        $view = Mockery::mock(View::class);
+        $view = $this->mock(View::class);
 
         $view->shouldReceive('with')
             ->once()
             ->with('upcomingMovies', $movies);
 
-        $composer = new UpcomingMoviesComposer($service);
+        $composer = new UpcomingMoviesComposer($cinemaService);
 
         $composer->compose($view);
-
-        $this->assertTrue(true);
     }
-
-
-    protected function tearDown(): void
-    {
-        Cache::flush();
-
-        Mockery::close();
-
-        parent::tearDown();
-    }
-
 }

@@ -10,40 +10,62 @@ class ActorController extends Controller
 {
     public function index()
     {
-        $actors = Actor::paginate(20);
+        $this->authorize('viewAny', Actor::class);
+
+        $actors = Actor::latest('id')->paginate(20);
+
         return view('admin.actors.index', compact('actors'));
     }
 
     public function create()
     {
+        $this->authorize('create', Actor::class);
+
         return view('admin.actors.create');
     }
 
     public function store(NameRequest $request)
     {
-        Actor::create($request->all());
-        return redirect()->route('admin.actors.index')->with('success', 'Актор доданий');
+        $this->authorize('create', Actor::class);
+
+        Actor::create($request->validated());
+
+        return redirect()
+            ->route('admin.actors.index')
+            ->with('success', 'Актор доданий');
     }
 
     public function edit(string $id)
     {
         $actor = Actor::findOrFail($id);
+
+        // Viewer також може зайти у форму перегляду.
+        $this->authorize('view', $actor);
+
         return view('admin.actors.edit', compact('actor'));
     }
 
     public function update(NameRequest $request, string $id)
     {
         $actor = Actor::findOrFail($id);
-        $actor->update($request->all());
-        return redirect()->route('admin.actors.index')->with('success', 'Зміни збережені');
+
+        // Admin та Editor можуть зберігати зміни.
+        $this->authorize('update', $actor);
+
+        $actor->update($request->validated());
+
+        return redirect()
+            ->route('admin.actors.index')
+            ->with('success', 'Зміни збережені');
     }
 
     /**
-     * Одиночне видалення актора через AJAX
+     * Одиночне видалення актора через AJAX.
      */
     public function destroy(Actor $actor)
     {
-        // Перевірка, чи не прив'язаний актор до фільмів
+        $this->authorize('delete', $actor);
+
         if ($actor->films()->exists()) {
             return response()->json([
                 'success' => false,
@@ -60,21 +82,24 @@ class ActorController extends Controller
     }
 
     /**
-     * Масове видалення акторів через AJAX
+     * Масове видалення акторів через AJAX.
      */
     public function bulkAction(Request $request)
     {
+        // Bulk delete доступний лише Admin.
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
         $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'exists:actors,id',
-            'action' => 'required|string|in:delete'
+            'action' => 'required|string|in:delete',
         ]);
 
         $ids = $request->input('ids');
 
-        // Валідація зв'язків для кожного обраного актора перед видаленням
         foreach ($ids as $id) {
             $actor = Actor::find($id);
+
             if ($actor && $actor->films()->exists()) {
                 return response()->json([
                     'success' => false,
@@ -83,7 +108,6 @@ class ActorController extends Controller
             }
         }
 
-        // Якщо перевірка пройшла успішно — видаляємо скопом
         Actor::destroy($ids);
 
         return response()->json([

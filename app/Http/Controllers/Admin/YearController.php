@@ -10,38 +10,60 @@ class YearController extends Controller
 {
     public function index()
     {
-        $years = Year::paginate(20);
+        $this->authorize('viewAny', Year::class);
+
+        $years = Year::latest('id')->paginate(20);
+
         return view('admin.years.index', compact('years'));
     }
 
     public function create()
     {
+        $this->authorize('create', Year::class);
+
         return view('admin.years.create');
     }
 
     public function store(TitleRequest $request)
     {
-        Year::create($request->all());
-        return redirect()->route('admin.years.index')->with('success', 'Рік додано');
+        $this->authorize('create', Year::class);
+
+        Year::create($request->validated());
+
+        return redirect()
+            ->route('admin.years.index')
+            ->with('success', 'Рік додано');
     }
 
     public function edit($id)
     {
         $year = Year::findOrFail($id);
+
+        $this->authorize('view', $year);
+
         return view('admin.years.edit', compact('year'));
     }
 
     public function update(TitleRequest $request, $id)
     {
         $year = Year::findOrFail($id);
-        $year->update($request->all());
-        return redirect()->route('admin.years.index')->with('success', 'Зміни збережено');
+
+        $this->authorize('update', $year);
+
+        $year->update($request->validated());
+
+        return redirect()
+            ->route('admin.years.index')
+            ->with('success', 'Зміни збережено');
     }
 
-
-    // Одиночне видалення через AJAX
+    /**
+     * Одиночне видалення через AJAX.
+     */
     public function destroy(Year $year)
     {
+        $this->authorize('delete', $year);
+
         if ($year->films()->exists()) {
             return response()->json([
                 'success' => false,
@@ -57,19 +79,24 @@ class YearController extends Controller
         ]);
     }
 
-    // Масове видалення через AJAX
+    /**
+     * Масове видалення через AJAX.
+     */
     public function bulkAction(Request $request)
     {
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
         $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'exists:years,id',
-            'action' => 'required|string|in:delete'
+            'action' => 'required|string|in:delete',
         ]);
 
         $ids = $request->input('ids');
 
         foreach ($ids as $id) {
             $year = Year::find($id);
+
             if ($year && $year->films()->exists()) {
                 return response()->json([
                     'success' => false,
@@ -85,5 +112,4 @@ class YearController extends Controller
             'message' => 'Вибрані роки успішно видалено.'
         ]);
     }
-
 }

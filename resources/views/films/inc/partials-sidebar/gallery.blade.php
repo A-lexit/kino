@@ -4,11 +4,7 @@
 @if (!empty($images))
     <div class="gallery nnn film-gallery-grid">
         @foreach ($images as $image)
-
-            <a href="{{ $image['src'] }}" data-fancybox="gallery" data-caption="{{ $image['title'] }}">
-                <img src="{{ $image['thumb'] }}" alt="{{ $image['title'] }}" width="53" height="164" loading="lazy" decoding="async">
-            </a>
-
+            <x-gallery-thumb :image="$image" :fancybox-group="$fancyboxGroup" />
         @endforeach
     </div>
 

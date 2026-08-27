@@ -21,36 +21,11 @@ require __DIR__ . '/admin/films.php';
         ->name('admin.dashboard')
         ->middleware(['auth', 'is.staff']);
 
-    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'is.admin']], function () {
-        // Головна панель та системні налаштування
-        // Route::get('/', ...) видалено звідси — тепер окремо вище
-        Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
-        Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');
-        Route::get('/clear-cache', [CacheController::class, 'clear'])->name('cache.clear');
 
-
-
-
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'is.staff']], function () {
     // Управління контентом верхнього рівня
-    Route::post('/categories/bulk-action', [\App\Http\Controllers\Admin\CategoryController::class, 'bulkAction'])->name('categories.bulk-action');
+    Route::post('/categories/bulk-action', [CategoryController::class, 'bulkAction'])->name('categories.bulk-action');
     Route::resource('/categories', CategoryController::class)->except(['show']);
-
-    Route::get('/menu/create', [MenuController::class, 'create'])->name('menu.create');
-    Route::post('/menu', [MenuController::class, 'store'])->name('menu.store');
-    Route::post('/menu/activate', [MenuController::class, 'activateMenu'])->name('menu.activate');
-
-    // Користувачі, коментарі та підписки
-    Route::post('/users/bulk-action', [\App\Http\Controllers\Admin\UserController::class, 'bulkAction'])->name('users.bulk-action');
-    Route::get('/users/toggle/{id}', [\App\Http\Controllers\Admin\UserController::class, 'toggle'])->name('users.toggle');
-    Route::resource('/users', UserController::class)->except(['show']);
-
-    Route::post('/subscribers/bulk-action', [\App\Http\Controllers\Admin\SubscriberController::class, 'bulkAction'])->name('subscribers.bulk-action');
-    Route::resource('/subscribers', SubscriberController::class)->except(['show', 'edit', 'update']);
-
-    Route::post('/comments/bulk-action', [\App\Http\Controllers\Admin\CommentController::class, 'bulkAction'])->name('comments.bulk-action');
-    Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
-    Route::get('/comments/toggle/{id}', [CommentController::class, 'toggle'])->name('comments.toggle');
-    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
     // Довідники та характеристики фільмів (Словники)
     Route::post('/actors/bulk-action', [App\Http\Controllers\Admin\ActorController::class, 'bulkAction'])->name('actors.bulk-action');
@@ -104,11 +79,39 @@ require __DIR__ . '/admin/films.php';
     Route::post('/years/bulk-action', [\App\Http\Controllers\Admin\YearController::class, 'bulkAction'])->name('years.bulk-action');
     Route::resource('/years', \App\Http\Controllers\Admin\YearController::class)->except(['show']);
 
+    // Головна панель та системні налаштування
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings', [SettingsController::class, 'update'])->name('settings.update');
+
+
+    // Управління контентом верхнього рівня
+    Route::get('/menu/edit', [MenuController::class, 'edit'])->name('menu.edit');
+    Route::put('/menu', [MenuController::class, 'update'])->name('menu.update');
+
+
+    // Користувачі, коментарі та підписки
+    Route::post('/users/bulk-action', [\App\Http\Controllers\Admin\UserController::class, 'bulkAction'])->name('users.bulk-action');
+    Route::get('/users/toggle/{id}', [\App\Http\Controllers\Admin\UserController::class, 'toggle'])->name('users.toggle');
+    Route::resource('/users', UserController::class)->except(['show']);
+
+    Route::post('/subscribers/bulk-action', [\App\Http\Controllers\Admin\SubscriberController::class, 'bulkAction'])->name('subscribers.bulk-action');
+    Route::resource('/subscribers', SubscriberController::class)->except(['show', 'edit', 'update']);
+
+    Route::post('/comments/bulk-action', [\App\Http\Controllers\Admin\CommentController::class, 'bulkAction'])->name('comments.bulk-action');
+    Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
+    Route::get('/comments/toggle/{id}', [CommentController::class, 'toggle'])->name('comments.toggle');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
 
     Route::get('telegram-subscribers', [App\Http\Controllers\Admin\TelegramSubscriberController::class, 'index'])->name('telegram.index');
     Route::post('telegram-subscribers/{subscriber}/toggle-ban', [App\Http\Controllers\Admin\TelegramSubscriberController::class, 'toggleBan'])->name('telegram.toggle-ban');
     Route::delete('telegram-subscribers/{subscriber}', [App\Http\Controllers\Admin\TelegramSubscriberController::class, 'destroy'])->name('telegram.destroy');
 
+});
+
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'is.admin']], function () {
+
+        Route::get('/clear-cache', [CacheController::class, 'clear'])->name('cache.clear');
 });
 
 

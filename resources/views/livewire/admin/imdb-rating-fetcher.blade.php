@@ -1,7 +1,6 @@
 {{-- resources/views/livewire/admin/imdb-rating-fetcher.blade.php --}}
 
 <div>
-    <label>Рейтинг IMDB</label>
     <div class="mb-2">
         @if($film->imdb_rating)
             <span class="badge badge-warning" style="font-size: 14px;">⭐ {{ $film->imdb_rating }}</span>
@@ -20,7 +19,7 @@
         wire:click="fetch"
         wire:loading.attr="disabled"
         wire:target="fetch"
-        class="btn btn-sm btn-outline-secondary"
+        class="btn btn-sm btn-outline-secondary mb-5"
     >
         <span wire:loading.remove wire:target="fetch">Оновити рейтинг з OMDb</span>
         <span wire:loading wire:target="fetch">

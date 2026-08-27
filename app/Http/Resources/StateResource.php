@@ -16,7 +16,7 @@ class StateResource extends JsonResource
     {
         return [
             'likes' => $this->likes,
-            'views' => $this->vviews,
+            'views' => $this->views,
         ];
     }
 

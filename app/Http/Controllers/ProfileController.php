@@ -1,15 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Media\ImageMedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Media\ImageMedia;
 
 class ProfileController extends Controller
 {
     protected $imageMedia;
 
-    // Впроваджуємо сервіс обробки зображень
     public function __construct(ImageMedia $imageMedia)
     {
         $this->imageMedia = $imageMedia;
@@ -18,6 +17,7 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = Auth::user();
+
         return view('users.edit', compact('user'));
     }
 
@@ -25,25 +25,43 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        $data = $request->only(['name', 'email', 'password']);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'avatar' => 'nullable|image',
+        ]);
 
-        // Якщо поле пароля залишили порожнім — не чіпаємо існуючий пароль
+        $data = $request->only([
+            'name',
+            'email',
+            'password',
+        ]);
+
+        // Якщо пароль не вказаний — залишаємо старий.
         if (blank($data['password'] ?? null)) {
             unset($data['password']);
         }
 
         $user->edit($data);
 
-        // Обробка файлу через новий сервіс
+        // Обробка нового аватара.
         if ($request->hasFile('avatar')) {
-            // Видаляємо попередній файл фізично з сервера
+            // Видаляємо попередній файл фізично з сервера.
             $this->imageMedia->delete($user->avatar);
-            // Завантажуємо новий та отримуємо правильний шлях
-            $user->avatar = $this->imageMedia->upload($request->file('avatar'), 'avatars');
+
+            // Завантажуємо новий аватар.
+            $user->avatar = $this->imageMedia->upload(
+                $request->file('avatar'),
+                'avatars'
+            );
+
             $user->save();
         }
 
-        return redirect()->back()->with('success', 'Зміни збережені');
+        return redirect()
+            ->back()
+            ->with('success', 'Зміни збережені');
     }
 
 }

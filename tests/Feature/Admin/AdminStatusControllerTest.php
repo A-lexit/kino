@@ -67,9 +67,9 @@ class AdminStatusControllerTest extends TestCase
     public function test_update_modifies_status_and_redirects(): void
     {
         $status = Status::factory()->create();
+
         $updatedData = [
             'title' => 'Оновлений статус',
-            'slug'  => 'onovlenii-status',
         ];
 
         $this->actingAs($this->admin)
@@ -77,7 +77,10 @@ class AdminStatusControllerTest extends TestCase
             ->assertRedirect(route('admin.statuses.index'))
             ->assertSessionHas('success', 'Зміни збережені');
 
-        $this->assertDatabaseHas('statuses', array_merge(['id' => $status->id], $updatedData));
+        $this->assertDatabaseHas('statuses', [
+            'id' => $status->id,
+            'title' => 'Оновлений статус',
+        ]);
     }
 
     public function test_destroy_deletes_status_if_it_has_no_films(): void

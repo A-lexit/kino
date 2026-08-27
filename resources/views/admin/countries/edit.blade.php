@@ -1,50 +1,19 @@
 @extends('admin.layouts.layout')
 @section('content')
 
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Редагування країни</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Blank Page</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </section>
+    <x-admin.content-header title="Редагування країни" />
 
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Країна "{{ $country->title }}"</h3>
-                        </div>
 
-                        <form role="form" method="post" action="{{ route('admin.countries.update', ['country' => $country->id]) }}">
-                            @csrf
-                            @method('PUT')
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="title">Назва</label>
-                                    <input type="text" name="title"
-                                           class="form-control @error('title') is-invalid @enderror" id="title"
-                                           value="{{ $country->title }}">
-                                    @error('title')
-                                    <div class="invalid-feedback">{{$message}}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Зберегти</button>
-                            </div>
-                        </form>
+                        <x-admin.forms.simple-title-form
+                            :action="route('admin.countries.update', ['country' => $country->id])"
+                            http-method="PUT"
+                            :value="$country->title"
+                        />
 
                     </div>
                 </div>
@@ -53,4 +22,3 @@
     </section>
 
 @endsection
-

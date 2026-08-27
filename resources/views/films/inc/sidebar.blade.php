@@ -4,16 +4,7 @@
          POSTER
          ========================= --}}
 
-    <img
-        width="685"
-        height="390"
-        src="{{ app(\App\Media\FilmImageResolver::class)->image($film) }}"
-        class="attachment-large size-large wp-post-image"
-        alt="{{ $film->title }}"
-        decoding="async"
-        fetchpriority="high"
-        sizes="(max-width: 685px) 100vw, 685px"
-    >
+    <x-film-image :film="$film" variant="image" fetchpriority="high"/>
 
 
     {{-- =========================
@@ -21,21 +12,9 @@
          ========================= --}}
 
     @include('films.inc.partials-sidebar.gallery', [
-        'images' => app(\App\Media\FilmImageResolver::class)->gallery($film)
-    ])
-
-
-    {{-- =========================
-         RELEASE DATE
-         ========================= --}}
-
-    {{--<p class="mt-4 mb-2">
-        Дата виходу: {{ $film->display_date }}
-    </p>--}}
-
-
-
-
+    'images' => app(\App\Media\FilmImageResolver::class)->gallery($film),
+    'fancyboxGroup' => 'gallery-desktop',
+])
 
 
 
@@ -203,7 +182,7 @@
                 <div class="tag-cloud-single">
 
                     <span class="first-col-film">
-                        IMDB:
+                        Рейтинг IMDB:
                     </span>
 
                     <span>
@@ -238,111 +217,29 @@
 
     </div>
 
-
-    {{-- =========================
-         BEST FILMS
-         ========================= --}}
-
-    <div class="sidetitle bestfilmss mt-5">
-
-        <h3>
-            Кращі {{ $film->category->title }} (likes)
-        </h3>
-
-        <ul>
-            @foreach($bestFilms as $sidefilm)
-
-                <hr>
-
-                <li>
-                    <a href="{{ route('single', [
-                        'category' => $film->category->slug,
-                        'slug' => $sidefilm->slug
-                    ]) }}">
-                        {{ $sidefilm->title }}
-                    </a>
-                </li>
-
-            @endforeach
-        </ul>
-
-    </div>
+    <x-film-sidebar-list :films="$bestFilms" :title="'Кращі ' . $film->category->title . ' (likes)'" wrapper-class="sidetitle bestfilmss mt-5" />
 
 
     {{-- =========================
          FEATURED FILMS
          ========================= --}}
 
-    <div class="sidetitle text-start mt-5">
-
-        <h3>
-            Обрані Фільми
-        </h3>
-
-        <ul>
-            @foreach($featuredFilms as $featuredFilm)
-
-                <hr>
-
-                <li>
-                    <a href="{{ route('single', [
-                        'category' => $film->category->slug,
-                        'slug' => $featuredFilm->slug
-                    ]) }}">
-                        {{ $featuredFilm->title }}
-                    </a>
-                </li>
-
-            @endforeach
-        </ul>
-
-    </div>
+    <x-film-sidebar-list :films="$featuredFilms" title="Обрані Фільми" wrapper-class="sidetitle text-start mt-5" />
 
     <hr>
+
+    <x-film-sidebar-list :films="$bestFilms" :title="'Кращі ' . $film->category->title . ' (likes)'" wrapper-class="sidetitle bestfilmss mt-5" />
+
 
 
     {{-- =========================
          SUBSCRIBE
          ========================= --}}
-
     <div class="sidetitle text-start mt-5">
 
-        <h3 class="sidebar-title">
-            Підписатися
-        </h3>
-
-    </div>
-
-    @include('admin.layouts.alerts')
-
-    <form
-        action="{{ route('subscribe') }}"
-        method="POST"
-        class="mb-4"
-    >
-        @csrf
-
-        <div class="input-group">
-
-            <input
-                type="email"
-                name="email"
-                class="form-control"
-                placeholder="Ваш Email"
-            >
-
-            <button
-                class="btn btn-dark"
-                type="submit"
-            >
-                <i class="bi bi-send"></i>
-            </button>
-
-        </div>
-    </form>
+        <x-subscribe-form wrapper-class="sidetitle text-start mt-5" />
 
     <hr>
-
 </div>
 
 
@@ -350,37 +247,6 @@
      UPCOMING MOVIES
      ========================= --}}
 
-<div class="sidetitle text-start mt-5">
-
-    <h3 class="sidebar-title mt-4">
-        Скоро в кіно (API)
-    </h3>
+    <x-upcoming-movies :movies="$upcomingMovies" wrapper-class="sidetitle text-start mt-5" />
 
 </div>
-
-@foreach($upcomingMovies as $movie)
-
-    <div class="py-2">
-
-        <a
-            href="#"
-            class="d-block fw-semibold"
-        >
-            {{ $movie['title'] }}
-        </a>
-
-        <small class="text-muted">
-
-            <i class="bi bi-calendar-event me-1"></i>
-
-            {{ $movie['release_date'] }}
-
-        </small>
-
-    </div>
-
-    @unless($loop->last)
-        <hr class="my-2">
-    @endunless
-
-@endforeach

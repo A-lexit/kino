@@ -123,61 +123,7 @@ onMounted(() => {
 });
 </script>
 
-<!--<style scoped>
-.dropdown-menu {
-    max-height: 420px;
-    overflow-y: auto;
-    border-radius: .8rem;
-    z-index: 1055;
-}
 
-.dropdown-item img {
-    object-fit: cover;
-}
-
-.dropdown-item:hover {
-    background: #f8f9fa;
-}
-
-/* Біла обводка навколо всієї групи */
-/* М'яка, спокійна напівпрозора рамка */
-.input-group {
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 6px;
-    overflow: hidden;
-    transition: border-color 0.2s ease;
-}
-
-/* Легкий акцент при фокусі */
-.input-group:focus-within {
-    border-color: rgba(255, 255, 255, 0.35);
-}
-
-.search-input {
-    border: none !important;
-    height: 46px;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-}
-
-.search-input:focus {
-    background-color: #fff;
-}
-
-.search-btn {
-    width: 56px;
-    height: 46px;
-    border: none !important;
-    border-radius: 0 !important;
-    background: #212529;
-    color: #fff;
-    transition: .2s;
-}
-
-.search-btn:focus {
-    box-shadow: none !important;
-}
-</style>-->
 <style scoped>
 .dropdown-menu {
     max-height: 420px;

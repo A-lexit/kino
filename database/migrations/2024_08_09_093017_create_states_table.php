@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('states', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('likes')->unsigned()->default(0);
-            $table->integer('vviews')->unsigned()->default(0);
+            $table->integer('views')->unsigned()->default(0);
             $table->integer('film_id')->constrained('films');
         });
     }

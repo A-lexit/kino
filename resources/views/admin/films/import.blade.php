@@ -1,7 +1,6 @@
 @extends('admin.layouts.layout')
 @section('content')
 
-
 <form method="GET"
       action="{{route('admin.films.search')}}">
 

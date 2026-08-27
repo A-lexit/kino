@@ -37,9 +37,9 @@
     --color-black: #000000;
 
     /* Header & Footer */
-    --color-header-nav-bg: #ececec;
+    --color-header-nav-bg: #e1e7e9;
     --color-footer-bg: #212529;
-    --color-footer-border: #5b5e75;
+    --color-footer-border: #e1e7e9;
     --color-footer-text: #bfc3cf;
 
     /* Layout & UI */
@@ -221,7 +221,7 @@ label {
 .archive-area h1,
 .film-title h1 {
     margin-top: 0;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     color: var(--color-accent);
     font-weight: bold;
 }
@@ -327,7 +327,7 @@ header h2 {
 
 .bg-body-tertiary {
     --bs-bg-opacity: 0 !important;
-    background-color: transparent !important;
+    background-color: #1a1e24;
 }
 
 .border-bottom-customm {
@@ -538,19 +538,20 @@ footer {
 }
 
 .section-archive {
-    background-color: var(--color-bg-section-alt);
+    background-color: var(--color-bg-soft);
     border-radius: var(--radius-sm);
     margin-bottom: 50px;
     padding: 20px;
 }
 
-.container-archive {
+/*.container-archive {
     display: flex;
     justify-content: flex-start;
+    align-items: flex-start;
     flex-wrap: wrap;
     position: relative;
     width: 100%;
-    gap: 30px;
+    gap: 57px;
 }
 
 .child-archive {
@@ -569,7 +570,39 @@ footer {
 .child-archive p {
     font-size: 12px;
     overflow: hidden;
+    text-align: center;
+}*/
+
+
+.container-archive {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(155px, 155px));
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
 }
+
+.child-archive {
+    width: 100%;
+    min-width: 0;
+}
+
+.child-archive img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 155 / 235;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+}
+
+.child-archive p {
+    width: 100%;
+    font-size: 12px;
+    overflow: hidden;
+    text-align: center;
+}
+
 
 .section-default-posts {
     display: block;
@@ -582,7 +615,7 @@ footer {
 }
 
 [data-bs-theme="dark"] .section-default-posts {
-    background-color: #0f1011;
+    background-color: var(--color-bg-soft);
 }
 
 .section-default-posts h2 {
@@ -712,12 +745,13 @@ footer {
     margin-top: 7px;
 }
 
-.sidetitle h3,
-.watchmore h3 {
+.sidetitle h2,
+.watchmore h2 {
     text-align: left;
+    font-size: 1.75rem;
 }
 
-.sidetitle h3 {
+.sidetitle h2 {
     font-weight: 600;
 }
 
@@ -750,13 +784,29 @@ footer {
     font-size: 14.6px !important;
 }
 
-.film-title-text,
-.related-film-title {
+
+.other-film-title {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
+    text-align: center;
+
+    text-overflow: ellipsis;
+
+    /* резервує місце під 2 рядки */
+    min-height: calc(1em * 1.3 * 2);
 }
+
+
+
+
+.other-film-title {
+    font-size: 11px;
+}
+
+
+
 
 .related-category-title {
     display: inline-block;
@@ -959,28 +1009,42 @@ footer {
     margin-bottom: 0;
 }
 
-.related-films {
+.other-films {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 14px;
 }
 
-.related-film {
+.other-film {
     min-width: 0;
 }
 
-.related-film img {
+.other-film img {
     display: block;
     width: 100%;
+    aspect-ratio: 133 / 211;
     height: auto;
+    object-fit: cover;
+    object-position: center;
+    border-radius: var(--radius-sm);
 }
 
-.related-film a {
+.other-film a {
     display: block;
     margin-top: 8px;
     font-weight: 500;
-    line-height: 1.4;
+    line-height: 1.3;
 }
+
+
+
+
+
+
+
+
+
+
 
 .film-mobile-sidebar {
     margin-top: 40px;
@@ -1062,6 +1126,17 @@ footer {
     transition: background-color 5000s ease-in-out 0s;
 }
 
+.film-img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+
+.breadcrumb {
+    font-size: 13px;
+}
+
 /* =========================================================
    8. MEDIA QUERIES
    ========================================================= */
@@ -1089,6 +1164,8 @@ footer {
     .page-navigation ul {
         display: flex;
     }
+
+
 }
 
 @media (max-width: 991px) {
@@ -1117,8 +1194,8 @@ footer {
         font-size: 30px;
     }
 
-    .related-films {
-        grid-template-columns: repeat(3, 1fr);
+    .other-films {
+        grid-template-columns: repeat(4, 1fr);
     }
 
     .section-single {
@@ -1196,6 +1273,7 @@ footer {
 
     .film-origin-title {
         font-size: 16px;
+        text-align: center  ;
     }
 
     .film-mobile-block {
@@ -1231,8 +1309,8 @@ footer {
         font-size: 22px;
     }
 
-    .related-films {
-        grid-template-columns: repeat(2, 1fr);
+    .other-films {
+        grid-template-columns: repeat(4, 1fr);
         gap: 12px;
     }
 
@@ -1276,11 +1354,43 @@ footer {
     .container-header {
         position: absolute;
     }
+
+
+
+
+
+
+
+    .film-mobile-poster {
+        width: 100%;
+    }
+
+    .film-mobile-poster .film-img {
+        display: block;
+        width: 70% !important;
+        max-width: none !important;
+        height: auto !important;
+        margin: 0 auto;
+    }
+
+
+
+
+
+        .breadcrumb {
+            font-size: 11px;
+        }
+
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-    header {
+    /*header {
         margin-bottom: 48px;
+    }*/
+
+
+    .breadcrumb {
+        font-size: 12px;
     }
 }
 
@@ -1308,6 +1418,11 @@ footer {
         height: 130px;
         width: 100px;
     }
+
+
+    .film-mobile-poster .film-img {
+        width: 100% !important;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1330,9 +1445,14 @@ footer {
         font-size: 20px;
     }
 
-    .related-films {
+    /*.other-films {
         grid-template-columns: 1fr 1fr;
         gap: 10px;
+    }*/
+
+    .other-films {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
     }
 
     .logo img {
@@ -1403,4 +1523,606 @@ footer {
 
 .child a:hover p {
     color: var(--color-primary-hover) !important;
+}
+
+
+
+
+/* 1. Глобальне перевизначення системних синіх/акцентних кольорів у темній темі */
+[data-bs-theme="dark"] {
+    --bs-primary: #0d6efd !important;
+    --bs-primary-rgb: 13, 110, 253 !important;
+    --bs-link-color: #3b82f6 !important;
+    --bs-link-hover-color: #60a5fa !important;
+}
+
+/* 2. Універсальний селектор для будь-якої пагінації (включаючи кастомні Vue-компоненти) */
+[data-bs-theme="dark"] [class*="pagination"] [class*="active"],
+[data-bs-theme="dark"] [class*="pagination"] .active > *,
+[data-bs-theme="dark"] .page-item.active .page-link,
+[data-bs-theme="dark"] .page-link.active {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] [class*="pagination"] a,
+[data-bs-theme="dark"] [class*="pagination"] button,
+[data-bs-theme="dark"] [class*="pagination"] .page-link {
+    color: #3b82f6 !important;
+}
+
+[data-bs-theme="dark"] [class*="pagination"] a:hover,
+[data-bs-theme="dark"] [class*="pagination"] button:hover,
+[data-bs-theme="dark"] [class*="pagination"] .page-link:hover {
+    color: #60a5fa !important;
+    background-color: #252a34 !important;
+}
+
+
+a,
+a:visited {
+    color: var(--color-text) !important;
+    text-decoration: none;
+    transition: color var(--transition-normal), opacity var(--transition-normal);
+}
+
+a:hover,
+a:focus {
+    color: var(--color-primary-hover) !important;
+    text-decoration: none;
+}
+
+/* Верхня чорна панель */
+header .bg-black a,
+header .bg-black a:visited {
+    color: #ffffff !important;
+}
+
+header .bg-black a:hover,
+header .bg-black a:focus {
+    color: #ffffff !important;
+    opacity: 0.8;
+}
+
+/* Dropdown у світлій темі */
+[data-bs-theme="light"] header .dropdown-menu a,
+[data-bs-theme="light"] header .dropdown-menu a:visited {
+    color: #212529 !important;
+}
+
+[data-bs-theme="light"] header .dropdown-menu a:hover,
+[data-bs-theme="light"] header .dropdown-menu a:focus {
+    color: #212529 !important;
+    background-color: #f1f3f5 !important;
+}
+
+
+
+
+
+
+/* =========================================================
+   OWL FILM CAROUSEL
+   ========================================================= */
+
+.owl-carousel .owl-item .owl-film {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+}
+
+.owl-film-poster {
+    width: 100%;
+    aspect-ratio: 133 / 211;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+}
+
+.owl-film-poster img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/*.owl-film .text-owlkarousel {
+    margin-top: 6px;
+    font-size: 10px;
+    line-height: 1.3;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    text-align: center;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    !* щоб усі картки мали однакову висоту під назву *!
+    min-height: calc(10px * 1.3 * 2);
+}*/
+
+
+.owl-carousel {
+    position: relative;
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+
+
+
+
+
+
+
+@media (min-width: 1122px) {
+    .container-default {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .child,
+    .child-infilm {
+        max-width: 100%;
+    }
+
+    .child p {
+        max-width: 100%;
+    }
+}
+
+.sorting-wrapper label{
+    margin-top: 0px;
+}
+
+ .sorting-wrapper {
+     padding-bottom: 18px;
+     text-align: right;
+ }
+
+
+
+
+
+@media (max-width: 585px) {
+    .container-archive {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        justify-content: normal;
+        gap: 35px;
+    }
+
+    .child-archive {
+        width: 100%;
+    }
+
+    .child-archive img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 155 / 235;
+    }
+
+    .child-archive p {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+
+
+
+
+
+/*@media (max-width: 410px) {
+    .container-archive {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .child-archive {
+        width: 100%;
+    }
+
+    .child-archive img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 155 / 235;
+    }
+
+    .child-archive p {
+        width: 100%;
+        max-width: 100%;
+    }
+}*/
+
+
+
+
+
+
+
+/*@media (max-width: 410px) {
+    .container-archive {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .section-archive {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .child-archive {
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .child-archive img {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 155 / 235 !important;
+        object-fit: cover !important;
+    }
+
+    .child-archive p {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+}*/
+
+
+@media (max-width: 680px) {
+    .sorting-wrapper .filters-form {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+        width: 100% !important;
+    }
+
+    .sorting-wrapper .filters-form:has(> *:nth-child(3):last-child) {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    .sorting-wrapper .filters-form .form-select {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+}
+
+
+
+
+
+@media (max-width: 503px) {
+    .sorting-wrapper .filters-form .form-select {
+        font-size: 10px;
+    }
+}
+
+
+@media (max-width: 397px) {
+    .sorting-wrapper .filters-form .form-select {
+        font-size: 8px;
+    }
+}
+
+
+
+
+
+.header-nav-bg-customm .navbar-nav .nav-item {
+    position: relative;
+}
+
+.header-nav-bg-customm .navbar-nav .nav-link {
+    position: relative;
+}
+
+.header-nav-bg-customm .navbar-nav .nav-link.active-menu {
+    color: var(--bs-primary);
+    font-weight: 600;
+}
+
+.header-nav-bg-customm .navbar-nav .nav-link.active-menu::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: -8px;
+    height: 1.5px;
+    background-color: var(--bs-primary);
+    border-radius: 2px;
+}
+
+
+
+
+
+
+
+
+.header-nav-bg-customm .navbar-nav {
+    align-items: center;
+}
+
+.header-nav-bg-customm .navbar-nav .nav-item {
+    display: flex;
+    align-items: center;
+}
+
+.header-nav-bg-customm .navbar-nav .nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    line-height: 1.5;
+    height: 100%;
+}
+
+.header-nav-bg-customm .navbar-nav .nav-link.active-menu {
+    color: var(--bs-primary);
+    font-weight: 600;
+}
+
+.header-nav-bg-customm .navbar-nav .nav-link.active-menu::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: -8px;
+    height: 2px;
+    background-color: var(--bs-primary);
+    border-radius: 2px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   OWL FILM CAROUSEL
+   ========================================================= */
+
+/*.owl-carousel .owl-item .owl-film {
+    display: block;
+    width: 100%;
+    min-width: 0;
+}
+
+.owl-film-poster {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 133 / 211;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+}
+
+.owl-film-poster img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.owl-film-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+
+    display: block;
+    width: 100%;
+
+    padding: 6px 8px;
+
+    background: rgba(0, 0, 0, 0.82);
+    color: #fff !important;
+
+    font-size: 10px;
+    line-height: 1.3;
+    text-align: center;
+
+    text-decoration: none !important;
+
+    !*
+     * Дозволяємо необмежену кількість рядків.
+     * Дуже довге слово переноситься.
+     *!
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.owl-film-title:hover,
+.owl-film-title:focus,
+.owl-film-title:visited {
+    color: #fff !important;
+    text-decoration: none !important;
+    background: rgba(0, 0, 0, 0.62);
+}*/
+
+
+
+
+/* =========================================================
+   OWL FILM CAROUSEL
+   ========================================================= */
+
+.owl-carousel .owl-item .owl-film {
+    display: block;
+    width: 100%;
+    min-width: 0;
+}
+
+.owl-film-poster {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 133 / 211;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+}
+
+.owl-film-poster img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.owl-film-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+
+    display: block;
+    width: 100%;
+
+    padding: 6px 8px;
+
+    background: rgba(0, 0, 0, 0.87);
+    color: #fff !important;
+
+    font-size: 10px;
+    line-height: 1.3;
+    text-align: center;
+
+    text-decoration: none !important;
+
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+}
+
+.owl-film-poster:hover .owl-film-title {
+    opacity: 1;
+    visibility: visible;
+}
+
+.owl-film-title:hover,
+.owl-film-title:focus,
+.owl-film-title:visited {
+    color: #fff !important;
+    text-decoration: none !important;
+}
+
+
+
+
+
+
+@media (min-width: 992px) {
+    #search-app {
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: min(650px, 60%);
+        margin-inline: auto;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+[data-bs-theme="dark"] textarea#commentBody.form-control:focus {
+    border-color: #354480 !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+
+
+
+.filters-form {
+    display: flex;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+.btn-subscribe {
+    background-color: #1a1d24;
+    border-color: #2a2f3a;
+    color: #fff;
+}
+
+.btn-subscribe:hover {
+    background-color: #1a1d24;
+    border-color: #2a2f3a;
+    color: #fff;
+}
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+    .film-mobile-poster {
+        width: 100%;
+        text-align: center;
+    }
+
+    .film-mobile-poster .film-poster {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto;
+    }
+
+
+
+    [data-bs-theme="dark"] h1, [data-bs-theme="dark"] h1 a, [data-bs-theme="dark"] h1 a:visited {
+        text-align: center;
+    }
 }

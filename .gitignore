@@ -66,3 +66,4 @@ pnpm-debug.log*
 /.phpstan.cache
 .vercel
 .env*
+

@@ -84,6 +84,7 @@ class AdminUserControllerTest extends TestCase
             'name' => 'John Doe',
             'email' => 'john@example.com',
             'password' => 'secret123',
+            'password_confirmation' => 'secret123',
             'avatar' => $avatar,
             'role' => 'user',
         ];

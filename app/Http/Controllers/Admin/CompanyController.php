@@ -10,37 +10,62 @@ class CompanyController extends Controller
 {
     public function index()
     {
-        $companies = Company::paginate(20);
+        $this->authorize('viewAny', Company::class);
+
+        $companies = Company::latest('id')->paginate(20);
+
         return view('admin.companies.index', compact('companies'));
     }
 
     public function create()
     {
+        $this->authorize('create', Company::class);
+
         return view('admin.companies.create');
     }
 
     public function store(TitleRequest $request)
     {
-        Company::create($request->all());
-        return redirect()->route('admin.companies.index')->with('success', 'Компанію додано');
+        $this->authorize('create', Company::class);
+
+        Company::create($request->validated());
+
+        return redirect()
+            ->route('admin.companies.index')
+            ->with('success', 'Компанію додано');
     }
 
     public function edit($id)
     {
         $company = Company::findOrFail($id);
+
+        // Viewer може відкрити форму для перегляду.
+        $this->authorize('view', $company);
+
         return view('admin.companies.edit', compact('company'));
     }
 
     public function update(TitleRequest $request, $id)
     {
         $company = Company::findOrFail($id);
-        $company->update($request->all());
-        return redirect()->route('admin.companies.index')->with('success', 'Зміни збережені');
+
+        // Admin та Editor можуть редагувати.
+        $this->authorize('update', $company);
+
+        $company->update($request->validated());
+
+        return redirect()
+            ->route('admin.companies.index')
+            ->with('success', 'Зміни збережені');
     }
 
-    // Одиночне видалення через AJAX
+    /**
+     * Одиночне видалення через AJAX.
+     */
     public function destroy(Company $company)
     {
+        $this->authorize('delete', $company);
+
         if ($company->films()->exists()) {
             return response()->json([
                 'success' => false,
@@ -56,19 +81,25 @@ class CompanyController extends Controller
         ]);
     }
 
-    // Масове видалення через AJAX
+    /**
+     * Масове видалення через AJAX.
+     */
     public function bulkAction(Request $request)
     {
+        // Масове видалення доступне лише Admin.
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
         $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'exists:companies,id',
-            'action' => 'required|string|in:delete'
+            'action' => 'required|string|in:delete',
         ]);
 
         $ids = $request->input('ids');
 
         foreach ($ids as $id) {
             $company = Company::find($id);
+
             if ($company && $company->films()->exists()) {
                 return response()->json([
                     'success' => false,

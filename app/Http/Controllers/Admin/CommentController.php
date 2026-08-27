@@ -9,61 +9,68 @@ class CommentController extends Controller
 {
     public function index()
     {
-        $comments = Comment::with('film')->latest('id')->paginate(20);
+        $this->authorize('viewAny', Comment::class);
+
+        $comments = Comment::with('film')
+            ->latest('id')
+            ->paginate(20);
+
         return view('admin.comments.index', compact('comments'));
     }
 
     public function toggle($id)
     {
         $comment = Comment::findOrFail($id);
-        $comment->toggleStatus(); // Метод, який змінює статус (наприклад, з 0 на 1 і навпаки)
+
+        $this->authorize('update', $comment);
+
+        $comment->toggleStatus();
 
         return response()->json([
             'success' => true,
-            'status' => $comment->status, // Припускаємо, що поле в базі називається status
-            'message' => 'Статус коментаря змінено.'
+            'status' => $comment->status,
+            'message' => 'Статус коментаря змінено.',
         ]);
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Comment $comment, Request $request)
     {
-        // Знаходимо та видаляємо коментар
-        $comment = Comment::findOrFail($id);
+        $this->authorize('delete', $comment);
+
         $comment->delete();
 
-        // ЯКЩО запит прийшов через AJAX (наш JS-скрипт з коліщатком або кнопкою)
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Коментар успішно видалено через AJAX.'
+                'message' => 'Коментар успішно видалено через AJAX.',
             ]);
         }
 
-        // Класичний редірект (якщо раптом AJAX не спрацював або форму відправили «по-старому»)
-        return redirect()->route('admin.comments.index')->with('success', 'Коментар видалено');
+        return redirect()
+            ->route('admin.comments.index')
+            ->with('success', 'Коментар видалено');
     }
-
 
     public function bulkAction(Request $request)
     {
-        // Отримуємо масив ID та дію (у нас це 'delete')
-        $ids = $request->input('ids', []);
-        $action = $request->input('action');
+        abort_unless(
+            $request->user()?->isAdmin(),
+            403
+        );
 
-        if ($action === 'delete' && !empty($ids)) {
-            // Видаляємо всі вибрані коментарі одним махом
-            Comment::whereIn('id', $ids)->delete();
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:comments,id',
+            'action' => 'required|string|in:delete',
+        ]);
 
-            // Повертаємо JSON, який чекає наш JS у Layout
-            return response()->json([
-                'success' => true,
-                'message' => 'Коментарі успішно видалено.'
-            ]);
-        }
+        $ids = $request->input('ids');
+
+        Comment::whereIn('id', $ids)->delete();
 
         return response()->json([
-            'success' => false,
-            'message' => 'Невірна дія або не вибрано жодного коментаря.'
-        ], 400);
+            'success' => true,
+            'message' => 'Коментарі успішно видалено.',
+        ]);
     }
 }

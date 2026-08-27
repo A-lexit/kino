@@ -19,12 +19,17 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::paginate(20);
+        $this->authorize('viewAny', User::class);
+
+        $users = User::latest('id')->paginate(20);
+
         return view('admin.users.index', compact('users'));
     }
 
     public function toggle($id)
     {
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
         $user = User::findOrFail($id);
 
         if (auth()->id() == $user->id) {
@@ -45,72 +50,122 @@ class UserController extends Controller
 
     public function create()
     {
+        $this->authorize('create', User::class);
+
         return view('admin.users.create');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', User::class);
+
         $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
             'role' => 'required|in:admin,editor,viewer,user',
-            'password' => 'required|min:8', // при СТВОРЕННІ пароль обов'язковий
+            'password' => 'required|string|min:8|confirmed',
+            'avatar' => 'nullable|image',
         ]);
 
-        $user = User::add($request->only(['name', 'email', 'password', 'role']));
+        $user = User::add(
+            $request->only([
+                'name',
+                'email',
+                'password',
+                'role',
+            ])
+        );
 
         if ($request->hasFile('avatar')) {
-            $user->avatar = $this->imageMedia->upload($request->file('avatar'), 'avatars');
+            $user->avatar = $this->imageMedia->upload(
+                $request->file('avatar'),
+                'avatars'
+            );
+
             $user->save();
         }
 
-        return redirect()->route('admin.users.index')->with('success', 'Користувача додано');
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', 'Користувача додано');
     }
 
     public function edit($id)
     {
         $user = User::findOrFail($id);
+
+        // Viewer може відкрити форму перегляду.
+        $this->authorize('view', $user);
+
         return view('admin.users.edit', compact('user'));
     }
 
     public function update(NameRequest $request, $id)
     {
+        $user = User::findOrFail($id);
+
+        // Реальне збереження — тільки Admin.
+        $this->authorize('update', $user);
+
         $request->validate([
             'role' => 'required|in:admin,editor,viewer,user',
-            'password' => 'nullable|min:8', // при РЕДАГУВАННІ пароль опційний
+            'password' => 'nullable|min:8',
         ]);
 
-        $user = User::findOrFail($id);
-        $data = $request->only(['name', 'email', 'password', 'role']);
+        $data = $request->only([
+            'name',
+            'email',
+            'password',
+            'role',
+        ]);
 
-        // КРИТИЧНО: порожній пароль НЕ повинен перезаписувати існуючий.
-        // Без цього кожне редагування користувача без заповненого пароля
-        // тихо ламало його логін (хешувався порожній рядок).
+        // Порожній пароль не змінює існуючий.
         if (empty($data['password'])) {
             unset($data['password']);
         }
 
+        // Не дозволяємо змінити власну роль.
         if (auth()->id() == $user->id) {
             unset($data['role']);
         }
 
-        if ($user->role === UserRole::Admin && ($data['role'] ?? null) !== UserRole::Admin->value) {
-            return redirect()->back()
+        // Адміністратора не можна понизити через UI.
+        if (
+            $user->role === UserRole::Admin
+            && ($data['role'] ?? null) !== UserRole::Admin->value
+        ) {
+            return redirect()
+                ->back()
                 ->withInput()
-                ->with('error', 'Понизити роль адміністратора можна тільки напряму через базу даних.');
+                ->with(
+                    'error',
+                    'Понизити роль адміністратора можна тільки напряму через базу даних.'
+                );
         }
 
         $user->edit($data);
 
         if ($request->hasFile('avatar')) {
             $this->imageMedia->delete($user->avatar);
-            $user->avatar = $this->imageMedia->upload($request->file('avatar'), 'avatars');
+
+            $user->avatar = $this->imageMedia->upload(
+                $request->file('avatar'),
+                'avatars'
+            );
+
             $user->save();
         }
 
-        return redirect()->route('admin.users.index')->with('success', 'Зміни збережені');
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', 'Зміни збережені');
     }
 
     public function destroy($id)
     {
+        // Видалення доступне тільки Admin.
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
         $user = User::findOrFail($id);
 
         if (auth()->id() == $user->id) {
@@ -128,6 +183,7 @@ class UserController extends Controller
         }
 
         $this->imageMedia->delete($user->avatar);
+
         $user->delete();
 
         return response()->json([
@@ -138,10 +194,13 @@ class UserController extends Controller
 
     public function bulkAction(Request $request)
     {
+        // Масове видалення доступне тільки Admin.
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
         $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'exists:users,id',
-            'action' => 'required|string|in:delete'
+            'action' => 'required|string|in:delete',
         ]);
 
         $ids = $request->input('ids');
@@ -153,7 +212,9 @@ class UserController extends Controller
             ], 422);
         }
 
-        $adminInBatch = User::whereIn('id', $ids)->where('role', UserRole::Admin->value)->exists();
+        $adminInBatch = User::whereIn('id', $ids)
+            ->where('role', UserRole::Admin->value)
+            ->exists();
 
         if ($adminInBatch) {
             return response()->json([
@@ -164,6 +225,7 @@ class UserController extends Controller
 
         foreach ($ids as $id) {
             $user = User::find($id);
+
             if ($user) {
                 $this->imageMedia->delete($user->avatar);
                 $user->delete();
@@ -175,5 +237,4 @@ class UserController extends Controller
             'message' => 'Вибраних користувачів успішно видалено.'
         ]);
     }
-
 }

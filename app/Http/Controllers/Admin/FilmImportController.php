@@ -13,8 +13,6 @@ class FilmImportController extends Controller
     {
         $this->authorize('create', Film::class);
 
-        /*return view('admin.films.import');*/
-
         return view('admin.films.import', [
             'movies' => [],
             'query' => '',

@@ -9,17 +9,22 @@ class SubscriberController extends Controller
 {
     public function index()
     {
-        $subs = Subscription::paginate(20);
+        $this->authorize('viewAny', Subscription::class);
+        $subs = Subscription::latest('id')->paginate(20);
         return view('admin.subs.index', compact('subs'));
     }
 
+
     public function create()
     {
+        $this->authorize('create', Subscription::class);
         return view('admin.subs.create');
     }
 
+
     public function store(Request $request)
     {
+        $this->authorize('create', Subscription::class);
         $this->validate($request, [
             'email' => 'required|email|unique:subscriptions'
         ]);
@@ -30,22 +35,24 @@ class SubscriberController extends Controller
     }
 
 
-    // Одиночне видалення через AJAX
     public function destroy($id)
     {
         $sub = Subscription::findOrFail($id);
+
+        $this->authorize('delete', $sub);
+
         $sub->delete();
 
-        return response()
-            ->json([
+        return response()->json([
             'success' => true,
-            'message' => 'Підписника успішно видалено.'
+            'message' => 'Підписника успішно видалено.',
         ]);
     }
 
-    // Масове видалення через AJAX
+
     public function bulkAction(Request $request)
     {
+        abort_unless(auth()->user()?->isAdmin(), 403);
         $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'exists:subscriptions,id',

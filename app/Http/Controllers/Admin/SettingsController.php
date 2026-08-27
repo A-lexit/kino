@@ -2,68 +2,86 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Setting;
 use App\Media\ImageMedia;
+use App\Models\Setting;
 use Illuminate\Http\Request;
-use App\Constants\ImageSizes;
 
 class SettingsController extends Controller
 {
-    protected $imageMedia;
-
-    public function __construct(ImageMedia $imageMedia)
-    {
-        $this->imageMedia = $imageMedia;
-    }
+    public function __construct(
+        protected ImageMedia $imageMedia
+    ) {}
 
     public function index()
     {
+        $this->authorize('viewAny', Setting::class);
+
         $settings = Setting::first();
 
-        return view('admin.settings.index', compact('settings'));
+        return view(
+            'admin.settings.index',
+            compact('settings')
+        );
     }
 
     public function update(Request $request)
     {
         $settings = Setting::firstOrNew([]);
 
+        $this->authorize('update', $settings);
+
         $settings->title = $request->input('title');
         $settings->description = $request->input('description');
 
-        $this->handleUpload($request, $settings, 'favicon');
-        $this->handleUpload($request, $settings, 'logo');
+        if ($request->hasFile('favicon')) {
 
-        $settings->save();
+            $oldFavicon = $settings->favicon;
 
-        return redirect()->back()->with('success', 'Налаштування збережено');
-    }
-
-    protected function handleUpload(Request $request, Setting $settings, string $field): void
-    {
-        if (!$request->hasFile($field)) {
-            return;
-        }
-
-        if ($settings->{$field}) {
-            $this->imageMedia->delete($settings->{$field});
-        }
-
-        if ($field === 'favicon') {
-            $files = $this->imageMedia->uploadFavicon(
+            $settings->favicon = $this->imageMedia->uploadFavicon(
                 $request->file('favicon'),
+                'settings'
+            )['original'];
+
+            if ($oldFavicon) {
+                $this->imageMedia->deleteFavicon($oldFavicon);
+            }
+
+        } elseif ($request->boolean('delete_favicon')) {
+
+            $this->imageMedia->deleteFavicon(
+                $settings->favicon
+            );
+
+            $settings->favicon = null;
+        }
+
+
+        if ($request->hasFile('logo')) {
+
+            $oldLogo = $settings->logo;
+
+            $settings->logo = $this->imageMedia->uploadLogo(
+                $request->file('logo'),
                 'settings'
             );
 
-            $settings->favicon = $files['original'];
-        } elseif ($field === 'logo') {
-            $settings->logo = $this->imageMedia->upload(
-                $request->file('logo'),
-                'settings',
-                ImageSizes::LOGO_WIDTH,
-                ImageSizes::LOGO_HEIGHT,
-                'logo'
-            );
-        }
-    }
+            if ($oldLogo) {
+                $this->imageMedia->deleteLogo($oldLogo);
+            }
 
+        } elseif ($request->boolean('delete_logo')) {
+
+            $this->imageMedia->deleteLogo(
+                $settings->logo
+            );
+
+            $settings->logo = null;
+        }
+
+        $settings->save();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Налаштування збережено');
+    }
 }

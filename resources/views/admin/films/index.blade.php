@@ -1,5 +1,6 @@
 @extends('admin.layouts.layout')
 @section('content')
+
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
@@ -17,11 +18,13 @@
     </section>
 
     <section class="content table-container" id="active-films-section">
-        @include('admin.films.partials.active-table', ['films' => $films])
+        @include('admin.films.partials-index.active-table', ['films' => $films])
     </section>
 
     <section class="content table-container" id="trash-films-section">
-        @include('admin.films.partials.trash-table', ['sdelfilms' => $sdelfilms])
+        @if(auth()->user()?->isAdmin() || auth()->user()?->isViewer())
+            @include('admin.films.partials-index.trash-table')
+        @endif
     </section>
 
 @endsection

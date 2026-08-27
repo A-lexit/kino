@@ -1,13 +1,11 @@
 <?php
-
 namespace App\Media;
 
+use App\Constants\ImageSizes;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
-use Spatie\Image\Image;
 use Spatie\Image\Enums\Fit;
-
-use App\Constants\ImageSizes;
+use Spatie\Image\Image;
 
 class ImageConverter
 {
@@ -20,7 +18,12 @@ class ImageConverter
         $filename = $this->generateFilename($titleSlug);
         $tempPath = sys_get_temp_dir() . '/' . $filename;
 
-        $this->saveProcessedImage($file->getRealPath(), $tempPath, $width, $height);
+        $this->saveProcessedImage(
+            $file->getRealPath(),
+            $tempPath,
+            $width,
+            $height
+        );
 
         return $tempPath;
     }
@@ -33,21 +36,56 @@ class ImageConverter
         int $thumbHeight,
         ?int $searchWidth = null,
         ?int $searchHeight = null,
+        ?int $largeThumbWidth = null,
+        ?int $largeThumbHeight = null,
         ?string $titleSlug = null,
         string $posterSuffix = 'poster',
         string $thumbSuffix = 'thumb',
         string $searchSuffix = 'search',
+        string $largeThumbSuffix = 'large-thumb',
     ): array {
         $baseName = $this->generateFilenameBase($titleSlug);
 
         $originalTempPath = sys_get_temp_dir() . "/{$baseName}.webp";
-        $this->saveOriginalImage($file->getRealPath(), $originalTempPath);
 
-        $posterTempPath = sys_get_temp_dir() . "/{$baseName}-{$posterSuffix}.webp";
-        $this->saveProcessedImage($file->getRealPath(), $posterTempPath, $origWidth, $origHeight);
+        $this->saveOriginalImage(
+            $file->getRealPath(),
+            $originalTempPath
+        );
 
-        $thumbTempPath = sys_get_temp_dir() . "/{$baseName}-{$thumbSuffix}.webp";
-        $this->saveProcessedImage($file->getRealPath(), $thumbTempPath, $thumbWidth, $thumbHeight);
+        $posterTempPath = sys_get_temp_dir()
+            . "/{$baseName}-{$posterSuffix}.webp";
+
+        $this->saveProcessedImage(
+            $file->getRealPath(),
+            $posterTempPath,
+            $origWidth,
+            $origHeight
+        );
+
+        $largeThumbTempPath = null;
+
+        if ($largeThumbWidth && $largeThumbHeight) {
+            $largeThumbTempPath = sys_get_temp_dir()
+                . "/{$baseName}-{$largeThumbSuffix}.webp";
+
+            $this->saveProcessedImage(
+                $file->getRealPath(),
+                $largeThumbTempPath,
+                $largeThumbWidth,
+                $largeThumbHeight
+            );
+        }
+
+        $thumbTempPath = sys_get_temp_dir()
+            . "/{$baseName}-{$thumbSuffix}.webp";
+
+        $this->saveProcessedImage(
+            $file->getRealPath(),
+            $thumbTempPath,
+            $thumbWidth,
+            $thumbHeight
+        );
 
         $paths = [
             'original' => $originalTempPath,
@@ -55,18 +93,33 @@ class ImageConverter
             'thumb'    => $thumbTempPath,
         ];
 
+        if ($largeThumbTempPath) {
+            $paths['largeThumb'] = $largeThumbTempPath;
+        }
+
         if ($searchWidth && $searchHeight) {
-            $searchTempPath = sys_get_temp_dir() . "/{$baseName}-{$searchSuffix}.webp";
-            $this->saveProcessedImage($file->getRealPath(), $searchTempPath, $searchWidth, $searchHeight);
+            $searchTempPath = sys_get_temp_dir()
+                . "/{$baseName}-{$searchSuffix}.webp";
+
+            $this->saveProcessedImage(
+                $file->getRealPath(),
+                $searchTempPath,
+                $searchWidth,
+                $searchHeight
+            );
+
             $paths['search'] = $searchTempPath;
         }
 
         return $paths;
     }
 
-
-    protected function saveProcessedImage(string $sourcePath, string $destinationPath, ?int $width, ?int $height): void
-    {
+    protected function saveProcessedImage(
+        string $sourcePath,
+        string $destinationPath,
+        ?int $width,
+        ?int $height
+    ): void {
         $image = Image::load($sourcePath)
             ->format('webp')
             ->quality(90);
@@ -96,15 +149,19 @@ class ImageConverter
         return $this->generateFilenameBase($titleSlug) . '.webp';
     }
 
-
     public function convertFavicon(
-        UploadedFile $file,
-        ?string $titleSlug = 'favicon'
+        UploadedFile $file
     ): array {
-        $baseName = $this->generateFilenameBase($titleSlug);
 
-        // Оригінал
-        $originalPath = sys_get_temp_dir() . "/{$baseName}.webp";
+        $tempDirectory = sys_get_temp_dir()
+            . '/favicon-' . Str::lower(Str::random(12));
+
+        if (!is_dir($tempDirectory)) {
+            mkdir($tempDirectory, 0755, true);
+        }
+
+        $originalPath = $tempDirectory . '/favicon.webp';
+
         $this->saveProcessedImage(
             $file->getRealPath(),
             $originalPath,
@@ -112,8 +169,8 @@ class ImageConverter
             null
         );
 
-        // favicon 16x16
-        $favicon16Path = sys_get_temp_dir() . "/{$baseName}_16.webp";
+        $favicon16Path = $tempDirectory . '/favicon-16.webp';
+
         $this->saveProcessedImage(
             $file->getRealPath(),
             $favicon16Path,
@@ -121,8 +178,8 @@ class ImageConverter
             ImageSizes::FAVICON_16
         );
 
-        // favicon 32x32
-        $favicon32Path = sys_get_temp_dir() . "/{$baseName}_32.webp";
+        $favicon32Path = $tempDirectory . '/favicon-32.webp';
+
         $this->saveProcessedImage(
             $file->getRealPath(),
             $favicon32Path,
@@ -130,26 +187,28 @@ class ImageConverter
             ImageSizes::FAVICON_32
         );
 
-        // Apple Touch Icon 180x180
-        $appleTouchIconPath = sys_get_temp_dir() . "/{$baseName}_180.webp";
+        $favicon180Path = $tempDirectory . '/favicon-180.webp';
+
         $this->saveProcessedImage(
             $file->getRealPath(),
-            $appleTouchIconPath,
+            $favicon180Path,
             ImageSizes::FAVICON_180,
             ImageSizes::FAVICON_180
         );
 
         return [
-            'original' => $originalPath,
-            '16'       => $favicon16Path,
-            '32'       => $favicon32Path,
-            '180'      => $appleTouchIconPath,
+            'original'  => $originalPath,
+            '16'        => $favicon16Path,
+            '32'        => $favicon32Path,
+            '180'       => $favicon180Path,
+            'directory' => $tempDirectory,
         ];
     }
 
-
-    protected function saveOriginalImage(string $sourcePath, string $destinationPath): void
-    {
+    protected function saveOriginalImage(
+        string $sourcePath,
+        string $destinationPath
+    ): void {
         $image = Image::load($sourcePath)
             ->format('webp')
             ->quality(90);
@@ -170,7 +229,6 @@ class ImageConverter
         $image->save($destinationPath);
     }
 
-
     public function regenerateImageSet(
         string $originalPath,
         string $posterPath,
@@ -182,9 +240,10 @@ class ImageConverter
         ?string $searchPath = null,
         ?int $searchWidth = null,
         ?int $searchHeight = null,
+        ?string $largeThumbPath = null,
+        ?int $largeThumbWidth = null,
+        ?int $largeThumbHeight = null,
     ): void {
-
-        // poster
         $this->saveProcessedImage(
             $originalPath,
             $posterPath,
@@ -192,7 +251,6 @@ class ImageConverter
             $posterHeight
         );
 
-        // thumb
         $this->saveProcessedImage(
             $originalPath,
             $thumbPath,
@@ -200,7 +258,19 @@ class ImageConverter
             $thumbHeight
         );
 
-        // search
+        if (
+            $largeThumbPath
+            && $largeThumbWidth
+            && $largeThumbHeight
+        ) {
+            $this->saveProcessedImage(
+                $originalPath,
+                $largeThumbPath,
+                $largeThumbWidth,
+                $largeThumbHeight
+            );
+        }
+
         if ($searchPath && $searchWidth && $searchHeight) {
             $this->saveProcessedImage(
                 $originalPath,

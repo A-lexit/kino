@@ -1,5 +1,5 @@
 <header>
-    {{-- Верхня інформаційна панель (ВИДАЛЕНО border-bottom) --}}
+    {{-- Верхня інформаційна панель --}}
     <div class="bg-black text-white small">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center py-2">
@@ -67,7 +67,7 @@
                         </div>
                     @endguest
 
-                    {{-- Елементи керування для Mobile (ВИДАЛЕНО border-start) --}}
+                    {{-- Елементи керування для Mobile --}}
                     <div class="d-flex align-items-center gap-1 d-lg-none ps-2 ms-1">
                         <button type="button"
                                 class="btn btn-sm btn-outline-light border-0 theme-toggle d-flex align-items-center justify-content-center p-1"
@@ -91,36 +91,37 @@
         </div>
     </div>
 
-    {{-- Основна шапка: ЕДИНА ЛІНІЯ ТУТ (border-bottom) --}}
+    {{-- Основна шапка --}}
     <div class="bg-body border-bottom-customm shadow-sm">
-        <div class="container py-2 py-lg-3">
-            <div class="row align-items-center gy-2">
 
-                <div class="col-12 col-lg-2 text-center text-lg-start">
-                    <a href="{{ route('home') }}" class="navbar-brand d-inline-block">
-                        <img src="{{ app(\App\Media\SettingsImageResolver::class)->logo($settings) }}"
-                             alt="{{ $settings->title ?? 'Kino' }}"
-                             style="height: 48px; width: auto; max-width: 100%;">
-                    </a>
-                </div>
+            <div class="container py-2 py-lg-3">
+                <div class="row align-items-center gy-2 position-relative">
 
-                <div class="col-12 col-lg-7">
-                    <div id="search-app" class="mx-auto" style="max-width: 650px;">
-                        <search-component></search-component>
+                    <div class="col-12 col-lg-2 text-center text-lg-start">
+                        <a href="{{ route('home') }}" class="navbar-brand d-inline-block">
+                            <img src="{{ app(\App\Media\SettingsImageResolver::class)->logo($settings) }}"
+                                 alt="{{ $settings->title ?? 'Kino' }}"
+                                 style="height: 60px; width: auto; max-width: 100%;">
+                        </a>
                     </div>
+
+                    <div class="col-12 col-lg-7 d-flex align-items-center">
+                        <div id="search-app" class="mx-auto w-100" style="max-width: 650px;">
+                            <search-component></search-component>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 d-none d-lg-flex justify-content-end align-items-center">
+                        <button type="button"
+                                class="btn btn-outline-secondary border-0 theme-toggle d-flex align-items-center justify-content-center"
+                                aria-label="Перемкнути тему"
+                                title="Перемкнути тему"
+                                style="width: 40px; height: 40px; border-radius: 50%;">
+                            <i class="bi bi-moon-fill fs-5"></i>
+                        </button>
+                    </div>
+
                 </div>
-
-                <div class="col-lg-3 d-none d-lg-flex justify-content-end align-items-center">
-
-                    <button type="button"
-                            class="btn btn-outline-secondary border-0 theme-toggle d-flex align-items-center justify-content-center"
-                            aria-label="Перемкнути тему"
-                            title="Перемкнути тему"
-                            style="width: 40px; height: 40px; border-radius: 50%;">
-                        <i class="bi bi-moon-fill fs-5"></i>
-                    </button>
-                </div>
-
             </div>
         </div>
     </div>
@@ -131,7 +132,7 @@
             <ul class="navbar-nav mx-auto gap-2 align-items-center">
                 @foreach($menuItems as $item)
                     <li class="nav-item">
-                        <a class="nav-link px-3 {{ request()->is(...$item['is_patterns']) ? 'active fw-bold text-primary' : '' }}"
+                        <a class="nav-link px-3 {{ request()->is(...$item['is_patterns']) ? 'active-menu' : '' }}"
                            href="{{ $item['url'] }}">
                             {{ $item['name'] }}
                         </a>
@@ -140,6 +141,7 @@
             </ul>
         </div>
     </nav>
+
 
     {{-- Mobile Offcanvas Menu --}}
     <div class="offcanvas offcanvas-start" tabindex="-1" id="mainMenu" aria-labelledby="mainMenuLabel">
@@ -202,10 +204,10 @@
     </div>
 
 
-    @if(View::exists('layouts.inc.carouselfilms'))
+    @if(View::exists('layouts.inc.header.carouselfilms'))
         <section class="pt-3 pb-1 bg-body-tertiary">
             <div class="container">
-                @include('layouts.inc.carouselfilms')
+                @include('layouts.inc.header.carouselfilms')
             </div>
         </section>
     @endif

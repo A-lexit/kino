@@ -13,15 +13,17 @@ class HomeRepository
             "home_films_{$category->value}_{$limit}",
             now()->addHours(6),
             function () use ($category, $limit) {
-                return Film::whereHas('category', function ($query) use ($category) {
-                    $query->where('slug', $category->value);
-                })
+                return Film::query()
+                    ->whereHas('category', function ($query) use ($category) {
+                        $query->where('slug', $category->value);
+                    })
                     ->published()
-                    ->latest()
+                    ->orderByRaw('sort_order = 0')   // 0 йдуть після 1,2,3...
+                    ->orderBy('sort_order')
+                    ->orderByDesc('created_at')
                     ->take($limit)
                     ->get();
             }
         );
     }
-
 }

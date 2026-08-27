@@ -10,6 +10,10 @@ class ImageSizes
     public const POSTER_WIDTH = 290;
     public const POSTER_HEIGHT = 435;
 
+    //Велика мініатюра
+    public const LARGE_THUMB_WIDTH = 200;
+    public const LARGE_THUMB_HEIGHT = 300;
+
     // Мініатюра
     public const POSTER_THUMB_WIDTH = 134;
     public const POSTER_THUMB_HEIGHT = 202;

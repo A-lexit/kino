@@ -7,8 +7,22 @@
     <title>@yield('title', 'Адмінка')</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.10/dist/css/tempus-dominus.min.css">
+    <!-- CSS для DataTables + Bootstrap 5 -->
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/admin.css') }}">
+
+
     @vite(['resources/js/admin.js'])
     <script src="https://cdn.tiny.cloud/1/txln5vn9q43ycsqx4nexvd0fqki8ytkg41zrl922uzssr29v/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+
+    <!-- JS: jQuery (обов'язково для DataTables) та сам плагін -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -36,8 +50,7 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
-    {{-- admin/layouts/layout.blade.php --}}
-    {{-- Додати в <head>, ПІСЛЯ select2.min.css --}}
+
     <style>
         /* Підганяємо базовий Select2 під вигляд Bootstrap 5 форм AdminLTE4,
            без сторонньої theme-бібліотеки — щоб не було конфліктів стилів */
@@ -77,7 +90,7 @@
     </style>
 </head>
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
-<div class="app-wrapper">
+<div class="app-wrapper mb-5">
     {{-- Navbar --}}
     <nav class="app-header navbar navbar-expand bg-body">
         <div class="container-fluid">
@@ -169,34 +182,9 @@
                             <p>Головна</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-gear"></i>
-                            <p>Налаштування <i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.settings.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Налаштування</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-menu-button-wide"></i>
-                            <p>Меню <i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.menu.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Нове меню</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+
+
+
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-film"></i>
@@ -209,12 +197,29 @@
                                     <p>Список фільмів</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.films.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Додати новий фільм</p>
-                                </a>
-                            </li>
+                            @can('create', \App\Models\Film::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.films.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Додати новий фільм</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Додавання фільмів доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Додати новий фільм</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
 
                             @can('create', \App\Models\Film::class)
                                 <li class="nav-item">
@@ -241,14 +246,309 @@
                                     <p>Список категорій</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.categories.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Нова категорія</p>
-                                </a>
-                            </li>
+                            @can('create', \App\Models\Category::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.categories.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Нова категорія</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення категорій доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Нова категорія</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
                         </ul>
                     </li>
+
+
+
+                    <li class="nav-item mt-4">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon bi bi-people"></i>
+                            <p>Топ-актори <i class="nav-arrow bi bi-chevron-right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.actors.index') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>Список акторів</p>
+                                </a>
+                            </li>
+                            @can('create', \App\Models\Actor::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.actors.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Новий актор</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення акторів доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Новий актор</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
+                        </ul>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon bi bi-person-video"></i>
+                            <p>Режисери <i class="nav-arrow bi bi-chevron-right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.directors.index') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>Список режисерів</p>
+                                </a>
+                            </li>
+                            @can('create', \App\Models\Director::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.directors.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Новий режисер</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення режисерів доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Новий режисер</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
+                        </ul>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon bi bi-person-workspace"></i>
+                            <p>Продюсери <i class="nav-arrow bi bi-chevron-right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.producers.index') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>Список продюсерів</p>
+                                </a>
+                            </li>
+                            @can('create', \App\Models\Producer::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.producers.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Новий продюсер</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення продюсерів доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Новий продюсер</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
+                        </ul>
+                    </li>
+
+
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon bi bi-music-note-list"></i>
+                            <p>Композитори <i class="nav-arrow bi bi-chevron-right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.composers.index') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>Список композиторів</p>
+                                </a>
+                            </li>
+                            @can('create', \App\Models\Composer::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.composers.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Новий композитор</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення композиторів доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Новий композитор</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
+                        </ul>
+                    </li>
+
+
+                    <li class="nav-item mt-4">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon bi bi-shield-lock"></i>
+                            <p>Вікові обмеження <i class="nav-arrow bi bi-chevron-right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.ages.index') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>Список обмежень</p>
+                                </a>
+                            </li>
+                            @can('create', \App\Models\Age::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.ages.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Нове обмеження</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення вікових обмежень доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Нове обмеження</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
+                        </ul>
+                    </li>
+
+
+
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon bi bi-stack"></i>
+                            <p>Добірки <i class="nav-arrow bi bi-chevron-right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.selections.index') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>Список добірок</p>
+                                </a>
+                            </li>
+                            @can('create', \App\Models\Selection::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.selections.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Нова добірка</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення добірок доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Нова добірка</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
+                        </ul>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon bi bi-bookmarks"></i>
+                            <p>Жанри <i class="nav-arrow bi bi-chevron-right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.genres.index') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>Список жанрів</p>
+                                </a>
+                            </li>
+                            @can('create', \App\Models\Genre::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.genres.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Новий жанр</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення жанрів доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Новий жанр</p>
+            </button>
+        </span>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+
+
 
 
                     <li class="nav-item">
@@ -263,314 +563,34 @@
                                     <p>Список компаній</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.companies.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Нова компанія</p>
-                                </a>
-                            </li>
+                            @can('create', \App\Models\Company::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.companies.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Нова компанія</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення компаній доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Нова компанія</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-person-video"></i>
-                            <p>Режисери <i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.directors.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список режисерів</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.directors.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Новий режисер</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-music-note-list"></i>
-                            <p>Композитори <i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.composers.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список композиторів</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.composers.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Новий композитор</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-collection-play"></i>
-                            <p>Сезони <i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.seasons.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список сезонів</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.seasons.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Додати сезон</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-calendar3"></i>
-                            <p>Роки випуску<i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.years.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список років випуску</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.years.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Додати рік випуску</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-star"></i>
-                            <p>Рейтинги <i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.ratings.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список рейтингів</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.ratings.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Новий рейтинг</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-clock"></i>
-                            <p>Тривалість <i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.durations.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список тривалостей</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.durations.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Нова тривалість</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-card-checklist"></i>
-                            <p>Статуси серіалів<i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.statuses.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список статусів</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.statuses.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Новий статус</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-shield-lock"></i>
-                            <p>Вікові обмеження <i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.ages.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список обмежень</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.ages.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Нове обмеження</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-translate"></i>
-                            <p>Мови <i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.languages.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список мов</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.languages.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Нова мова</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-person-workspace"></i>
-                            <p>Продюсери <i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.producers.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список продюсерів</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.producers.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Новий продюсер</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-people"></i>
-                            <p>Топ-актори <i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.actors.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список акторів</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.actors.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Новий актор</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-bookmarks"></i>
-                            <p>Жанри <i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.genres.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список жанрів</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.genres.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Новий жанр</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-stack"></i>
-                            <p>Добірки <i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.selections.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список добірок</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.selections.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Нова добірка</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-badge-cc"></i>
-                            <p>Субтитри <i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.captions.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список субтитрів</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.captions.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Нові субтитри</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-badge-hd"></i>
-                            <p>Якість відео <i class="nav-arrow bi bi-chevron-right"></i></p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.qualities.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Якості відео</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.qualities.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Додати якість відео</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+
+
+
                     <li class="nav-item">
                         <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-globe2"></i>
@@ -583,78 +603,608 @@
                                     <p>Список країн</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.countries.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Нова країна</p>
-                                </a>
-                            </li>
+                            @can('create', \App\Models\Country::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.countries.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Нова країна</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення країн доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Нова країна</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
                         </ul>
                     </li>
+
+
+
                     <li class="nav-item">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-chat-dots"></i>
-                            <p>Коментарі <i class="nav-arrow bi bi-chevron-right"></i></p>
+                            <i class="nav-icon bi bi-translate"></i>
+                            <p>Мови <i class="nav-arrow bi bi-chevron-right"></i></p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('admin.comments.index') }}" class="nav-link">
+                                <a href="{{ route('admin.languages.index') }}" class="nav-link">
                                     <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список коментарів</p>
+                                    <p>Список мов</p>
                                 </a>
                             </li>
+                            @can('create', \App\Models\Language::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.languages.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Нова мова</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення мов доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Нова мова</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
                         </ul>
                     </li>
+
+
+
+
+
+
                     <li class="nav-item">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-person-lines-fill"></i>
-                            <p>Користувачі <i class="nav-arrow bi bi-chevron-right"></i></p>
+                            <i class="nav-icon bi bi-star"></i>
+                            <p>Рейтинги <i class="nav-arrow bi bi-chevron-right"></i></p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('admin.users.index') }}" class="nav-link">
+                                <a href="{{ route('admin.ratings.index') }}" class="nav-link">
                                     <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список користувачів</p>
+                                    <p>Список рейтингів</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.users.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Новий коистувач</p>
-                                </a>
-                            </li>
+                            @can('create', \App\Models\Rating::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.ratings.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Новий рейтинг</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення рейтингів доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Новий рейтинг</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
                         </ul>
                     </li>
+
+
+
+
+
                     <li class="nav-item">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon bi bi-envelope"></i>
-                            <p>Підписники <i class="nav-arrow bi bi-chevron-right"></i></p>
+                            <i class="nav-icon bi bi-calendar3"></i>
+                            <p>Роки випуску<i class="nav-arrow bi bi-chevron-right"></i></p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('admin.subscribers.index') }}" class="nav-link">
+                                <a href="{{ route('admin.years.index') }}" class="nav-link">
                                     <i class="nav-icon bi bi-circle"></i>
-                                    <p>Список підписників</p>
+                                    <p>Список років випуску</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.subscribers.create') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i>
-                                    <p>Новий підписник</p>
-                                </a>
-                            </li>
+                            @can('create', \App\Models\Year::class)
 
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.years.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Додати рік випуску</p>
+                                    </a>
+                                </li>
 
-                            <li class="nav-item mb-5">
-                                <a href="{{ route('admin.telegram.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-telegram"></i>
-                                    <p>Telegram підписники</p>
-                                </a>
-                            </li>
+                            @elseif(auth()->user()?->isViewer())
 
+                                <li class="nav-item">
+        <span title="Створення років доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Додати рік випуску</p>
+            </button>
+        </span>
+                                </li>
 
+                            @endcan
                         </ul>
                     </li>
+
+
+
+
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon bi bi-collection-play"></i>
+                            <p>Сезони <i class="nav-arrow bi bi-chevron-right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.seasons.index') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>Список сезонів</p>
+                                </a>
+                            </li>
+                            @can('create', \App\Models\Season::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.seasons.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Додати сезон</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення сезонів доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Додати сезон</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
+                        </ul>
+                    </li>
+
+
+
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon bi bi-card-checklist"></i>
+                            <p>Статуси серіалів<i class="nav-arrow bi bi-chevron-right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.statuses.index') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>Список статусів</p>
+                                </a>
+                            </li>
+                            @can('create', \App\Models\Status::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.statuses.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Новий статус</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення статусів доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Новий статус</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
+                        </ul>
+                    </li>
+
+
+
+
+
+
+
+
+
+
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon bi bi-badge-cc"></i>
+                            <p>Субтитри <i class="nav-arrow bi bi-chevron-right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.captions.index') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>Список субтитрів</p>
+                                </a>
+                            </li>
+                            @can('create', \App\Models\Caption::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.captions.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Нові субтитри</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення субтитрів доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Нові субтитри</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
+                        </ul>
+                    </li>
+
+
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon bi bi-clock"></i>
+                            <p>Тривалість <i class="nav-arrow bi bi-chevron-right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.durations.index') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>Список тривалостей</p>
+                                </a>
+                            </li>
+                            @can('create', \App\Models\Duration::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.durations.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Нова тривалість</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення тривалостей доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Нова тривалість</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
+                        </ul>
+                    </li>
+
+
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon bi bi-badge-hd"></i>
+                            <p>Якість відео <i class="nav-arrow bi bi-chevron-right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.qualities.index') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-circle"></i>
+                                    <p>Якості відео</p>
+                                </a>
+                            </li>
+                            @can('create', \App\Models\Quality::class)
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.qualities.create') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Додати якість відео</p>
+                                    </a>
+                                </li>
+
+                            @elseif(auth()->user()?->isViewer())
+
+                                <li class="nav-item">
+        <span title="Створення якостей відео доступне лише адміністратору">
+            <button type="button"
+                    class="nav-link border-0 bg-transparent w-100 text-start opacity-50"
+                    disabled>
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Додати якість відео</p>
+            </button>
+        </span>
+                                </li>
+
+                            @endcan
+                        </ul>
+                    </li>
+
+
+
+                    @if(!auth()->user()?->isEditor())
+
+                        {{-- =====================================================
+                             КОРИСТУВАЧІ
+                        ====================================================== --}}
+
+                        <li class="nav-item mt-4">
+
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-person-lines-fill"></i>
+
+                                <p>
+                                    Користувачі
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+
+                            <ul class="nav nav-treeview">
+
+                                {{-- Список користувачів --}}
+                                <li class="nav-item">
+
+                                    @if(auth()->user()?->isAdmin())
+
+                                        <a href="{{ route('admin.users.index') }}" class="nav-link">
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>Список користувачів</p>
+                                        </a>
+
+                                    @elseif(auth()->user()?->isViewer())
+
+                                        <span class="nav-link opacity-50 cursor-not-allowed"
+                                              title="Розділ користувачів недоступний у демо">
+
+                        <i class="nav-icon bi bi-circle"></i>
+
+                        <p>Список користувачів</p>
+
+                    </span>
+
+                                    @endif
+
+                                </li>
+
+
+                                <li class="nav-item">
+
+                                    @if(auth()->user()?->isAdmin())
+
+                                        <a href="{{ route('admin.users.create') }}" class="nav-link">
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>Новий користувач</p>
+                                        </a>
+
+                                    @elseif(auth()->user()?->isViewer())
+
+                                        <span class="nav-link opacity-50 cursor-not-allowed"
+                                              title="Створення користувачів недоступне у демо">
+
+                        <i class="nav-icon bi bi-circle"></i>
+
+                        <p>Новий користувач</p>
+
+                    </span>
+
+                                    @endif
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+
+                        {{-- =====================================================
+                             ПІДПИСНИКИ
+                        ====================================================== --}}
+
+                        <li class="nav-item">
+
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-envelope"></i>
+
+                                <p>
+                                    Підписники
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+
+                            <ul class="nav nav-treeview">
+
+                                <li class="nav-item">
+
+                                    @if(auth()->user()?->isAdmin())
+
+                                        <a href="{{ route('admin.subscribers.index') }}" class="nav-link">
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>Список підписників</p>
+                                        </a>
+
+                                    @elseif(auth()->user()?->isViewer())
+
+                                        <span class="nav-link opacity-50 cursor-not-allowed"
+                                              title="Розділ підписників недоступний у демо">
+
+                        <i class="nav-icon bi bi-circle"></i>
+
+                        <p>Список підписників</p>
+
+                    </span>
+
+                                    @endif
+
+                                </li>
+
+
+                                <li class="nav-item">
+
+                                    @if(auth()->user()?->isAdmin())
+
+                                        <a href="{{ route('admin.subscribers.create') }}" class="nav-link">
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>Новий підписник</p>
+                                        </a>
+
+                                    @elseif(auth()->user()?->isViewer())
+
+                                        <span class="nav-link opacity-50 cursor-not-allowed"
+                                              title="Створення підписників недоступне у демо">
+
+                        <i class="nav-icon bi bi-circle"></i>
+
+                        <p>Новий підписник</p>
+
+                    </span>
+
+                                    @endif
+
+                                </li>
+
+
+                                {{-- Telegram підписники --}}
+                                <li class="nav-item mb-5">
+
+                                    @if(auth()->user()?->isAdmin())
+
+                                        <a href="{{ route('admin.telegram.index') }}" class="nav-link">
+                                            <i class="nav-icon bi bi-telegram"></i>
+                                            <p>Telegram підписники</p>
+                                        </a>
+
+                                    @elseif(auth()->user()?->isViewer())
+
+                                        <span class="nav-link opacity-50 cursor-not-allowed"
+                                              title="Telegram-підписники недоступні у демо">
+
+                        <i class="nav-icon bi bi-telegram"></i>
+
+                        <p>Telegram підписники</p>
+
+                    </span>
+
+                                    @endif
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+
+
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-chat-dots"></i>
+                                <p>Коментарі <i class="nav-arrow bi bi-chevron-right"></i></p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.comments.index') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Список коментарів</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-menu-button-wide"></i>
+
+                                <p>
+                                    Меню
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.menu.edit') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Нове меню</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon bi bi-gear"></i>
+                                <p>
+                                    Налаштування
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </p>
+                            </a>
+
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.settings.index') }}" class="nav-link">
+                                        <i class="nav-icon bi bi-circle"></i>
+                                        <p>Налаштування</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+
+
+                    @endif
+
+
+
+
                 </ul>
             </nav>
         </div>
@@ -680,7 +1230,7 @@
         </div>
     </main>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
@@ -691,14 +1241,36 @@
     });
 </script>
 
-{{-- resources/views/admin/layouts/layout.blade.php --}}
-{{-- Замінити ВЕСЬ старий <script> блок з bulkActionUrl/table-container логікою на цей --}}
-
 <script>
     const bulkActionUrl = "{{ route('admin.films.bulk-action') }}";
 
     function csrfToken() {
         return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    }
+
+    function initFilmsDataTable() {
+        const $table = $('#filmsTable');
+        if (!$table.length || typeof $.fn.DataTable === 'undefined') {
+            return;
+        }
+
+        if ($.fn.DataTable.isDataTable($table)) {
+            $table.DataTable().destroy();
+        }
+
+        $table.DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/uk.json'
+            },
+            pageLength: 15,
+            lengthChange: true,
+            autoWidth: false,
+            columnDefs: [
+                {
+                    orderable: false, targets: [0, -1] // 0 = чекбокс, -1 = остання колонка ("Дії")
+                }
+            ]
+        });
     }
 
     function refreshFilmTables(data) {
@@ -709,10 +1281,13 @@
             activeSection.innerHTML = data.activeHtml;
             initTableContainer(activeSection);
         }
+
         if (trashSection && data.trashHtml !== undefined) {
             trashSection.innerHTML = data.trashHtml;
             initTableContainer(trashSection);
         }
+
+        initFilmsDataTable();
     }
 
     function initTableContainer(container) {
@@ -723,8 +1298,9 @@
         const rowButtons = container.querySelectorAll('.row-action-btn');
         const wholeTableButtons = container.querySelectorAll('.admin-action-btn');
 
-        // на випадок, якщо чекбокси якимось чином лишились позначеними
-        container.querySelectorAll('.bulk-checkbox, .select-all-checkbox').forEach(cb => cb.checked = false);
+        container.querySelectorAll('.bulk-checkbox, .select-all-checkbox').forEach(cb => {
+            cb.checked = false;
+        });
 
         function updateBulkContainerState() {
             const checkboxes = container.querySelectorAll('.bulk-checkbox');
@@ -732,7 +1308,9 @@
 
             bulkButtons.forEach(btn => {
                 const countSpan = btn.querySelector('.selected-count');
-                if (countSpan) countSpan.textContent = checkedCount;
+                if (countSpan) {
+                    countSpan.textContent = checkedCount;
+                }
                 btn.classList.toggle('d-none', checkedCount === 0);
             });
 
@@ -743,7 +1321,9 @@
 
         if (selectAllCheckbox) {
             selectAllCheckbox.addEventListener('change', function () {
-                container.querySelectorAll('.bulk-checkbox').forEach(cb => cb.checked = this.checked);
+                container.querySelectorAll('.bulk-checkbox').forEach(cb => {
+                    cb.checked = this.checked;
+                });
                 updateBulkContainerState();
             });
         }
@@ -754,12 +1334,11 @@
             }
         });
 
-        // Загальний AJAX-запит на bulk-action (масові дії та дії в одному рядку)
         function sendAjaxAction(ids, action, confirmMessage, rowsToFade) {
             if (ids.length === 0) return;
             if (confirmMessage && !confirm(confirmMessage)) return;
 
-            const url = bulkActionUrl + window.location.search; // зберігаємо поточну сторінку пагінації
+            const url = bulkActionUrl + window.location.search;
 
             fetch(url, {
                 method: 'POST',
@@ -774,6 +1353,7 @@
                 .then(data => {
                     if (data.success) {
                         rowsToFade.forEach(row => {
+                            if (!row) return;
                             row.style.transition = 'opacity 0.3s ease';
                             row.style.opacity = '0';
                         });
@@ -789,34 +1369,74 @@
                 });
         }
 
-        // Масові дії (кнопки над таблицею)
         bulkButtons.forEach(btn => {
             btn.addEventListener('click', function (e) {
                 e.preventDefault();
+
                 const action = this.dataset.action;
                 const confirmMessage = this.dataset.confirm;
                 const checkedCheckboxes = container.querySelectorAll('.bulk-checkbox:checked');
                 const ids = Array.from(checkedCheckboxes).map(cb => cb.value);
                 const rows = Array.from(checkedCheckboxes).map(cb => cb.closest('tr'));
+
                 sendAjaxAction(ids, action, confirmMessage, rows);
             });
         });
 
-        // Дії в конкретному рядку (Кошик / Відновити / Знищити)
         rowButtons.forEach(btn => {
             btn.addEventListener('click', function (e) {
                 e.preventDefault();
+
                 const id = this.dataset.id;
                 const action = this.dataset.action;
                 const confirmMessage = this.dataset.confirm;
-                sendAjaxAction([id], action, confirmMessage, [this.closest('tr')]);
+                const url = this.dataset.url;
+                const method = this.dataset.method || 'POST';
+
+                if (confirmMessage && !confirm(confirmMessage)) {
+                    return;
+                }
+
+                fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken(),
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+
+                            const row = this.closest('tr');
+
+                            if (row) {
+                                row.style.transition = 'opacity 0.3s ease';
+                                row.style.opacity = '0';
+                            }
+
+                            setTimeout(() => {
+                                if (row) {
+                                    row.remove();
+                                }
+                            }, 300);
+
+                        } else {
+                            alert(data.message || 'Сталася помилка під час виконання дії.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Помилка відправки запиту.');
+                    });
             });
         });
 
-        // "Відновити всі" / "Очистити кошик повністю" — теж без перезавантаження
         wholeTableButtons.forEach(btn => {
             btn.addEventListener('click', function (e) {
                 e.preventDefault();
+
                 const url = this.dataset.url + window.location.search;
                 const confirmMessage = this.dataset.confirm;
 
@@ -846,10 +1466,8 @@
     }
 
     document.querySelectorAll('.table-container').forEach(initTableContainer);
+    initFilmsDataTable();
 </script>
-
-
-
 
 @stack('scripts')
 </body>

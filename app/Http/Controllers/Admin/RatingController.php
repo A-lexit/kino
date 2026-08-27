@@ -10,38 +10,60 @@ class RatingController extends Controller
 {
     public function index()
     {
-        $ratings = Rating::paginate(20);
+        $this->authorize('viewAny', Rating::class);
+
+        $ratings = Rating::latest('id')->paginate(20);
+
         return view('admin.ratings.index', compact('ratings'));
     }
 
     public function create()
     {
+        $this->authorize('create', Rating::class);
+
         return view('admin.ratings.create');
     }
 
     public function store(TitleRequest $request)
     {
-        Rating::create($request->all());
-        return redirect()->route('admin.ratings.index')->with('success', 'Рейтинг додано');
+        $this->authorize('create', Rating::class);
+
+        Rating::create($request->validated());
+
+        return redirect()
+            ->route('admin.ratings.index')
+            ->with('success', 'Рейтинг додано');
     }
 
     public function edit($id)
     {
         $rating = Rating::findOrFail($id);
+
+        $this->authorize('view', $rating);
+
         return view('admin.ratings.edit', compact('rating'));
     }
 
     public function update(TitleRequest $request, $id)
     {
         $rating = Rating::findOrFail($id);
-        $rating->update($request->all());
-        return redirect()->route('admin.ratings.index')->with('success', 'Зміни збережені');
+
+        $this->authorize('update', $rating);
+
+        $rating->update($request->validated());
+
+        return redirect()
+            ->route('admin.ratings.index')
+            ->with('success', 'Зміни збережені');
     }
 
-
-    // Одиночне видалення через AJAX
+    /**
+     * Одиночне видалення через AJAX.
+     */
     public function destroy(Rating $rating)
     {
+        $this->authorize('delete', $rating);
+
         if ($rating->films()->exists()) {
             return response()->json([
                 'success' => false,
@@ -57,19 +79,25 @@ class RatingController extends Controller
         ]);
     }
 
-    // Масове видалення через AJAX
+    /**
+     * Масове видалення через AJAX.
+     */
     public function bulkAction(Request $request)
     {
+        // Масове видалення доступне лише Admin.
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
         $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'exists:ratings,id',
-            'action' => 'required|string|in:delete'
+            'action' => 'required|string|in:delete',
         ]);
 
         $ids = $request->input('ids');
 
         foreach ($ids as $id) {
             $rating = Rating::find($id);
+
             if ($rating && $rating->films()->exists()) {
                 return response()->json([
                     'success' => false,
@@ -85,5 +113,4 @@ class RatingController extends Controller
             'message' => 'Вибрані рейтинги успішно видалено.'
         ]);
     }
-
 }

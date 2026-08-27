@@ -26,7 +26,7 @@ export default {
     border-color: #dee2e6 !important;
 }
 
-/* Стилі для темної теми */
+
 :global([data-bs-theme="dark"]) .views-badge {
     background-color: var(--color-bg-section, #1c2026) !important;
     color: var(--color-text, #e1e3e8) !important;

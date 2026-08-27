@@ -10,38 +10,60 @@ class StatusController extends Controller
 {
     public function index()
     {
-        $statuses = Status::paginate(20);
+        $this->authorize('viewAny', Status::class);
+
+        $statuses = Status::latest('id')->paginate(20);
+
         return view('admin.statuses.index', compact('statuses'));
     }
 
     public function create()
     {
+        $this->authorize('create', Status::class);
+
         return view('admin.statuses.create');
     }
 
     public function store(TitleRequest $request)
     {
-        Status::create($request->all());
-        return redirect()->route('admin.statuses.index')->with('success', 'Статус додано');
+        $this->authorize('create', Status::class);
+
+        Status::create($request->validated());
+
+        return redirect()
+            ->route('admin.statuses.index')
+            ->with('success', 'Статус додано');
     }
 
     public function edit($id)
     {
         $status = Status::findOrFail($id);
+
+        $this->authorize('view', $status);
+
         return view('admin.statuses.edit', compact('status'));
     }
 
     public function update(TitleRequest $request, $id)
     {
         $status = Status::findOrFail($id);
-        $status->update($request->all());
-        return redirect()->route('admin.statuses.index')->with('success', 'Зміни збережені');
+
+        $this->authorize('update', $status);
+
+        $status->update($request->validated());
+
+        return redirect()
+            ->route('admin.statuses.index')
+            ->with('success', 'Зміни збережені');
     }
 
-
-    // Одиночне видалення через AJAX
+    /**
+     * Одиночне видалення через AJAX.
+     */
     public function destroy(Status $status)
     {
+        $this->authorize('delete', $status);
+
         if ($status->films()->exists()) {
             return response()->json([
                 'success' => false,
@@ -57,19 +79,24 @@ class StatusController extends Controller
         ]);
     }
 
-    // Масове видалення через AJAX
+    /**
+     * Масове видалення через AJAX.
+     */
     public function bulkAction(Request $request)
     {
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
         $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'exists:statuses,id',
-            'action' => 'required|string|in:delete'
+            'action' => 'required|string|in:delete',
         ]);
 
         $ids = $request->input('ids');
 
         foreach ($ids as $id) {
             $status = Status::find($id);
+
             if ($status && $status->films()->exists()) {
                 return response()->json([
                     'success' => false,
@@ -85,5 +112,4 @@ class StatusController extends Controller
             'message' => 'Вибрані статуси успішно видалено.'
         ]);
     }
-
 }

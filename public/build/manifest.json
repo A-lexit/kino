@@ -32,7 +32,7 @@
     "src": "_instrument-sans-600-normal-B9e8oLYv.woff"
   },
   "resources/css/app.css": {
-    "file": "assets/app-Cr9GKg6A.css",
+    "file": "assets/app-C_deOGX8.css",
     "name": "app",
     "names": [
       "app.css"
@@ -53,7 +53,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-B3TDxrNF.js",
+    "file": "assets/app-Cwtoqx8-.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -61,7 +61,7 @@
       "_bootstrap.esm-DQulZAK3.js"
     ],
     "css": [
-      "assets/app-sDBnBjvp.css"
+      "assets/app-BIQ1GyVY.css"
     ]
   }
 }

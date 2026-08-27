@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Feature\APIs;
 
 use App\APIs\ComingSoonCinemaService;
@@ -23,7 +24,7 @@ class ComingSoonCinemaServiceTest extends TestCase
             ], 200),
         ]);
 
-        Cache::forget('upcoming_movies');
+        Cache::forget('tmdb_upcoming_movies');
 
         $service = new ComingSoonCinemaService();
 
@@ -33,28 +34,24 @@ class ComingSoonCinemaServiceTest extends TestCase
 
         $this->assertEquals(
             'Film 1',
-            $movies->first()['title']
+            $movies[0]['title']
         );
     }
 
-
-    public function test_upcoming_returns_empty_collection_when_api_failed(): void
+    public function test_upcoming_returns_empty_array_when_api_failed(): void
     {
         Http::fake([
             'api.themoviedb.org/*' => Http::response([], 500),
         ]);
 
-        Cache::forget('upcoming_movies');
+        Cache::forget('tmdb_upcoming_movies');
 
         $service = new ComingSoonCinemaService();
 
         $movies = $service->upcoming();
 
-        $this->assertTrue(
-            $movies->isEmpty()
-        );
+        $this->assertEmpty($movies);
     }
-
 
     public function test_upcoming_uses_cache(): void
     {
@@ -66,20 +63,15 @@ class ComingSoonCinemaServiceTest extends TestCase
             ], 200),
         ]);
 
-        Cache::forget('upcoming_movies');
+        Cache::forget('tmdb_upcoming_movies');
 
         $service = new ComingSoonCinemaService();
 
         $first = $service->upcoming();
-
         $second = $service->upcoming();
 
         Http::assertSentCount(1);
 
-        $this->assertEquals(
-            $first,
-            $second
-        );
+        $this->assertEquals($first, $second);
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Livewire\Admin;
 
 use App\APIs\OmdbService;
@@ -32,14 +31,11 @@ class ImdbRatingFetcher extends Component
             'imdb_id' => $result['imdb_id'],
             'imdb_rating' => $result['imdb_rating'],
         ]);
-
-        // модель у компоненті вже оновлена завдяки update(), Livewire сам
-        // перерендерить актуальні значення $this->film->imdb_rating у view
     }
 
     public function render()
     {
         return view('livewire.admin.imdb-rating-fetcher');
     }
-    
+
 }

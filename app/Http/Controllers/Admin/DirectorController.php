@@ -10,45 +10,62 @@ class DirectorController extends Controller
 {
     public function index()
     {
-        $directors = Director::paginate(20);
+        $this->authorize('viewAny', Director::class);
+
+        $directors = Director::latest('id')->paginate(20);
 
         return view('admin.directors.index', compact('directors'));
     }
 
     public function create()
     {
+        $this->authorize('create', Director::class);
+
         return view('admin.directors.create');
     }
 
-
     public function store(NameRequest $request)
     {
-        Director::create($request->all());
+        $this->authorize('create', Director::class);
 
-        return redirect()->route('admin.directors.index')->with('success', 'Тег добавлен');
+        Director::create($request->validated());
+
+        return redirect()
+            ->route('admin.directors.index')
+            ->with('success', 'Режисера додано');
     }
-
 
     public function edit(string $id)
     {
         $director = Director::findOrFail($id);
 
+        // Viewer може зайти у форму для перегляду.
+        $this->authorize('view', $director);
+
         return view('admin.directors.edit', compact('director'));
     }
-
 
     public function update(NameRequest $request, string $id)
     {
         $director = Director::findOrFail($id);
-        $director->update($request->all());
 
-        return redirect()->route('admin.directors.index')->with('success', 'Зміни збережені');
+        // Admin та Editor можуть зберігати зміни.
+        $this->authorize('update', $director);
+
+        $director->update($request->validated());
+
+        return redirect()
+            ->route('admin.directors.index')
+            ->with('success', 'Зміни збережені');
     }
 
-
-// Одиночне видалення через AJAX
+    /**
+     * Одиночне видалення через AJAX.
+     */
     public function destroy(Director $director)
     {
+        $this->authorize('delete', $director);
+
         if ($director->films()->exists()) {
             return response()->json([
                 'success' => false,
@@ -64,19 +81,25 @@ class DirectorController extends Controller
         ]);
     }
 
-    // Масове видалення через AJAX
+    /**
+     * Масове видалення через AJAX.
+     */
     public function bulkAction(Request $request)
     {
+        // Масове видалення доступне лише Admin.
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
         $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'exists:directors,id',
-            'action' => 'required|string|in:delete'
+            'action' => 'required|string|in:delete',
         ]);
 
         $ids = $request->input('ids');
 
         foreach ($ids as $id) {
             $director = Director::find($id);
+
             if ($director && $director->films()->exists()) {
                 return response()->json([
                     'success' => false,
@@ -92,5 +115,4 @@ class DirectorController extends Controller
             'message' => 'Вибраних режисерів успішно видалено.'
         ]);
     }
-
 }

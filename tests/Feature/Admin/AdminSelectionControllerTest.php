@@ -44,9 +44,11 @@ class AdminSelectionControllerTest extends TestCase
                 'slug'  => 'testova-pidbirka',
             ])
             ->assertRedirect(route('admin.selections.index'))
-            ->assertSessionHas('success', 'Підбірку додано');
+            ->assertSessionHas('success', 'Добірку додано');
 
-        $this->assertDatabaseHas('selections', ['title' => 'Тестова підбірка']);
+        $this->assertDatabaseHas('selections', [
+            'title' => 'Тестова підбірка',
+        ]);
     }
 
     public function test_edit_returns_view_with_selection(): void

@@ -1,7 +1,7 @@
 <?php
-
 namespace App\Services;
 
+use Illuminate\Support\Str;
 use App\Models\Film;
 
 class FilmRelationService
@@ -18,11 +18,16 @@ class FilmRelationService
             'languages',
             'countries',
             'captions',
-            'selections'
+            'selections',
+            'related_films',
         ];
 
         foreach ($relations as $relation) {
-            $film->{$relation}()->sync($data[$relation] ?? []);
+            // Перетворюємо 'related_films' на 'relatedFilms'
+            $methodName = Str::camel($relation);
+
+            // Викликаємо camelCase метод і передаємо дані зі snake_case ключа
+            $film->{$methodName}()->sync($data[$relation] ?? []);
         }
     }
 

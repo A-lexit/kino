@@ -33,4 +33,5 @@ class AddNewComment implements ShouldQueue
             'user_id' => $this->user_id,
         ]);
     }
+
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Media;
 
 use App\Models\Film;

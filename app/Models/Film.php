@@ -1,30 +1,48 @@
 <?php
 namespace App\Models;
-
-use App\Enums\FilmStatus;
-use App\Traits\DateFormats;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+/**
+ * @method static \Illuminate\Database\Eloquent\Builder|static applySorting(string $sort)
+ */
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Enums\FilmStatus;
+use App\Traits\DateFormats;
+use App\Traits\SortFilms;
+use App\Enums\UserRole;
+
 
 class Film extends Model
 {
-    use HasFactory, DateFormats, SoftDeletes;
+    protected static function booted(): void
+    {
+        static::saved(function ($film) {
+            if (request()->has('related_films')) {
+                $relatedIds = request()->input('related_films', []);
 
-    // Значення за замовчуванням для нових записів
+                $film->relatedFilms()->syncWithoutDetaching($relatedIds);
+
+                foreach ($relatedIds as $relatedId) {
+                    if ($relatedFilm = self::find($relatedId)) {
+                        $peers = array_merge([$film->id], array_diff($relatedIds, [$relatedId]));
+                        $relatedFilm->relatedFilms()->syncWithoutDetaching($peers);
+                    }
+                }
+            }
+
+        });
+    }
+
+    use HasFactory, DateFormats, SoftDeletes, SortFilms;
+
     protected $attributes = [
-        /*'category_id' => 1,*/
-       /* 'age_id'      => 1,
-        'quality_id'  => 1,
-        'rating_id'   => 1,
-        'year_id'     => 1,*/
+        /*'year_id'     => 1,*/
     ];
 
-    // ====================== ВЛАСТИВОСТІ ======================
     protected $fillable = [
         'title',
         'slug',
@@ -59,6 +77,7 @@ class Film extends Model
         'datepicker',
         'imdb_id',
         'imdb_rating',
+        'sort_order',
     ];
 
     protected $casts = [
@@ -66,10 +85,8 @@ class Film extends Model
         'tmdb_id'        => 'integer',
         'publish_status' => FilmStatus::class,
         'datepicker'     => \App\Casts\DatePickerCast::class,
-        'duration_id' => \App\Casts\DurationCast::class,
     ];
 
-    // ====================== ВІДНОСИНИ ======================
     public function state(): HasOne
     {
         return $this->hasOne(State::class, 'film_id');
@@ -78,6 +95,20 @@ class Film extends Model
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class, 'film_id');
+    }
+
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'category_id')->withDefault([
+            'slug'  => 'uncategorized',
+            'title' => 'Без категорії'
+        ]);
+    }
+
+    public function year(): BelongsTo
+    {
+        return $this->belongsTo(Year::class, 'year_id');
     }
 
     public function duration(): BelongsTo
@@ -93,19 +124,6 @@ class Film extends Model
     public function season(): BelongsTo
     {
         return $this->belongsTo(Season::class, 'season_id');
-    }
-
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class, 'category_id')->withDefault([
-            'slug'  => 'uncategorized', // або 'default'
-            'title' => 'Без категорії'
-        ]);
-    }
-
-    public function year(): BelongsTo
-    {
-        return $this->belongsTo(Year::class, 'year_id');
     }
 
     public function rating(): BelongsTo
@@ -127,6 +145,7 @@ class Film extends Model
     {
         return $this->belongsTo(User::class, 'author_id');
     }
+
 
     public function directors(): BelongsToMany
     {
@@ -178,13 +197,12 @@ class Film extends Model
         return $this->belongsToMany(Selection::class, 'film_selection', 'film_id', 'selection_id');
     }
 
-    // ====================== ЛОГІКА ======================
-    /**
-     * Опис для <meta description>. Якщо адмін написав власний опис — беремо його
-     * (обрізаний до 160 символів). Якщо опис порожній — автоматично збираємо
-     * короткий опис зі структурованих даних (категорія, рік, жанри) —
-     * вони завжди заповнені, на відміну від вільного тексту.
-     */
+    public function relatedFilms(): BelongsToMany
+    {
+        return $this->belongsToMany(Film::class, 'film_related_film', 'film_id', 'related_film_id');
+    }
+
+
     public function seoDescription(): string
     {
         if (!empty($this->description)) {
@@ -208,19 +226,25 @@ class Film extends Model
 
     public function togglePublishStatus(?string $value): void
     {
-        if ($value === FilmStatus::Published->value) {
-            $status = FilmStatus::Published;
-        } else {
-            $status = FilmStatus::Draft;
+        if (
+            $value === FilmStatus::Published->value
+            && is_null($this->category_id)
+        ) {
+            $this->publish_status = FilmStatus::Draft;
+            $this->save();
+
+            return;
         }
 
-        $this->publish_status = $status;
+        $this->publish_status = $value === FilmStatus::Published->value
+            ? FilmStatus::Published
+            : FilmStatus::Draft;
+
         $this->save();
     }
 
 
-
-    public function toggleFeatured(mixed $value): void     //Читабильний варіант
+    public function toggleFeatured(mixed $value): void
     {
         if ($value) {
             $this->is_featured = true;
@@ -232,30 +256,60 @@ class Film extends Model
     }
 
 
-    // ====================== АКСЕСОРИ ======================
     public function getDisplayDateAttribute(): string
     {
-        // Перевіряємо сире значення з бази: якщо воно порожнє, беремо createdAtFormatter
         return empty($this->attributes['datepicker'])
             ? $this->createdAtFormatter
             : (string)$this->datepicker;
     }
 
 
-    // ====================== СКОУПИ ======================
+    public function getFormattedDurationAttribute(): ?string
+    {
+        if (!$this->duration) {
+            return null;
+        }
+
+        $total = (int) $this->duration->title;
+        $hours = intdiv($total, 60);
+        $minutes = $total % 60;
+
+        if ($total < 60) {
+            return "{$total} хв";
+        }
+
+        return $minutes > 0 ? "{$hours} год {$minutes} хв" : "{$hours} год";
+    }
+
+
+    public function getUrlAttribute(): string
+    {
+        return route('single', [
+            'category' => $this->category->slug,
+            'slug' => $this->slug,
+        ]);
+    }
+
+
     public function scopePublished($query)
     {
         return $query->where('publish_status', FilmStatus::Published);
     }
 
-
+    
     public function scopeForUser($query, $user)
     {
-        if ($user && in_array($user->role, [\App\Enums\UserRole::Admin, \App\Enums\UserRole::Viewer], true)) {
-            return $query;
+        if (!$user) {
+            return $query->whereRaw('1 = 0');
         }
 
-        return $query->where('author_id', $user?->id);
+        return match ($user->role) {
+            UserRole::Admin,
+            UserRole::Editor,
+            UserRole::Viewer => $query,
+
+            default => $query->whereRaw('1 = 0'),
+        };
     }
 
 }

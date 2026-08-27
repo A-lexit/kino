@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Unit\Policies;
 
 use App\Enums\UserRole;
@@ -18,9 +19,10 @@ class FilmPolicyTest extends TestCase
         $this->policy = new FilmPolicy();
     }
 
-
-    private function makeUser(UserRole $role, int $id = 1): User
-    {
+    private function makeUser(
+        UserRole $role,
+        int $id = 1
+    ): User {
         $user = new User();
 
         $user->id = $id;
@@ -29,39 +31,46 @@ class FilmPolicyTest extends TestCase
         return $user;
     }
 
-
-    private function makeFilm(int $authorId = 1): Film
-    {
+    private function makeFilm(
+        int $authorId = 1
+    ): Film {
         return new Film([
             'author_id' => $authorId,
         ]);
     }
 
-
     public function test_view_any(): void
     {
         $this->assertTrue(
-            $this->policy->viewAny($this->makeUser(UserRole::Admin))
+            $this->policy->viewAny(
+                $this->makeUser(UserRole::Admin)
+            )
         );
 
         $this->assertTrue(
-            $this->policy->viewAny($this->makeUser(UserRole::Editor))
+            $this->policy->viewAny(
+                $this->makeUser(UserRole::Editor)
+            )
         );
 
         $this->assertTrue(
-            $this->policy->viewAny($this->makeUser(UserRole::Viewer))
+            $this->policy->viewAny(
+                $this->makeUser(UserRole::Viewer)
+            )
         );
 
         $this->assertFalse(
-            $this->policy->viewAny($this->makeUser(UserRole::User))
+            $this->policy->viewAny(
+                $this->makeUser(UserRole::User)
+            )
         );
     }
-
 
     public function test_view(): void
     {
         $film = $this->makeFilm(10);
 
+        // Admin бачить будь-який фільм.
         $this->assertTrue(
             $this->policy->view(
                 $this->makeUser(UserRole::Admin),
@@ -69,13 +78,8 @@ class FilmPolicyTest extends TestCase
             )
         );
 
-        $this->assertTrue(
-            $this->policy->view(
-                $this->makeUser(UserRole::Viewer),
-                $film
-            )
-        );
-
+        // Editor бачить будь-який фільм,
+        // незалежно від author_id.
         $this->assertTrue(
             $this->policy->view(
                 $this->makeUser(UserRole::Editor, 10),
@@ -83,13 +87,22 @@ class FilmPolicyTest extends TestCase
             )
         );
 
-        $this->assertFalse(
+        $this->assertTrue(
             $this->policy->view(
                 $this->makeUser(UserRole::Editor, 5),
                 $film
             )
         );
 
+        // Viewer бачить будь-який фільм.
+        $this->assertTrue(
+            $this->policy->view(
+                $this->makeUser(UserRole::Viewer),
+                $film
+            )
+        );
+
+        // Звичайний користувач не має доступу в адмінку.
         $this->assertFalse(
             $this->policy->view(
                 $this->makeUser(UserRole::User),
@@ -98,16 +111,16 @@ class FilmPolicyTest extends TestCase
         );
     }
 
-
     public function test_create(): void
     {
+        // Створення доступне тільки Admin.
         $this->assertTrue(
             $this->policy->create(
                 $this->makeUser(UserRole::Admin)
             )
         );
 
-        $this->assertTrue(
+        $this->assertFalse(
             $this->policy->create(
                 $this->makeUser(UserRole::Editor)
             )
@@ -126,11 +139,11 @@ class FilmPolicyTest extends TestCase
         );
     }
 
-
     public function test_update(): void
     {
         $film = $this->makeFilm(15);
 
+        // Admin може редагувати будь-який фільм.
         $this->assertTrue(
             $this->policy->update(
                 $this->makeUser(UserRole::Admin),
@@ -138,6 +151,7 @@ class FilmPolicyTest extends TestCase
             )
         );
 
+        // Editor може редагувати власний фільм.
         $this->assertTrue(
             $this->policy->update(
                 $this->makeUser(UserRole::Editor, 15),
@@ -145,13 +159,15 @@ class FilmPolicyTest extends TestCase
             )
         );
 
-        $this->assertFalse(
+        // Editor може редагувати і чужий фільм.
+        $this->assertTrue(
             $this->policy->update(
                 $this->makeUser(UserRole::Editor, 20),
                 $film
             )
         );
 
+        // Viewer — тільки перегляд.
         $this->assertFalse(
             $this->policy->update(
                 $this->makeUser(UserRole::Viewer),
@@ -159,6 +175,7 @@ class FilmPolicyTest extends TestCase
             )
         );
 
+        // Звичайний користувач не має доступу.
         $this->assertFalse(
             $this->policy->update(
                 $this->makeUser(UserRole::User),
@@ -166,7 +183,6 @@ class FilmPolicyTest extends TestCase
             )
         );
     }
-
 
     public function test_delete(): void
     {
@@ -201,7 +217,6 @@ class FilmPolicyTest extends TestCase
         );
     }
 
-
     public function test_restore(): void
     {
         $film = $this->makeFilm();
@@ -235,7 +250,6 @@ class FilmPolicyTest extends TestCase
         );
     }
 
-
     public function test_force_delete(): void
     {
         $film = $this->makeFilm();
@@ -268,5 +282,4 @@ class FilmPolicyTest extends TestCase
             )
         );
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Jobs;
 
 use App\Media\ImageMedia;
@@ -92,4 +91,5 @@ class DownloadFilmPoster implements ShouldQueue
             throw $e;
         }
     }
+
 }

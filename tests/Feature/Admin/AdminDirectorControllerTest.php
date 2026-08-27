@@ -31,11 +31,12 @@ class AdminDirectorControllerTest extends TestCase
     public function test_store_saves_director_and_redirects(): void
     {
         $this->actingAs($this->admin);
+
         $data = ['name' => 'Christopher Nolan'];
 
         $this->post(route('admin.directors.store'), $data)
             ->assertRedirect(route('admin.directors.index'))
-            ->assertSessionHas('success', 'Тег добавлен');
+            ->assertSessionHas('success', 'Режисера додано');
 
         $this->assertDatabaseHas('directors', $data);
     }

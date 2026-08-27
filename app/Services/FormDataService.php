@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Enums\CategorySlug;
 use App\Models\Category;
 use App\Models\Year;
 use App\Models\Rating;
@@ -21,29 +22,57 @@ use App\Models\Caption;
 use App\Models\Selection;
 use Illuminate\Support\Facades\Cache;
 
-class FormDataService {
-    public function getFormData() {
-        return Cache::tags(['form_data'])->remember('film_form_lists', 86400, function () {
-            $data = [];
-            $data['categories'] = Category::pluck('title', 'id')->all();
-            $data['years'] = Year::pluck('title', 'id')->all();
-            $data['ratings'] = Rating::pluck('title', 'id')->all();
-            $data['durations'] = Duration::pluck('title', 'id')->all();
-            $data['statuses'] = Status::pluck('title', 'id')->all();
-            $data['ages'] = Age::pluck('title', 'id')->all();
-            $data['qualities'] = Quality::pluck('title', 'id')->all();
-            $data['seasons'] = Season::pluck('title', 'id')->all();
-            $data['composers'] = Composer::pluck('name', 'id')->all();
-            $data['companies'] = Company::pluck('title', 'id')->all();
-            $data['directors'] = Director::pluck('name', 'id')->all();
-            $data['actors'] = Actor::pluck('name', 'id')->all();
-            $data['producers'] = Producer::pluck('name', 'id')->all();
-            $data['genres'] = Genre::pluck('title', 'id')->all();
-            $data['languages'] = Language::pluck('title', 'id')->all();
-            $data['countries'] = Country::pluck('title', 'id')->all();
-            $data['captions'] = Caption::pluck('title', 'id')->all();
-            $data['selections'] = Selection::pluck('title', 'id')->all();
-            return $data;
-        });
+class FormDataService
+{
+    public function getFormData(): array
+    {
+        return Cache::tags(['form_data'])->remember(
+            'film_form_lists',
+            86400,
+            function () {
+                $data = [];
+
+                $data['categories'] = Category::pluck('title', 'id')->all();
+                $data['years'] = Year::pluck('title', 'id')->all();
+                $data['ratings'] = Rating::pluck('title', 'id')->all();
+                $data['durations'] = Duration::pluck('title', 'id')->all();
+                $data['statuses'] = Status::pluck('title', 'id')->all();
+                $data['ages'] = Age::pluck('title', 'id')->all();
+                $data['qualities'] = Quality::pluck('title', 'id')->all();
+
+                $data['seasons'] = Season::all()
+                    ->sortBy(function (Season $season) {
+                        preg_match('/(\d+)$/', $season->title, $matches);
+
+                        return isset($matches[1])
+                            ? (int) $matches[1]
+                            : PHP_INT_MAX;
+                    })
+                    ->pluck('title', 'id')
+                    ->all();
+
+                $data['composers'] = Composer::pluck('name', 'id')->all();
+                $data['companies'] = Company::pluck('title', 'id')->all();
+                $data['directors'] = Director::pluck('name', 'id')->all();
+                $data['actors'] = Actor::pluck('name', 'id')->all();
+                $data['producers'] = Producer::pluck('name', 'id')->all();
+                $data['genres'] = Genre::pluck('title', 'id')->all();
+                $data['languages'] = Language::pluck('title', 'id')->all();
+                $data['countries'] = Country::pluck('title', 'id')->all();
+                $data['captions'] = Caption::pluck('title', 'id')->all();
+                $data['selections'] = Selection::pluck('title', 'id')->all();
+
+                $data['serial_category_ids'] = Category::query()
+                    ->whereIn('slug', [
+                        CategorySlug::SERIALS->value,
+                        CategorySlug::MULTSERIALS->value,
+                    ])
+                    ->pluck('id')
+                    ->all();
+
+                return $data;
+            }
+        );
     }
+
 }

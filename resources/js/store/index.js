@@ -103,12 +103,13 @@ export default createStore({
                     user_id: payload.user_id,
                 });
 
-                commit('SET_COMMENT_SUCCESS', !state.commentSuccess);
-
+                commit('SET_COMMENT_SUCCESS', true);
                 await dispatch('getFilmData', state.slug);
             } catch (error) {
                 if (error.response?.status === 422) {
                     commit('SET_ERRORS', error.response.data.errors);
+                } else if (error.response?.status === 401) {
+                    commit('SET_ERRORS', { body: ['Авторизуйтесь, щоб залишити коментар'] });
                 } else {
                     console.error(error);
                 }

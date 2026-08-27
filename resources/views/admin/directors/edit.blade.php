@@ -1,49 +1,21 @@
 @extends('admin.layouts.layout')
 @section('content')
 
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Редагування режисера</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Blank Page</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
+    <x-admin.content-header title="Редагування режисера" />
 
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Режисер "{{ $director->name }}"</h3>
-                        </div>
 
-                        <form role="form" method="post" action="{{ route('admin.directors.update', ['director' => $director->id]) }}">
-                            @csrf
-                            @method('PUT')
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="name">Ім'я</label>
-                                    <input type="text" name="name"
-                                           class="form-control @error('name') is-invalid @enderror" id="name"
-                                           value="{{ $director->name }}">
-                                    @error('name')
-                                    <div class="invalid-feedback">{{$message}}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Зберегти</button>
-                            </div>
-                        </form>
+                        <x-admin.forms.simple-title-form
+                            :action="route('admin.directors.update', ['director' => $director->id])"
+                            http-method="PUT"
+                            field="name"
+                            label="Ім'я"
+                            :value="$director->name"
+                        />
 
                     </div>
                 </div>
@@ -52,4 +24,3 @@
     </section>
 
 @endsection
-

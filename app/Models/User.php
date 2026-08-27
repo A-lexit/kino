@@ -143,8 +143,6 @@ class User extends Authenticatable
     }
 
 
-//Ролі
-    // Додати метод-хелпери (зручніше, ніж всюди писати $user->role === UserRole::Admin):
     public function isAdmin(): bool
     {
         return $this->role === UserRole::Admin;
@@ -165,10 +163,7 @@ class User extends Authenticatable
         return in_array($this->role, UserRole::staffRoles(), true);
     }
 
-// Автоматична синхронізація is_admin <-> role, щоб УВЕСЬ старий код,
-// який досі перевіряє $user->is_admin (блейди, інші контролери, які я не бачив),
-// продовжував працювати без жодних правок — is_admin тепер завжди
-// автоматично відповідає ролі при кожному збереженні моделі.
+
     protected static function booted(): void
     {
         static::saving(function (User $user) {

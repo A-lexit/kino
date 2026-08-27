@@ -1,0 +1,52 @@
+.image-section {
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 20px;
+    background: #f8f9fa;
+}
+
+.image-section--poster {
+    border-left: 4px solid #007bff;
+}
+
+.image-section--gallery {
+    border-left: 4px solid #28a745;
+}
+
+.image-section__title {
+    margin-bottom: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: .5px;
+    color: #495057;
+}
+
+.image-section__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.image-section__grid .form-group {
+    margin-bottom: 0;
+}
+
+
+.image-filename {
+    max-width: 400px;
+    padding: 6px 10px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+
+.image-upload-preview {
+    width: 400px;
+    max-width: 100%;
+}
