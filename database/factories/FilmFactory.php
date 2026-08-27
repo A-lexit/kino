@@ -31,7 +31,7 @@ class FilmFactory extends Factory
             'title' => $title,
             'slug' => Str::slug($title),
             'origin_title' => $this->faker->optional()->realTextBetween(10, 50),
-            'duration' => $this->faker->optional()->numberBetween(60, 240) . ' хв.',
+            
             'other_actor' => $this->faker->optional()->paragraph(1),
             'note' => $this->faker->optional()->sentence(),
             'description' => $this->faker->optional()->paragraphs(3, true),
