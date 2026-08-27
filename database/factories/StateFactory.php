@@ -20,7 +20,7 @@ class StateFactory extends Factory
         $views = $this->faker->numberBetween(0, 100000);
 
         return [
-            'vviews' => $views,
+            'views' => $views,
             'likes' => $this->faker->numberBetween(0, max(0, intval($views * 0.1))),
             'film_id' => Film::factory(),
         ];
